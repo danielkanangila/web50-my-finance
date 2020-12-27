@@ -8,12 +8,20 @@ const defaultTheme = {
   color: "#fff",
 };
 
-const Checkbox = ({ label, value, onClick, theme = defaultTheme }) => {
+const Checkbox = ({
+  label,
+  value,
+  onClick,
+  theme = defaultTheme,
+  LabelComponent,
+}) => {
   return (
     <Wrapper theme={theme} onClick={() => onClick(!value)}>
       <span className={`box ${value ? "checked" : ""}`}></span>
       {value && <span className="checkmark"></span>}
-      <label className="text-sm">{label}</label>
+      <label className="text-sm">
+        {LabelComponent ? <LabelComponent /> : label}
+      </label>
     </Wrapper>
   );
 };

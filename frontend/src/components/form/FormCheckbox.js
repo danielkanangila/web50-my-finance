@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import Checkbox from "../Checkbox";
 
-const FormCheckbox = ({ label, name, theme }) => {
+const FormCheckbox = ({ label, name, LabelComponent, theme }) => {
   const { values, setFieldValue, errors } = useFormikContext();
   return (
     <div className="form-group">
@@ -13,6 +13,7 @@ const FormCheckbox = ({ label, name, theme }) => {
         theme={theme}
         value={values[name]}
         onClick={(value) => setFieldValue(name, value)}
+        LabelComponent={LabelComponent}
       />
       {errors[name] && <Error>{errors[name]}</Error>}
     </div>

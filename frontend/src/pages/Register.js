@@ -10,8 +10,8 @@ import FormCheckbox from "./../components/form/FormCheckbox";
 import AuthFooter from "../components/AuthFooter";
 
 const validationSchema = Yup.object().shape({
-  first_name: Yup.string().required().max(2),
-  first_name: Yup.string().required().max(2),
+  first_name: Yup.string().required().min(2),
+  last_name: Yup.string().required().min(2),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(8).label("Password"),
 });
@@ -20,7 +20,13 @@ const Register = () => {
   return (
     <div className={styles.auth_container}>
       <Form
-        initialValues={{ username: "", password: "", remember_me: false }}
+        initialValues={{
+          first_name: "",
+          last_name: "",
+          email: "",
+          password: "",
+          terms: false,
+        }}
         onSubmit={() => {}}
         validationSchema={validationSchema}
         className={`${styles.auth_card} ${styles.auth_card__signup} shadow bg-white`}
@@ -51,7 +57,7 @@ const Register = () => {
         <FormTextField
           type="text"
           name="email"
-          label="Username or Email"
+          label="Email"
           placeholder="example@gmail.com"
           required
         />
@@ -64,7 +70,17 @@ const Register = () => {
           required
         />
         <div className="m-6"></div>
-        <FormCheckbox label="Terms and Conditions" name="terms" />
+        <FormCheckbox
+          LabelComponent={() => (
+            <Link
+              className="transition duration-500 ease-in-out underline text-green-500 hover:text-green-700"
+              to="/term_and_conditions"
+            >
+              Terms and Conditions
+            </Link>
+          )}
+          name="terms"
+        />
         <div className="m-6"></div>
         <SubmitButton title="Sing up" />
         <AuthFooter
