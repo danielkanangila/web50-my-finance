@@ -7,7 +7,9 @@ const SubmitButton = ({ className, onSubmit = null, title, loading }) => {
   };
   return (
     <button
-      className={`btn btn-primary ${className ? className : ""}`}
+      className={`transition duration-500 ease-in-out w-full p-2 bg-green-500 hover:bg-green-600 rounded-md cursor-pointer text-white uppercase text-xs ${
+        className ? className : ""
+      }`}
       type="submit"
       disabled={loading}
       onClick={handleSubmit}
