@@ -8,7 +8,7 @@ const css = String.raw;
 
 const defaultStyles = {
   borderSize: 2,
-  borderColor: "#bdbdbd",
+  borderColor: "#f1f1f1",
   borderRadius: 5,
   borderBottom: false,
   focusedLabelTopPosition: 7,
