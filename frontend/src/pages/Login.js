@@ -17,8 +17,9 @@ const Login = () => {
         initialValues={{ username: "", password: "", remember_me: false }}
         onSubmit={() => {}}
         validationSchema={validationSchema}
-        className={styles.auth_card}
+        className={`${styles.auth_card} shadow-sm bg-white`}
       >
+        <h1 className="main-title">Login</h1>
         <TextField
           type="text"
           name="username"
