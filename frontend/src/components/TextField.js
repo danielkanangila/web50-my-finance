@@ -25,17 +25,26 @@ const TextField = ({
   onFocus,
   onBlur,
   _style,
+  name,
   error,
+  touched,
   ...rest
 }) => {
   const [inputType, setInputType] = useState(type);
   const [pwdVisibility, setPwdVisibility] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     setInputType(type);
   }, [type]);
+
+  // Track touched and error
+  useEffect(() => {
+    if (error && touched) setHasError(true);
+    else setHasError(false);
+  }, [error, touched]);
 
   const changePasswordVisibility = (visibility) => {
     setPwdVisibility(visibility);
@@ -70,7 +79,7 @@ const TextField = ({
 
   return (
     <TextFieldWrapper isEmpty={isEmpty} focus={isFocused} _style={getStyles()}>
-      <label className={error ? "field-label error " : "field-label"}>
+      <label className={hasError ? "field-label error " : "field-label"}>
         {label}
       </label>
       <FieldWidget
@@ -78,7 +87,7 @@ const TextField = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         type={inputType}
-        className={error ? "field error " : "field"}
+        className={hasError ? "field error " : "field"}
         {...rest}
       />
       {type === "password" && (
@@ -89,13 +98,7 @@ const TextField = ({
           {pwdVisibility ? <VisibilityOffIcon /> : <VisibilityIcon />}
         </span>
       )}
-      {error && (
-        <Error>
-          {error?.messages?.map((message) => (
-            <i>{message}</i>
-          ))}
-        </Error>
-      )}
+      {hasError && <Error>{error}</Error>}
     </TextFieldWrapper>
   );
 };

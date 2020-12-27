@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { Formik } from "formik";
 
 const Form = ({
@@ -7,6 +7,7 @@ const Form = ({
   validationSchema,
   children,
   className,
+  Title = () => <></>, // form title component, by default empty component
   ...otherProps
 }) => {
   const formRef = useRef(null);
@@ -32,6 +33,7 @@ const Form = ({
           className={`${className} shadow-sm rounded`}
           {...otherProps}
         >
+          <Title />
           {hasNonFieldError(status) && <Error message={parseError(status)} />}
           {children}
         </form>
