@@ -193,3 +193,19 @@ export const CheckboxWrapper = styled.div`
     margin-left: 35px;
   }
 `;
+
+export const HomeButtonWrapper = styled.div`
+  position: absolute;
+  height: fit-content;
+  top: 10px;
+  left: 15px;
+  z-index: 10;
+  a > * {
+    color: #ffffff;
+  }
+
+  svg {
+    z-index: 10;
+    fill: #ffffff;
+  }
+`;

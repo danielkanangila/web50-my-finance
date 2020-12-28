@@ -8,6 +8,7 @@ import FormTextField from "../components/form/FormTextField";
 import SubmitButton from "../components/form/SubmitButton";
 import FormCheckbox from "./../components/form/FormCheckbox";
 import AuthFooter from "../components/AuthFooter";
+import AuthFormWrapper from "../components/AuthFormWrapper";
 
 const validationSchema = Yup.object().shape({
   first_name: Yup.string().required().min(2),
@@ -18,7 +19,7 @@ const validationSchema = Yup.object().shape({
 
 const Register = () => {
   return (
-    <div className={styles.auth_container}>
+    <AuthFormWrapper>
       <Form
         initialValues={{
           first_name: "",
@@ -29,7 +30,7 @@ const Register = () => {
         }}
         onSubmit={() => {}}
         validationSchema={validationSchema}
-        className={`${styles.auth_card} ${styles.auth_card__signup} shadow-md bg-white`}
+        className={`${styles.auth_card} ${styles.auth_card__signup} shadow-md bg-white mt-3.5 md:mt-0`}
         Title={() => <h1 className="main-title">Sign up</h1>}
       >
         <div className="flex flex-col md:flex-row">
@@ -89,7 +90,7 @@ const Register = () => {
           linkTitle=" Login here."
         />
       </Form>
-    </div>
+    </AuthFormWrapper>
   );
 };
 
