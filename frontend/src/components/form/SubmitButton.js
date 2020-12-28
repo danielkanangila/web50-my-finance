@@ -7,7 +7,7 @@ const SubmitButton = ({ className, onSubmit = null, title, loading }) => {
   };
   return (
     <button
-      className={`transition duration-500 ease-in-out w-full p-2 bg-green-500 hover:bg-green-600 rounded-md cursor-pointer text-white uppercase text-xs ${
+      className={`transition duration-500 ease-in-out w-full p-3 bg-green-500 hover:bg-green-600 rounded-md cursor-pointer text-white uppercase text-xs ${
         className ? className : ""
       }`}
       type="submit"

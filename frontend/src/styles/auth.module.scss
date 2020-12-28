@@ -1,15 +1,12 @@
 .auth_container {
   display: flex;
   justify-content: center;
-  //   align-items: center;
   width: 100%;
-  //   margin-top: 50px;
-  padding: 100px 15px;
+  padding: 50px 15px;
   background-color: #f9fafb;
   @media (min-width: 750px) {
     height: 100vh;
-    // margin: 0;
-    // padding: 0;
+    padding-top: 100px;
   }
 }
 
@@ -18,9 +15,7 @@
   max-width: 350px;
   height: fit-content;
   padding: 15px 20px;
-  // border: 1px solid #f1f1f1;
   border-radius: 5px;
-  //   background-color: #fff;
   @media (min-width: 750px) {
     padding: 15px 40px;
   }
@@ -29,12 +24,4 @@
 .auth_card__signup {
   width: 100%;
   max-width: 515px;
-  // height: fit-content;
-  // padding: 15px 20px;
-  // // border: 1px solid #f1f1f1;
-  // border-radius: 5px;
-  // //   background-color: #fff;
-  // @media (min-width: 750px) {
-  //   padding: 15px 40px;
-  // }
 }
