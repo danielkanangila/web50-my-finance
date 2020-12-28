@@ -3,11 +3,11 @@ import styled from "styled-components";
 const css = String.raw;
 
 export const Error = styled.span`
-  ${({ styles }) => css`
+  ${() => css`
     display: block;
     margin-top: 5px;
     font-size: 0.8rem;
-    color: ${styles.errorColor};
+    color: #e04040;
     transition: all 0.3s ease;
     text-align: left;
     display: flex;
@@ -23,7 +23,7 @@ export const Error = styled.span`
         height: 5px;
         border-radius: 50%;
         margin-right: 10px;
-        background-color: ${styles.errorColor};
+        background-color: #e04040;
       }
     }
   `}

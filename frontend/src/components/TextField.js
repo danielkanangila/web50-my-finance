@@ -13,7 +13,7 @@ const defaultStyles = {
   colorPrimary: "#10B981",
   colorDefault: "#757575",
   labelFocusedColor: "#000",
-  errorColor: "#B71C1C",
+  errorColor: "#e04040",
 };
 
 const TextField = ({

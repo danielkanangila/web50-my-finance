@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { Formik } from "formik";
+import Banner from "../Banner";
 
 const Form = ({
   initialValues,
@@ -13,10 +14,11 @@ const Form = ({
   const formRef = useRef(null);
 
   const hasNonFieldError = (error) => {
-    return (error && error.non_field_errors) || (error && error.details);
+    return !!(error && error.non_field_errors) || !!(error && error.details);
   };
 
   const parseError = (error) => {
+    if (!hasNonFieldError(error)) return;
     return error.non_field_errors || error.details;
   };
 
@@ -34,16 +36,16 @@ const Form = ({
           {...otherProps}
         >
           <Title />
-          {hasNonFieldError(status) && <Error message={parseError(status)} />}
+          <Banner
+            visibility={hasNonFieldError(status)}
+            type="danger"
+            message={parseError(status)}
+          />
           {children}
         </form>
       )}
     </Formik>
   );
-};
-
-const Error = ({ message }) => {
-  return <div>{message}</div>;
 };
 
 export default Form;

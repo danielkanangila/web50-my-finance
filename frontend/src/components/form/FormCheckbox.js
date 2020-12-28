@@ -1,29 +1,32 @@
 import React from "react";
 import { useFormikContext } from "formik";
-import styled from "styled-components";
 
 import Checkbox from "../Checkbox";
+import { Error } from "../styled-components";
 
 const FormCheckbox = ({ label, name, LabelComponent, theme }) => {
-  const { values, setFieldValue, errors } = useFormikContext();
+  const {
+    values,
+    setFieldValue,
+    errors,
+    touched,
+    setFieldTouched,
+  } = useFormikContext();
   return (
     <div className="form-group">
       <Checkbox
         label={label}
         theme={theme}
         value={values[name]}
-        onClick={(value) => setFieldValue(name, value)}
+        onClick={(value) => {
+          setFieldValue(name, value);
+          setFieldTouched(name);
+        }}
         LabelComponent={LabelComponent}
       />
-      {errors[name] && <Error>{errors[name]}</Error>}
+      {errors[name] && touched[name] && <Error>{errors[name]}</Error>}
     </div>
   );
 };
-
-const Error = styled.div`
-  padding: 10px;
-  font-size: 0.85rem;
-  color: red;
-`;
 
 export default FormCheckbox;

@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
     .min(2, "Last name must have minimum 2 character."),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(8).label("Password"),
-  terms: Yup.boolean().required(),
+  terms: Yup.boolean().oneOf([true], "You must accept terms and conditions."),
 });
 
 const Register = () => {
@@ -30,6 +30,7 @@ const Register = () => {
       return setStatus({
         details: "You must accept the terms and conditions.",
       });
+    setStatus({});
     console.log(data);
   };
 

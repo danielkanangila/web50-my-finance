@@ -1,0 +1,28 @@
+@import "./mixin.scss";
+
+.banner {
+  @extend %alert;
+  width: 100%;
+  margin: 0 auto 15px;
+
+  button {
+    position: absolute;
+    top: 15%;
+    right: 5px;
+
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+}
+
+@include alert-types;
+
+// .close {
+//   top: 0;
+//   svg {
+//     width: 25px;
+//     height: 25px;
+//   }
+// }
