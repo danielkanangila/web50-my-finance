@@ -11,13 +11,28 @@ import AuthFooter from "../components/AuthFooter";
 import AuthFormWrapper from "../components/AuthFormWrapper";
 
 const validationSchema = Yup.object().shape({
-  first_name: Yup.string().required().min(2),
-  last_name: Yup.string().required().min(2),
+  first_name: Yup.string()
+    .required("First name is required")
+    .matches(/^[a-zA-Z]+$/, "First name is not a valid string.")
+    .min(2, "First name must have minimum 2 character."),
+  last_name: Yup.string()
+    .matches(/^[a-zA-Z]+$/, "Last name is not a valid string.")
+    .required("Last name is required")
+    .min(2, "Last name must have minimum 2 character."),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(8).label("Password"),
+  terms: Yup.boolean().required(),
 });
 
 const Register = () => {
+  const register = (data, { setStatus }) => {
+    if (!data.terms)
+      return setStatus({
+        details: "You must accept the terms and conditions.",
+      });
+    console.log(data);
+  };
+
   return (
     <AuthFormWrapper>
       <Form
@@ -28,9 +43,9 @@ const Register = () => {
           password: "",
           terms: false,
         }}
-        onSubmit={() => {}}
+        onSubmit={register}
         validationSchema={validationSchema}
-        className={`${styles.auth_card} ${styles.auth_card__signup} shadow-md bg-white mt-3.5 md:mt-0`}
+        className={`${styles.auth_card} ${styles.auth_card__signup} shadow-md bg-white mt-3.5  md:mt-0`}
         Title={() => <h1 className="main-title">Sign up</h1>}
       >
         <div className="flex flex-col md:flex-row">

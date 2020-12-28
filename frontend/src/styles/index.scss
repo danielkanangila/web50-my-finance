@@ -21,3 +21,8 @@ body {
   font-weight: bold;
   padding: 15px 0;
 }
+
+button:focus {
+  outline: none;
+  border: none;
+}
