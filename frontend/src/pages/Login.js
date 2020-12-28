@@ -20,7 +20,7 @@ const Login = () => {
         initialValues={{ username: "", password: "", remember_me: false }}
         onSubmit={() => {}}
         validationSchema={validationSchema}
-        className={`${styles.auth_card} shadow bg-white`}
+        className={`${styles.auth_card} shadow-md bg-white`}
         Title={() => <h1 className="main-title">Sign In</h1>}
       >
         <FormTextField
