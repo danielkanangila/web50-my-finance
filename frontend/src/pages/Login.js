@@ -8,6 +8,9 @@ import SubmitButton from "../components/form/SubmitButton";
 import FormCheckbox from "./../components/form/FormCheckbox";
 import AuthFooter from "../components/AuthFooter";
 import AuthFormWrapper from "../components/AuthFormWrapper";
+import useAuth from "../hooks/useAuth";
+import authApi from "../api/auth";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().email().label("Email"),
@@ -15,11 +18,20 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
+  const auth = useAuth(authApi.login);
+  const history = useHistory();
+
+  const handleLogin = (data, formHandler) => {
+    auth.login(data, formHandler, () => {
+      history.push("/");
+    });
+  };
+
   return (
     <AuthFormWrapper>
       <Form
         initialValues={{ username: "", password: "", remember_me: false }}
-        onSubmit={() => {}}
+        onSubmit={handleLogin}
         validationSchema={validationSchema}
         className={`${styles.auth_card} shadow-md bg-white mt-6`}
         Title={() => <h1 className="main-title">Sign In</h1>}

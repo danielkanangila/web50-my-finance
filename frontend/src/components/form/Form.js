@@ -28,7 +28,7 @@ const Form = ({
       onSubmit={onSubmit}
       validationSchema={validationSchema}
     >
-      {({ handleSubmit, status }) => (
+      {({ handleSubmit, errors }) => (
         <form
           ref={formRef}
           onSubmit={handleSubmit}
@@ -37,9 +37,9 @@ const Form = ({
         >
           <Title />
           <Banner
-            visibility={hasNonFieldError(status)}
+            visibility={hasNonFieldError(errors)}
             type="danger"
-            message={parseError(status)}
+            message={parseError(errors)}
           />
           {children}
         </form>
