@@ -7,8 +7,10 @@ const register = (user) => client.post("/auth/register", user);
 
 const logout = () => client.get("/auth/logout");
 
-export default {
+const auth = {
   login,
   logout,
   register,
 };
+
+export default auth;

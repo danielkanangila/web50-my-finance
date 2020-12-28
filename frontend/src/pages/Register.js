@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as Yup from "yup";
 
 import styles from "./../styles/auth.module.scss";
@@ -9,6 +9,8 @@ import SubmitButton from "../components/form/SubmitButton";
 import FormCheckbox from "./../components/form/FormCheckbox";
 import AuthFooter from "../components/AuthFooter";
 import AuthFormWrapper from "../components/AuthFormWrapper";
+import useAuth from "../hooks/useAuth";
+import authApi from "../api/auth";
 
 const validationSchema = Yup.object().shape({
   first_name: Yup.string()
@@ -25,13 +27,16 @@ const validationSchema = Yup.object().shape({
 });
 
 const Register = () => {
-  const register = (data, { setStatus }) => {
-    if (!data.terms)
-      return setStatus({
-        details: "You must accept the terms and conditions.",
-      });
-    setStatus({});
-    console.log(data);
+  const auth = useAuth(authApi.register);
+  const history = useHistory();
+
+  const handleRegister = (data, formHandlerFunc) => {
+    // call the signup helper function
+    auth.signup(data, formHandlerFunc, () => {
+      // callback function to handle form success
+      // redirect to home if success
+      history.push("/");
+    });
   };
 
   return (
@@ -44,7 +49,7 @@ const Register = () => {
           password: "",
           terms: false,
         }}
-        onSubmit={register}
+        onSubmit={handleRegister}
         validationSchema={validationSchema}
         className={`${styles.auth_card} ${styles.auth_card__signup} shadow-md bg-white mt-3.5  md:mt-0`}
         Title={() => <h1 className="main-title">Sign up</h1>}

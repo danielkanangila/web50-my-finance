@@ -1,3 +1,4 @@
+import axios from "axios";
 import settings from "./../config/settings";
 
 export const getAuthToken = () => {
