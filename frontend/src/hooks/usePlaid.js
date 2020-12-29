@@ -1,0 +1,52 @@
+// import { useLocalStorage } from "./useLocalStorage";
+import useApi from "./useApi";
+import plaidApiFunc from "./../api/plaid";
+
+const usePlaid = () => {
+  const plaidApi = useApi();
+
+  const createLinkToken = async () => {
+    // Call the api to create the link token
+    const response = await plaidApi.request(plaidApiFunc.createLinkToken);
+    // log the error of any
+    if (!response.ok) return console.log(response);
+    // return the created link token
+    return response.data;
+  };
+
+  const setAccessToken = async (public_token) => {
+    console.log(public_token);
+    const response = await plaidApi.request(plaidApiFunc.setAccessToken, {
+      public_token,
+    });
+    // log the error of any
+    if (!response.ok) return console.log(response);
+    return response;
+  };
+
+  const _createHandler = async (token) => {
+    // check if token is defined otherwise throw an error
+    if (!token)
+      throw Error("Cannot create the Plaid handler without the link token.");
+    // create the Plaid handler and return it
+    return window.Plaid.create({
+      token,
+      onSuccess: function (publicToken) {
+        setAccessToken(publicToken);
+      },
+    });
+  };
+
+  const open = async () => {
+    //create link token
+    const token = await createLinkToken();
+    // create the plaid link handler
+    const handler = await _createHandler(token.link_token);
+    // open the handler
+    handler.open();
+  };
+
+  return { createLinkToken, setAccessToken, open };
+};
+
+export default usePlaid;

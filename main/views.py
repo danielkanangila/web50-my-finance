@@ -55,6 +55,7 @@ class PlaidAccessTokenAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
+            # ::TODO:: ADD REQUEST BODY VALDATION ::TODO::
             # Exchange link public token to access token
             exchange_response = plaid.get_access_token(
                 public_token=request.data.get('public_token'))
