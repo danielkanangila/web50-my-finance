@@ -1,11 +1,7 @@
-// import { useLocalStorage } from "./useLocalStorage";
-import useApi from "./useApi";
 import plaidApiFunc from "./../api/plaid";
 import { request } from "../utils";
 
 const usePlaid = () => {
-  const plaidApi = useApi();
-
   const createLinkToken = async () => {
     // Call the api to create the link token
     const response = await request(plaidApiFunc.createLinkToken);
