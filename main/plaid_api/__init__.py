@@ -9,6 +9,9 @@ client = plaid.Client(
     api_version=PLAID_API_VERSION
 )
 
+# expose plaid error
+PlaidError = plaid.errors.PlaidError
+
 
 def get_link_token(user):
     try:

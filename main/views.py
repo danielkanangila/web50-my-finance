@@ -63,6 +63,9 @@ class PlaidAccessTokenAPIView(APIView):
             # save item id
             itemIds_serializer = serializers.PlaidItemIdsSerializer(
                 data={'item_id': exchange_response['item_id']})
+            # validate data
+            itemIds_serializer.is_valid()
+            # save
             item_ids = itemIds_serializer.save()
             # save access_token
             access_token_serializer = serializers.PlaidAccessTokenSerializer(data={
@@ -70,11 +73,17 @@ class PlaidAccessTokenAPIView(APIView):
                 'item': item_ids.pk,
                 'access_token': exchange_response['access_token']
             })
+            # validate data
+            access_token_serializer.is_valid()
+            # save
             access_token = access_token_serializer.save()
             # return the response
             return Response({
                 'access_token': access_token.access_token,
                 'item_id': item_ids.item_id
             })
-        except Exception as e:
+        except plaid.plaid.errors.PlaidError as e:
             return Response(format_error(e))
+        except Exception as e:
+            print(e)
+            return Response(data={"details": "An unknown error occurred while trying to save the access token"}, status=500)

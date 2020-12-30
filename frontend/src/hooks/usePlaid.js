@@ -1,13 +1,14 @@
 // import { useLocalStorage } from "./useLocalStorage";
 import useApi from "./useApi";
 import plaidApiFunc from "./../api/plaid";
+import { request } from "../utils";
 
 const usePlaid = () => {
   const plaidApi = useApi();
 
   const createLinkToken = async () => {
     // Call the api to create the link token
-    const response = await plaidApi.request(plaidApiFunc.createLinkToken);
+    const response = await request(plaidApiFunc.createLinkToken);
     // log the error of any
     if (!response.ok) return console.log(response);
     // return the created link token
@@ -16,7 +17,7 @@ const usePlaid = () => {
 
   const setAccessToken = async (public_token) => {
     console.log(public_token);
-    const response = await plaidApi.request(plaidApiFunc.setAccessToken, {
+    const response = await request(plaidApiFunc.setAccessToken, {
       public_token,
     });
     // log the error of any
@@ -38,12 +39,16 @@ const usePlaid = () => {
   };
 
   const open = async () => {
-    //create link token
-    const token = await createLinkToken();
-    // create the plaid link handler
-    const handler = await _createHandler(token.link_token);
-    // open the handler
-    handler.open();
+    try {
+      //create link token
+      const token = await createLinkToken();
+      // create the plaid link handler
+      const handler = await _createHandler(token.link_token);
+      // open the handler
+      handler.open();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return { createLinkToken, setAccessToken, open };

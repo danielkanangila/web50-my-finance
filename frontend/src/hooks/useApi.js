@@ -6,10 +6,8 @@ const useApi = (apiFunc) => {
   const [loading, setLoading] = useState(false);
 
   // http request handler function
-  const request = async (_apiFunc, ...args) => {
+  const request = async (...args) => {
     let response = {};
-    // set api function to call
-    apiFunc = apiFunc ? apiFunc : _apiFunc;
     try {
       setLoading(true);
       response = await apiFunc(...args);

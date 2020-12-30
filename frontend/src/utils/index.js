@@ -31,3 +31,21 @@ export const handleFormSubmission = async (
   // call the callback function
   onSuccess();
 };
+
+// http request handler function
+export const request = async (apiFunc, data) => {
+  let response = {};
+  try {
+    response = await apiFunc(data);
+    // set ok to false if request contain error
+    if (response.statusText !== "ok") response.ok = false;
+    // set ok to true if request success
+    response.ok = true;
+  } catch (error) {
+    // set response
+    response = error.response;
+    response.ok = false;
+  }
+
+  return response;
+};
