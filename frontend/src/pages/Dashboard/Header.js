@@ -1,12 +1,12 @@
 import React from "react";
-import Logo from "../../components/Logo";
+import Logo from "../../components/common/Logo";
 import {
   Dropdown,
   DropdownItem,
   DropdownItemsContainer,
   Navbar,
   NavItem,
-} from "../../components/Navbar";
+} from "../../components/common/Navbar";
 
 const Header = () => {
   return (

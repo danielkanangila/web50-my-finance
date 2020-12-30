@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CheckboxWrapper } from "./styled-components";
+import { CheckboxWrapper } from "../styled-components";
 
 const defaultTheme = {
   borderColor: "#ccc",

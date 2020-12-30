@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormikContext } from "formik";
 
-import Checkbox from "../Checkbox";
+import Checkbox from "../common/Checkbox";
 import { Error } from "../styled-components";
 
 const FormCheckbox = ({ label, name, LabelComponent, theme }) => {

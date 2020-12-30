@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 import styles from "./../styles/auth.module.scss";
-import CloseButton from "./CloseButton";
+import CloseButton from "./common/CloseButton";
 import { CountrySide } from "./illustrations";
 
 const AuthFormWrapper = ({ children }) => {

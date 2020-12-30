@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import styles from "./../styles/banner.module.scss";
+import styles from "./../../styles/banner.module.scss";
 import CloseButton from "./CloseButton";
 
 const Banner = ({ message, type, visibility }) => {

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Formik } from "formik";
-import Banner from "../Banner";
+import Banner from "../common/Banner";
 
 const Form = ({
   initialValues,

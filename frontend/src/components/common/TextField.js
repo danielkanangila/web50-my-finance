@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { ReactComponent as VisibilityIcon } from "../assets/visibility.svg";
-import { ReactComponent as VisibilityOffIcon } from "../assets/visibility_off.svg";
-import { Error, TextFieldWrapper } from "./styled-components";
+import { ReactComponent as VisibilityIcon } from "../../assets/visibility.svg";
+import { ReactComponent as VisibilityOffIcon } from "../../assets/visibility_off.svg";
+import { Error, TextFieldWrapper } from "../styled-components";
 
 const defaultStyles = {
   borderSize: 2,

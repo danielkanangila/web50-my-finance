@@ -1,6 +1,6 @@
 import React from "react";
 import FormField from "./FormField";
-import TextField from "./../TextField";
+import TextField from "./../common/TextField";
 
 const FormTextField = ({ type, label, name, ...rest }) => {
   return (

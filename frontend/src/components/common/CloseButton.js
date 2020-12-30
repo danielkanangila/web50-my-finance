@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { CancelIcon } from "./icons";
+import { CancelIcon } from "./../icons";
 
 const CloseButton = ({ ...rest }) => {
   return (
