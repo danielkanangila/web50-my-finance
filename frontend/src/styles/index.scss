@@ -26,3 +26,14 @@ button:focus {
   outline: none;
   border: none;
 }
+
+.top-full {
+  top: 100%;
+}
+.left-full {
+  left: 100%;
+}
+
+.group:hover .group-hover\:block {
+  display: block;
+}
