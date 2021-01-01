@@ -18,8 +18,7 @@ const Header = () => {
           <Dropdown>
             <NavItem to="account" title="Account" dropdown />
             <DropdownItemsContainer>
-              <DropdownItem to="/" title="My Account" />
-              <DropdownItem to="/" title="Edit Account" />
+              <DropdownItem to="/" title="Manage Account" />
               <DropdownItem to="/logout" title="Logout" />
             </DropdownItemsContainer>
           </Dropdown>
