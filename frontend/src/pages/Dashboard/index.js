@@ -11,10 +11,10 @@ import Home from "./Home";
 const Dashboard = () => {
   return (
     <SidebarLayout>
-      <Header />
-      <SidebarLayoutMain className="pt-12" options={{ sidebarWidth: "16rem" }}>
+      <SidebarLayoutMain options={{ sidebarWidth: "16rem" }}>
         <Sidebar className="bg-white shadow"></Sidebar>
-        <div className="w-auto">
+        <div className="w-screen lg:w-auto">
+          <Header />
           <Switch>
             <Route path="/" component={Home} />
           </Switch>

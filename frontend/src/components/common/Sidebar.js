@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 import styled from "styled-components";
+import { ArrowLeft, MenuAltThree } from "../icons";
 
 const css = String.raw;
 
@@ -20,6 +21,7 @@ export const SidebarContext = createContext();
  */
 export const initialState = {
   visibility: (() => (window.innerWidth >= 1024 ? true : false))(),
+  action: null,
 };
 
 /**
@@ -37,6 +39,7 @@ export const reducer = (state, action) => {
       return {
         ...state,
         visibility: true,
+        action: "open",
       };
     default:
       throw new Error("Unknown action");
@@ -76,20 +79,53 @@ export const SidebarLayoutMain = styled.div`
  */
 export const Sidebar = ({ className, children, ...resOfProps }) => {
   // get state from context
-  const [state] = useContext(SidebarContext);
+  const [{ visibility }] = useContext(SidebarContext);
 
   return (
+    <div
+      className={`sidebar transition duration-500 ease-in-out ${
+        visibility ? "block" : "hidden"
+      } lg:block z-50 absolute w-full sm:w-60 lg:w-auto lg:relative  h-full min-h-screen ${
+        className ? className : ""
+      }`}
+      {...resOfProps}
+    >
+      <div className="sm:hidden absolute top-3 right-4">
+        <CloseSidebar />
+      </div>
+      {children}
+    </div>
+  );
+};
+
+export const CloseSidebar = () => {
+  const dispatch = useContext(SidebarContext)[1];
+
+  return (
+    <ArrowLeft
+      className="icon cursor-pointer"
+      onClick={() => dispatch({ type: actions.HIDE })}
+    />
+  );
+};
+
+export const OpenSidebar = () => {
+  const dispatch = useContext(SidebarContext)[1];
+
+  return (
+    <MenuAltThree
+      className="icon cursor-pointer"
+      onClick={() => dispatch({ type: actions.SHOW })}
+    />
+  );
+};
+
+export const SidebarHandle = () => {
+  const [{ visibility }] = useContext(SidebarContext);
+  return (
     <>
-      {state.visibility && (
-        <div
-          className={`sidebar hidden lg:block relative h-full min-h-screen ${
-            className ? className : ""
-          }`}
-          {...resOfProps}
-        >
-          {children}
-        </div>
-      )}
+      {!visibility && <OpenSidebar />}
+      {visibility && <CloseSidebar />}
     </>
   );
 };

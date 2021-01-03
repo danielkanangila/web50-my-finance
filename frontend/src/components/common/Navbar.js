@@ -9,7 +9,7 @@ export const Navbar = ({
 }) => {
   return (
     <div
-      className={`${position} z-50 h-12 w-full ${bg} ${shadow} shadow-sm flex items-center justify-between`}
+      className={`${position} z-40 h-12 w-full lg:w-auto ${bg} ${shadow} shadow-sm flex items-center justify-between`}
     >
       {children}
     </div>
@@ -26,7 +26,7 @@ export const NavItem = ({
 }) => (
   <NavLink
     to={to}
-    className={`nav-item transition duration-500 ease-in-out flex items-center h-full px-4 hover:bg-green-500 hover:text-white ${
+    className={`nav-item transition duration-500 ease-in-out flex items-center h-full p-3 px-4 hover:bg-green-500 hover:text-white ${
       className ? className : ""
     }`}
     {...restOfProps}
