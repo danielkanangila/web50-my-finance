@@ -1,7 +1,7 @@
 import { useLocalStorage } from "./useLocalStorage";
 import useApi from "./useApi";
 import authApiFunc from "./../api/auth";
-import { handleFormSubmission } from "../utils";
+import { handleFormSubmission, request } from "../utils";
 
 /**
  * Authentication hook
@@ -51,7 +51,14 @@ const useAuth = (authFunc) => {
     await handleFormSubmission(_request, formHandler, onSuccess, setUser);
   };
 
-  const logout = () => localStorage.removeItem("user");
+  const logout = () => {
+    const response = request(authApiFunc.logout);
+    if (response.ok) {
+      localStorage.removeItem("user");
+      return true;
+    }
+    return false;
+  };
 
   const refresh = (freshUser) => {
     setUser({

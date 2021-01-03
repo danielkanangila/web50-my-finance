@@ -32,10 +32,10 @@ const Register = () => {
 
   const handleRegister = (data, formHandlerFunc) => {
     // call the signup helper function
-    auth.signup(data, formHandlerFunc, () => {
+    auth.signup(data, formHandlerFunc, (user) => {
       // callback function to handle form success
       // redirect to home if success
-      history.push("/");
+      history.push(`/${user.id}`);
     });
   };
 

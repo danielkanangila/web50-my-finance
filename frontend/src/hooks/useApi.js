@@ -20,13 +20,16 @@ const useApi = (apiFunc) => {
       // disable loading
       setLoading(false);
     } catch (error) {
+      console.error(error);
       // set error to true
       setErrors(true);
       // disable loading
       setLoading(false);
       // set response
-      response = error.response;
-      response.ok = false;
+      response.data = {
+        details: error.message,
+        ok: false,
+      };
     }
 
     return response;

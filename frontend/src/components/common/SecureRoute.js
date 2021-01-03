@@ -11,7 +11,7 @@ const SecureRoute = ({ component: Component, ...restOfProps }) => {
       {...restOfProps}
       render={(props) => {
         if (user) return <Component {...props} />;
-        return <Redirect to="/" />;
+        return <Redirect to="/login" />;
       }}
     />
   );

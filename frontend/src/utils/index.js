@@ -16,7 +16,12 @@ export const handleFormSubmission = async (
     // call error handler if defined
     if (onError) return onError(response.data, setErrors, setStatus);
     // set the errors to the form errors
-    setErrors(response.data);
+    // parse form error
+    const errors =
+      "data" in response
+        ? response.data
+        : { details: "An unknown error occurred." };
+    setErrors(errors);
     // set form loading status to false
     setStatus({ loading: false });
     return;
@@ -29,7 +34,7 @@ export const handleFormSubmission = async (
   // reset the form
   resetForm();
   // call the callback function
-  onSuccess();
+  onSuccess(response.data);
 };
 
 // http request handler function
@@ -42,9 +47,12 @@ export const request = async (apiFunc, data) => {
     // set ok to true if request success
     response.ok = true;
   } catch (error) {
+    console.error(error);
     // set response
-    response = error.response;
-    response.ok = false;
+    response.data = {
+      details: error.message,
+      ok: false,
+    };
   }
 
   return response;

@@ -22,8 +22,8 @@ const Login = () => {
   const history = useHistory();
 
   const handleLogin = (data, formHandler) => {
-    auth.login(data, formHandler, () => {
-      history.push("/");
+    auth.login(data, formHandler, (user) => {
+      history.push(`/${user.id}`);
     });
   };
 
