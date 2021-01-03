@@ -44,8 +44,11 @@ class CreatePlaidLinkTokenAPIView(APIView):
         try:
             link_token = plaid.get_link_token(request.user)
             return Response(link_token)
-        except Exception as e:
+        except plaid.plaid.errors.PlaidError as e:
             return Response(format_error(e))
+        except Exception as e:
+            print(e)
+            return Response(data={"details": "An unknown error occurred while trying to save the access token"}, status=500)
 
 
 class PlaidAccessTokenAPIView(APIView):

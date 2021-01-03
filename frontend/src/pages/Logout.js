@@ -6,9 +6,15 @@ const Logout = () => {
   const auth = useAuth();
   const history = useHistory();
 
+  const logout = async () => {
+    const response = await auth.logout();
+    console.log(response);
+    if (!response) history.goBack();
+    window.location = "/login";
+  };
+
   useEffect(() => {
-    auth.logout();
-    history.push("/login");
+    logout();
     return () => {};
   });
 

@@ -13,6 +13,8 @@ import os
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
+from datetime import timedelta
+from rest_framework.settings import api_settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,8 +42,7 @@ CSRF_COOKIE_SECURE = True
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-    "http://192.168.1.7:3000"
+    "http://localhost:3000"
 ]
 
 
@@ -62,7 +63,10 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'knox.auth.TokenAuthentication',
+    ),
 }
 
 MIDDLEWARE = [
@@ -131,6 +135,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # DEFAULT AUTH Class
 AUTH_USER_MODEL = 'accounts.User'
+
+
+REST_KNOX = {
+    'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
+    'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+    'TOKEN_TTL': timedelta(hours=10),
+    'USER_SERIALIZER': 'accounts.serializers.UserSerializer',
+    'TOKEN_LIMIT_PER_USER': None,
+    'AUTO_REFRESH': True,
+    'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
+}
 
 
 # Internationalization
