@@ -62,6 +62,7 @@ const Register = () => {
               label="First Name"
               placeholder="Dan"
               required
+              autocomplete="first_name"
             />
           </div>
           <div className="m-2 md:m-1"></div>
@@ -72,6 +73,7 @@ const Register = () => {
               label="Last Name"
               placeholder="Joe"
               required
+              autocomplete="last_name"
             />
           </div>
         </div>
@@ -82,6 +84,7 @@ const Register = () => {
           label="Email"
           placeholder="example@gmail.com"
           required
+          autocomplete="email"
         />
         <div className="m-4"></div>
         <FormTextField
@@ -90,6 +93,7 @@ const Register = () => {
           label="Password"
           placeholder="**********"
           required
+          autocomplete="new-password"
         />
         <div className="m-6"></div>
         <FormCheckbox

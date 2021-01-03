@@ -41,6 +41,7 @@ const Login = () => {
           name="username"
           label="Username or Email"
           placeholder="example@gmail.com"
+          autocomplete="email"
           required
         />
         <div className="m-4"></div>
