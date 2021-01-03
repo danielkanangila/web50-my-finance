@@ -32,10 +32,10 @@ const Register = () => {
 
   const handleRegister = (data, formHandlerFunc) => {
     // call the signup helper function
-    auth.signup(data, formHandlerFunc, (user) => {
+    auth.signup(data, formHandlerFunc, (res) => {
       // callback function to handle form success
       // redirect to home if success
-      history.push(`/${user.id}`);
+      history.push(`/${res.user.id}`);
     });
   };
 
@@ -62,7 +62,7 @@ const Register = () => {
               label="First Name"
               placeholder="Dan"
               required
-              autocomplete="first_name"
+              autoComplete="first_name"
             />
           </div>
           <div className="m-2 md:m-1"></div>
@@ -73,7 +73,7 @@ const Register = () => {
               label="Last Name"
               placeholder="Joe"
               required
-              autocomplete="last_name"
+              autoComplete="last_name"
             />
           </div>
         </div>
@@ -84,7 +84,7 @@ const Register = () => {
           label="Email"
           placeholder="example@gmail.com"
           required
-          autocomplete="email"
+          autoComplete="email"
         />
         <div className="m-4"></div>
         <FormTextField
@@ -93,7 +93,7 @@ const Register = () => {
           label="Password"
           placeholder="**********"
           required
-          autocomplete="new-password"
+          autoComplete="new-password"
         />
         <div className="m-6"></div>
         <FormCheckbox

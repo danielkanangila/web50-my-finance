@@ -5,7 +5,7 @@ const login = (username, password) =>
 
 const register = (user) => client.post("/auth/register", user);
 
-const logout = () => client.get("/auth/logout");
+const logout = () => client.post("/auth/logout");
 
 const auth = {
   login,

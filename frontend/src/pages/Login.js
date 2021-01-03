@@ -22,8 +22,8 @@ const Login = () => {
   const history = useHistory();
 
   const handleLogin = (data, formHandler) => {
-    auth.login(data, formHandler, (user) => {
-      history.push(`/${user.id}`);
+    auth.login(data, formHandler, (res) => {
+      history.push(`/${res.user.id}`);
     });
   };
 
@@ -41,7 +41,7 @@ const Login = () => {
           name="username"
           label="Username or Email"
           placeholder="example@gmail.com"
-          autocomplete="email"
+          autoComplete="email"
           required
         />
         <div className="m-4"></div>

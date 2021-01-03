@@ -51,8 +51,8 @@ const useAuth = (authFunc) => {
     await handleFormSubmission(_request, formHandler, onSuccess, setUser);
   };
 
-  const logout = () => {
-    const response = request(authApiFunc.logout);
+  const logout = async () => {
+    const response = await request(authApiFunc.logout);
     if (response.ok) {
       localStorage.removeItem("user");
       return true;
