@@ -132,8 +132,16 @@ export const SidebarHandle = () => {
   );
 };
 
-export const SidebarItem = ({ to, className = "", children }) => (
-  <NavLink exact to={to}>
-    <ListItem className={`rounded ${className}`}>{children}</ListItem>
-  </NavLink>
-);
+export const SidebarItem = ({ to, className = "", children }) => {
+  const dispatch = useContext(SidebarContext)[1];
+  // close sidebar when clicked on sidebar item if is small screen
+  const closeSidebar = (e) => {
+    if (window.innerWidth < 1024) dispatch({ type: actions.HIDE });
+    return true;
+  };
+  return (
+    <NavLink onClick={closeSidebar} exact to={to}>
+      <ListItem className={`rounded ${className}`}>{children}</ListItem>
+    </NavLink>
+  );
+};
