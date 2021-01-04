@@ -10,6 +10,7 @@ const css = String.raw;
 export const actions = {
   HIDE: "HIDE",
   SHOW: "SHOW",
+  UPDATE_HEADER_TITLE: "UPDATE_HEADER_TITLE",
 };
 
 /**
@@ -24,6 +25,7 @@ export const SidebarContext = createContext();
 export const initialState = {
   visibility: (() => (window.innerWidth >= 1024 ? true : false))(),
   action: null,
+  headerTitle: "Home",
 };
 
 /**
@@ -42,6 +44,11 @@ export const reducer = (state, action) => {
         ...state,
         visibility: true,
         action: "open",
+      };
+    case actions.UPDATE_HEADER_TITLE:
+      return {
+        ...state,
+        headerTitle: action.payload,
       };
     default:
       throw new Error("Unknown action");
@@ -132,15 +139,21 @@ export const SidebarHandle = () => {
   );
 };
 
-export const SidebarItem = ({ to, className = "", children }) => {
+export const SidebarItem = ({
+  to,
+  className = "",
+  children,
+  onClick = () => {},
+}) => {
   const dispatch = useContext(SidebarContext)[1];
-  // close sidebar when clicked on sidebar item if is small screen
-  const closeSidebar = (e) => {
+  const handleClick = (e) => {
+    onClick(e);
+    // close sidebar when clicked on sidebar item if is small screen
     if (window.innerWidth < 1024) dispatch({ type: actions.HIDE });
     return true;
   };
   return (
-    <NavLink onClick={closeSidebar} exact to={to}>
+    <NavLink onClick={handleClick} exact to={to}>
       <ListItem className={`${className}`}>{children}</ListItem>
     </NavLink>
   );

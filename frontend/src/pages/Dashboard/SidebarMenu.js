@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FlexBox } from "../../components/common";
-import { SidebarItem } from "../../components/common/Sidebar";
+import {
+  SidebarContext,
+  SidebarItem,
+  actions,
+} from "../../components/common/Sidebar";
 import useAuth from "../../hooks/useAuth";
 import {
   ChartBar,
@@ -11,22 +15,40 @@ import {
 
 const SidebarMenu = () => {
   const auth = useAuth();
+  const dispatch = useContext(SidebarContext)[1]; // to update header title
+
+  const updateHearTitle = (title) => {
+    dispatch({
+      type: actions.UPDATE_HEADER_TITLE,
+      payload: title,
+    });
+    return true; // do not prevent link (a) behaviour
+  };
 
   return (
     <div className="sidebar-menu mt-2">
-      <SidebarItem to={`/${auth.user.id}`}>
+      <SidebarItem
+        onClick={() => updateHearTitle("Home")}
+        to={`/${auth.user.id}`}
+      >
         <FlexBox>
           <HomeIcon className="icon small mr-2" /> Home
         </FlexBox>
       </SidebarItem>
-      <SidebarItem to={`/${auth.user.id}/transactions`}>
+      <SidebarItem
+        onClick={() => updateHearTitle("Transactions")}
+        to={`/${auth.user.id}/transactions`}
+      >
         <FlexBox>
           <SwitchVertical className="icon small mr-2" /> Transactions
         </FlexBox>
       </SidebarItem>
-      <SidebarItem to={`/${auth.user.id}/statics`}>
+      <SidebarItem
+        onClick={() => updateHearTitle("Statistics")}
+        to={`/${auth.user.id}/statistics`}
+      >
         <FlexBox>
-          <ChartBar className="icon small mr-2" /> Statics
+          <ChartBar className="icon small mr-2" /> Statistics
         </FlexBox>
       </SidebarItem>
       <SidebarItem to="/logout">

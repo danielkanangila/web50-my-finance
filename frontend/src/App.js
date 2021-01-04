@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SecureRoute from "./components/common/SecureRoute";
 import Dashboard from "./pages/Dashboard";
-import Statics from "./pages/Dashboard/Statics";
+import Statistics from "./pages/Dashboard/Statistics";
 import Transactions from "./pages/Dashboard/Transactions";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -22,7 +22,7 @@ function App() {
             <Dashboard>
               <Route exact path="/:userId/" component={DashboardHome} />
               <Route path="/:userId/transactions" component={Transactions} />
-              <Route path="/:userId/statics" component={Statics} />
+              <Route path="/:userId/statistics" component={Statistics} />
             </Dashboard>
           </SecureRoute>
         </Switch>

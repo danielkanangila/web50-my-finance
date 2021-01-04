@@ -6,10 +6,11 @@ export const Navbar = ({
   bg = "bg-white",
   shadow = "shadow-sm",
   children,
+  className = "",
 }) => {
   return (
     <div
-      className={`${position} z-40 h-12 w-full lg:w-auto ${bg} ${shadow} shadow-sm flex items-center justify-between`}
+      className={`${position} z-40 h-12 w-full lg:w-auto ${bg} ${shadow} shadow-sm flex items-center justify-between ${className}`}
     >
       {children}
     </div>
