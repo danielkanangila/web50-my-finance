@@ -27,7 +27,7 @@ export const NavItem = ({
 }) => (
   <NavLink
     to={to}
-    className={`nav-item transition duration-500 ease-in-out flex items-center h-full p-3 px-4 hover:bg-green-500 hover:text-white ${
+    className={`nav-item transition duration-500 ease-in-out flex items-center h-full p-3 px-4 hover:bg-gray-900 hover:text-white ${
       className ? className : ""
     }`}
     {...restOfProps}

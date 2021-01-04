@@ -8,11 +8,13 @@ import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Register from "./pages/Register";
 import { default as DashboardHome } from "./pages/Dashboard/Home";
+import MainHeader from "./components/MainHeader";
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <MainHeader />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />

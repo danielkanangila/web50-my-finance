@@ -51,7 +51,7 @@ export const reducer = (state, action) => {
         headerTitle: action.payload,
       };
     default:
-      throw new Error("Unknown action");
+      throw new Error("Unknown sidebar action");
   }
 };
 /**
