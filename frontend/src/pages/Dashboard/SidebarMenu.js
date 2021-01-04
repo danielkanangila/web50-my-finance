@@ -13,7 +13,7 @@ const SidebarMenu = () => {
   const auth = useAuth();
 
   return (
-    <div className="sidebar-menu">
+    <div className="sidebar-menu mt-4">
       <SidebarItem to={`/${auth.user.id}`}>
         <FlexBox>
           <HomeIcon className="icon small mr-2" /> Home

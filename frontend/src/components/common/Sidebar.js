@@ -133,7 +133,7 @@ export const SidebarHandle = () => {
 };
 
 export const SidebarItem = ({ to, className = "", children }) => (
-  <NavLink to={to}>
+  <NavLink exact to={to}>
     <ListItem className={`rounded ${className}`}>{children}</ListItem>
   </NavLink>
 );
