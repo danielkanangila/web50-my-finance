@@ -141,7 +141,7 @@ export const SidebarItem = ({ to, className = "", children }) => {
   };
   return (
     <NavLink onClick={closeSidebar} exact to={to}>
-      <ListItem className={`rounded ${className}`}>{children}</ListItem>
+      <ListItem className={`${className}`}>{children}</ListItem>
     </NavLink>
   );
 };

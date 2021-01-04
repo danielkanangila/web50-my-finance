@@ -1,13 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 
-const Logo = () => (
-  <div className="flex items-center h-full">
-    <div className="flex items-center text-center h-full w-40">
-      <span className="w-full text-sm text-green-500 uppercase font-extrabold">
-        Tylpe.com
-      </span>
-    </div>
-  </div>
+const Logo = ({ size = "text-2xl" }) => (
+  <H1 className={`font-extrabold ${size} text-black`}>Finelth</H1>
 );
+
+const H1 = styled.h1`
+  font-family: "Pacifico", cursive;
+`;
 
 export default Logo;
