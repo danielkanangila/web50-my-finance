@@ -45,4 +45,14 @@ svg {
 .icon {
   width: 24px;
   height: 24px;
+
+  &.small {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+a.active > * {
+  --tw-bg-opacity: 1;
+  background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
 }

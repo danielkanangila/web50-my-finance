@@ -1,12 +1,10 @@
 import React from "react";
-import Button from "../../components/common/Button";
 import Logo from "../../components/common/Logo";
 import { Navbar, NavItem } from "../../components/common/Navbar";
 import { SidebarHandle } from "../../components/common/Sidebar";
-import usePlaid from "../../hooks/usePlaid";
+import LinkBankButton from "../../components/LinkBankButton";
 
 const Header = () => {
-  const plaid = usePlaid();
   return (
     <Navbar position="sticky">
       <Logo />
@@ -15,7 +13,7 @@ const Header = () => {
         <div className="hidden lg:block">
           <div className="flex items-center h-full">
             <div className="mr-3">
-              <Button onClick={() => plaid.open()}>Link Your Bank</Button>
+              <LinkBankButton />
             </div>
             {/* <NavItem to="/support" title="Support" /> */}
             {/* <Dropdown>

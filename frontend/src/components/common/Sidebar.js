@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useReducer } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { ArrowLeft, MenuAltThree } from "../icons";
+import ListItem from "./ListItem";
 
 const css = String.raw;
 
@@ -83,7 +85,7 @@ export const Sidebar = ({ className, children, ...resOfProps }) => {
 
   return (
     <div
-      className={`sidebar transition duration-500 ease-in-out ${
+      className={`sidebar pl-2 pr-2 flex flex-col transition duration-500 ease-in-out ${
         visibility ? "block" : "hidden"
       } lg:block z-50 absolute w-full sm:w-60 lg:w-auto lg:relative  h-full min-h-screen ${
         className ? className : ""
@@ -129,3 +131,9 @@ export const SidebarHandle = () => {
     </>
   );
 };
+
+export const SidebarItem = ({ to, className = "", children }) => (
+  <NavLink to={to}>
+    <ListItem className={`rounded ${className}`}>{children}</ListItem>
+  </NavLink>
+);
