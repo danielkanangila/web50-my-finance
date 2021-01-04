@@ -168,7 +168,7 @@ export const CheckboxWrapper = styled.div`
     transition: 0.3s;
     cursor: pointer;
     ${({ theme }) =>
-      `border: solid 2px ${theme.borderColor}; border-radius: 4px;background-color: ${theme.notCheckedBg};color: ${theme.color};`};
+      `border: solid 2px ${theme.borderColor};background-color: ${theme.notCheckedBg};color: ${theme.color};`};
     &:hover,
     &.checked {
       ${({ theme }) =>

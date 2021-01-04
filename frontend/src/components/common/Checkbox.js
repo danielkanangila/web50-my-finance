@@ -5,7 +5,7 @@ import { CheckboxWrapper } from "../styled-components";
 const defaultTheme = {
   borderColor: "#ccc",
   notCheckedBg: "#fff",
-  checkedBg: "#10B981",
+  checkedBg: "#111827",
   color: "#fff",
 };
 

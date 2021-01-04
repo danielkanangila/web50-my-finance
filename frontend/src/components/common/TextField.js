@@ -7,10 +7,10 @@ import { Error, TextFieldWrapper } from "../styled-components";
 const defaultStyles = {
   borderSize: 2,
   borderColor: "#ddd",
-  borderRadius: 5,
+  borderRadius: 0,
   borderBottom: false,
   focusedLabelTopPosition: 7,
-  colorPrimary: "#10B981",
+  colorPrimary: "#111827",
   colorDefault: "#757575",
   labelFocusedColor: "#000",
   errorColor: "#e04040",
