@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import {
   DrawerNavigation,
   DrawerNavigationHandler,
@@ -12,6 +13,7 @@ import { Navbar, NavItem } from "./common/Navbar";
 const MainHeader = () => {
   const [visibility, setVisibility] = useState(true);
   const location = useLocation();
+  const auth = useAuth();
 
   useEffect(() => {
     if (location.pathname === "/login" || location.pathname === "/register")
@@ -21,7 +23,11 @@ const MainHeader = () => {
 
   return (
     <DrawerNavigationLayout>
-      <div className={`w-full relative ${visibility ? "bloc" : "hidden"}`}>
+      <div
+        className={`w-full relative ${
+          visibility && !auth.user ? "block" : "hidden"
+        }`}
+      >
         <DrawerNavigation>
           <div className="logo-box flex justify-center w-full mt-2">
             <Link to="/">
