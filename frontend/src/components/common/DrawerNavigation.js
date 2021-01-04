@@ -27,7 +27,7 @@ export const reducer = (state, action) => {
         action: "open",
       };
     default:
-      throw new Error("Unknown sidebar action");
+      throw new Error("Unknown drawer navigation action");
   }
 };
 
