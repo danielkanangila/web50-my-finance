@@ -56,3 +56,8 @@ a.active > * {
   --tw-bg-opacity: 1;
   background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
 }
+
+.fill-gray-300 {
+  --tw-bg-opacity: 1;
+  fill: rgba(209, 213, 219, var(--tw-bg-opacity));
+}
