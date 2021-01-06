@@ -70,3 +70,25 @@ def get_access_tokens(user_pk):
     except Exception as e:
         raise
     return plaid_access_tokens
+
+
+def group_transactions_by_account(transactionList):
+    # ::TODO Refactor to improve runtime
+    # loop through transactions response as came from the Plaid API response
+    newAccounts = []
+    for transaction in transactionList:
+        accounts = []
+        _transactions = []
+        if "accounts" in transaction:
+            accounts = transaction["accounts"]
+
+        if "transactions" in transaction:
+            _transactions = transaction["transactions"]
+        for account in accounts:
+            account["transactions"] = []
+            for _transaction in _transactions:
+                if _transaction["account_id"] == account["account_id"]:
+                    account["transactions"].append(_transaction)
+            newAccounts.append(account)
+
+    return newAccounts

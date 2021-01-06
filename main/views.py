@@ -31,8 +31,7 @@ class TransactionRetreiveAPIView(APIView):
 
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('user_id')
-        # ::TODO Group transactions by bank accounts
-        print(args)
+
         try:
             # Retrieve start and end date form request query params
             # if not found set default limit date
@@ -43,15 +42,20 @@ class TransactionRetreiveAPIView(APIView):
             # Get plaid transactions
             transactions = plaid.get_transactions(
                 user_id, start_date, end_date)
+            # ::TODO Group transactions by bank accounts
+            groupedTransactions = plaid.group_transactions_by_account(
+                transactions)
+            # print(groupedTransactions)
             # Get manual saved transactions
             manual_transactions = models.Transaction.objects.all().order_by('-created_at')
             # Serialize the manual transaction
             serializer = serializers.TransactionSerializer(
                 instance=manual_transactions, many=True)
             # mixup all transactions
-            transactions.append({"manual_transactions": serializer.data})
+            groupedTransactions.append(
+                {"manual_transactions": serializer.data})
             # return all transactions
-            return Response(transactions)
+            return Response(groupedTransactions)
         except plaid.plaid.errors.PlaidError as e:
             return Response(format_error(e))
         except models.PlaidAccessToken.DoesNotExist as e:
