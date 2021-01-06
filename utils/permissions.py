@@ -16,7 +16,6 @@ class CanRetreive(permissions.BasePermission):
     def has_permission(self, request, view):
         # Authenticate user can only retreive entry/ies related to him/her
         if request.method == "GET":
-            print(view.kwargs.get('user_id'))
             if request.user.pk == view.kwargs.get('user_id'):
                 return True
         return False

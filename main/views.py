@@ -1,3 +1,4 @@
+import datetime
 from rest_framework import generics, viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -31,9 +32,17 @@ class TransactionRetreiveAPIView(APIView):
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('user_id')
         # ::TODO Group transactions by bank accounts
+        print(args)
         try:
+            # Retrieve start and end date form request query params
+            # if not found set default limit date
+            start_date = request.GET.get('start_date', '{:%Y-%m-%d}'.format(
+                datetime.datetime.now() + datetime.timedelta(-30)))
+            end_date = request.GET.get(
+                'end_date', '{:%Y-%m-%d}'.format(datetime.datetime.now()))
             # Get plaid transactions
-            transactions = plaid.get_transactions(user_id)
+            transactions = plaid.get_transactions(
+                user_id, start_date, end_date)
             # Get manual saved transactions
             manual_transactions = models.Transaction.objects.all().order_by('-created_at')
             # Serialize the manual transaction

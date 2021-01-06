@@ -52,13 +52,10 @@ def get_accounts(user_pk):
     return accounts
 
 
-def get_transactions(user_pk):
+def get_transactions(user_pk, start_date, end_date):
     transactions = []
     try:
         for plaid_access_token in get_access_tokens(user_pk):
-            start_date = '{:%Y-%m-%d}'.format(
-                datetime.datetime.now() + datetime.timedelta(-30))
-            end_date = '{:%Y-%m-%d}'.format(datetime.datetime.now())
             _transactions = client.Transactions.get(
                 plaid_access_token.access_token, start_date, end_date)
             transactions.append(_transactions)
