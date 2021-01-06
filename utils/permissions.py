@@ -11,15 +11,20 @@ class GETRequestNotAllowed(permissions.BasePermission):
 
 
 class CanRetreive(permissions.BasePermission):
+    message = "You are not allowed to retrieve transactions"
+
     def has_permission(self, request, view):
         # Authenticate user can only retreive entry/ies related to him/her
         if request.method == "GET":
+            print(view.kwargs.get('user_id'))
             if request.user.pk == view.kwargs.get('user_id'):
                 return True
         return False
 
 
 class CanCreate(permissions.BasePermission):
+    message = "You are not allowed to add transactions"
+
     def has_permission(self, request, view):
         # Authenticate user can only create entry related to him/her
         if request.method == "POST":
@@ -29,6 +34,8 @@ class CanCreate(permissions.BasePermission):
 
 
 class CanUpdate(permissions.BasePermission):
+    message = "You are not allowed to update transactions"
+
     def has_permission(self, request, view):
         # Authenticate user can only update entry related to him/her
         if request.method == "PUT" and not is_object_owner(request, view):
@@ -37,6 +44,8 @@ class CanUpdate(permissions.BasePermission):
 
 
 class CanDelete(permissions.BasePermission):
+    message = "You are not allowed to delete transactions"
+
     def has_permission(self, request, view):
         # Authenticate user can only delete entry related to him/her
         if request.method == "DELETE" and not is_object_owner(request, view):
@@ -54,7 +63,7 @@ def is_object_owner(request, view):
             'pk'), user_id=request.user.pk)
 
         if obj and request.method == "PUT":
-            # user reference cannot be updated 
+            # user reference cannot be updated
             if (request.data.get('user') == request.user.pk) and request.data.get('id') == int(view.kwargs.get('pk')):
                 return True
             else:

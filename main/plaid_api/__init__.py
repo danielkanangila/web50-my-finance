@@ -1,6 +1,8 @@
+import datetime
 import plaid
 
 from .settings import PLAID_PRODUCTS, PLAID_COUNTRY_CODES, PLAID_REDIRECT_URI, PLAID_CLIENT_ID, PLAID_SECRET, PLAID_ENV, PLAID_API_VERSION, config
+from ..models import PlaidAccessToken
 
 client = plaid.Client(
     client_id=PLAID_CLIENT_ID,
@@ -36,3 +38,38 @@ def get_access_token(public_token):
         return exchange_response
     except plaid.errors.PlaidError as e:
         raise
+
+
+def get_accounts(user_pk):
+    accounts = []
+    try:
+        for plaid_access_token in get_access_tokens(user_pk):
+            account = client.Accounts.get(plaid_access_token.access_token)
+            accounts.append(account)
+    except Exception as e:
+        print(e)
+        raise
+    return accounts
+
+
+def get_transactions(user_pk):
+    transactions = []
+    try:
+        for plaid_access_token in get_access_tokens(user_pk):
+            start_date = '{:%Y-%m-%d}'.format(
+                datetime.datetime.now() + datetime.timedelta(-30))
+            end_date = '{:%Y-%m-%d}'.format(datetime.datetime.now())
+            _transactions = client.Transactions.get(
+                plaid_access_token.access_token, start_date, end_date)
+            transactions.append(_transactions)
+    except Exception as e:
+        raise
+    return transactions
+
+
+def get_access_tokens(user_pk):
+    try:
+        plaid_access_tokens = PlaidAccessToken.objects.filter(user=user_pk)
+    except Exception as e:
+        raise
+    return plaid_access_tokens

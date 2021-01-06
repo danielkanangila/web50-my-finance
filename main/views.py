@@ -22,17 +22,35 @@ class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.TransactionSerializer
 
 
-class TransactionRetreiveAPIView(generics.ListAPIView):
+class TransactionRetreiveAPIView(APIView):
     permission_classes = [
         permissions.IsAuthenticated,
         CanRetreive
     ]
-    serializer_class = serializers.TransactionSerializer
-    queryset = models.Transaction.objects.all().order_by('-created_at')
 
-    def get_queryset(self, *args, **kwargs):
-        user_id = self.kwargs.get('user_id')
-        return super().get_queryset(*args, **kwargs).filter(user_id=user_id)
+    def get(self, request, *args, **kwargs):
+        user_id = kwargs.get('user_id')
+        # ::TODO Group transactions by bank accounts
+        try:
+            # Get plaid transactions
+            transactions = plaid.get_transactions(user_id)
+            # Get manual saved transactions
+            manual_transactions = models.Transaction.objects.all().order_by('-created_at')
+            # Serialize the manual transaction
+            serializer = serializers.TransactionSerializer(
+                instance=manual_transactions, many=True)
+            # mixup all transactions
+            transactions.append({"manual_transactions": serializer.data})
+            # return all transactions
+            return Response(transactions)
+        except plaid.plaid.errors.PlaidError as e:
+            return Response(format_error(e))
+        except models.PlaidAccessToken.DoesNotExist as e:
+            print(e)
+            return Response(data={"detail": "No plaid account found."}, status=404)
+        except Exception as e:
+            print(e)
+            return Response(data={"detail": "An unknown error occurred while trying to retrieve transactions"}, status=500)
 
 
 class CreatePlaidLinkTokenAPIView(APIView):
@@ -89,4 +107,24 @@ class PlaidAccessTokenAPIView(APIView):
             return Response(format_error(e))
         except Exception as e:
             print(e)
-            return Response(data={"details": "An unknown error occurred while trying to save the access token"}, status=500)
+            return Response(data={"detail": "An unknown error occurred while trying to save the access token"}, status=500)
+
+
+class AccountAPIView(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        CanRetreive
+    ]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            accounts = plaid.get_accounts(kwargs.get('user_id'))
+            return Response(accounts)
+        except plaid.plaid.errors.PlaidError as e:
+            return Response(format_error(e))
+        except models.PlaidAccessToken.DoesNotExist as e:
+            print(e)
+            return Response(data={"detail": "No plaid account found."}, status=404)
+        except Exception as e:
+            print(e)
+            return Response(data={"detail": "An unknown error occurred while trying to retrieve accounts data"}, status=500)
