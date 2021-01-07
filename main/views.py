@@ -141,3 +141,36 @@ class AccountAPIView(APIView):
         except Exception as e:
             print(e)
             return Response(data={"detail": "An unknown error occurred while trying to retrieve accounts data"}, status=500)
+
+
+class AccountTransactionsAPIView(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        CanRetreive
+    ]
+
+    def get(self, request, *args, **kwargs):
+        try:
+             # if not found set default limit date
+            start_date = request.GET.get('start_date', '{:%Y-%m-%d}'.format(
+                datetime.datetime.now() + datetime.timedelta(-30)))
+            end_date = request.GET.get(
+                'end_date', '{:%Y-%m-%d}'.format(datetime.datetime.now()))
+            transactions = plaid.get_account_transactions(
+                kwargs.get('user_id'), 
+                kwargs.get('account_id'), 
+                start_date,
+                end_date
+            )
+            return Response({
+                'count': len(transactions),
+                'transactions': transactions,
+                })
+        except plaid.plaid.errors.PlaidError as e:
+            return Response(format_error(e))
+        except models.PlaidAccessToken.DoesNotExist as e:
+            print(e)
+            return Response(data={"detail": "No plaid account found."}, status=404)
+        except Exception as e:
+            print(e)
+            return Response(data={"detail": "An unknown error occurred while trying to retrieve accounts data"}, status=500)
