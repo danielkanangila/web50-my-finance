@@ -10,6 +10,7 @@ import AuthFooter from "../components/AuthFooter";
 import AuthFormWrapper from "../components/AuthFormWrapper";
 import useAuth from "../hooks/useAuth";
 import authApi from "../api/auth";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().email().label("Email"),
@@ -18,10 +19,11 @@ const validationSchema = Yup.object().shape({
 
 const Login = () => {
   const auth = useAuth(authApi.login);
+  const history = useHistory();
 
   const handleLogin = (data, formHandler) => {
     auth.login(data, formHandler, (res) => {
-      window.location = `/${res.user.id}`;
+      history.push(`/${res.user.id}`);
     });
   };
 

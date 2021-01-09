@@ -20,7 +20,7 @@ const MainHeader = () => {
     if (
       location.pathname === "/login" ||
       location.pathname === "/register" ||
-      auth.user
+      (auth.user && location.pathname !== "/")
     )
       setVisibility(false);
     else setVisibility(true);
