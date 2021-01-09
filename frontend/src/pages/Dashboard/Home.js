@@ -11,7 +11,7 @@ const Home = () => {
     <div>
       <h1>
         Welcome to your Dashboard!{" "}
-        {auth.user.first_name + " " + auth.user.last_name}
+        {auth?.user?.first_name + " " + auth?.user?.last_name}
       </h1>
       <button onClick={() => plaid.open()}>Add an account</button>
     </div>

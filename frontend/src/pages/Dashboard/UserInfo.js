@@ -12,9 +12,9 @@ const UserInfo = () => {
           <UserCircle className="w-11 h-11 fill-gray-300" />
         </div>
         <div className="ml-1">
-          <h1 className="font-extrabold leading-3">{`${auth.user.first_name} ${auth.user.last_name}`}</h1>
+          <h1 className="font-extrabold leading-3">{`${auth?.user?.first_name} ${auth?.user?.last_name}`}</h1>
           <span className="text-xs leading-3 text-gray-500">
-            {auth.user.username}
+            {auth?.user?.username}
           </span>
         </div>
       </FlexBox>

@@ -29,7 +29,7 @@ const SidebarMenu = () => {
     <div className="sidebar-menu mt-2">
       <SidebarItem
         onClick={() => updateHearTitle("Home")}
-        to={`/${auth.user.id}`}
+        to={`/${auth?.user?.id}`}
       >
         <FlexBox>
           <HomeIcon className="icon small mr-2" /> Home
@@ -37,7 +37,7 @@ const SidebarMenu = () => {
       </SidebarItem>
       <SidebarItem
         onClick={() => updateHearTitle("Transactions")}
-        to={`/${auth.user.id}/transactions`}
+        to={`/${auth?.user?.id}/transactions`}
       >
         <FlexBox>
           <SwitchVertical className="icon small mr-2" /> Transactions
@@ -45,7 +45,7 @@ const SidebarMenu = () => {
       </SidebarItem>
       <SidebarItem
         onClick={() => updateHearTitle("Statistics")}
-        to={`/${auth.user.id}/statistics`}
+        to={`/${auth?.user?.id}/statistics`}
       >
         <FlexBox>
           <ChartBar className="icon small mr-2" /> Statistics

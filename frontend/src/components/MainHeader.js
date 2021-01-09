@@ -20,11 +20,11 @@ const MainHeader = () => {
     if (
       location.pathname === "/login" ||
       location.pathname === "/register" ||
-      (auth.user && location.pathname !== "/")
+      (auth?.user && location.pathname !== "/")
     )
       setVisibility(false);
     else setVisibility(true);
-  }, [location]);
+  }, [location, auth.user]);
 
   return (
     <DrawerNavigationLayout>

@@ -7,7 +7,10 @@ const register = (user) => client().post("/auth/register", user);
 
 const logout = () => authClient().post("/auth/logout");
 
+const getUser = () => authClient().get("/auth/user");
+
 const auth = {
+  getUser,
   login,
   logout,
   register,

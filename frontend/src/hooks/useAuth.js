@@ -11,7 +11,6 @@ import { deleteAuth, setAuth } from "../context/actions";
  * @param {Function} authFunc api call helper function
  */
 const useAuth = (authFunc) => {
-  const [user, setUser] = useLocalStorage("user", null); // browser local storage
   const [authToken, setAuthToken] = useLocalStorage("authToken", null); // browser local storage
   const [{ auth }, dispatch] = useContext(ApplicationContext); // Application context state and dispatch function
   const authApi = useApi(authFunc);
@@ -76,11 +75,25 @@ const useAuth = (authFunc) => {
     return true;
   };
 
-  const refresh = (freshUser) => {
-    setUser({
-      ...user,
-      user: freshUser,
-    });
+  const refresh = async () => {
+    /**
+     * check if authToken is not expired before to fetch the auth user
+     * otherwise call the login function and return
+     * ::TODO handle invalid token refresh
+     */
+    if (authToken) {
+      const expiryDate = new Date(authToken.expiry);
+      // if auth token is valid but the auth state is empty (when window is reload),
+      // fetch the auth user profile info
+      if (expiryDate > new Date() && !auth) {
+        // fetch user profile info from the backend
+        const response = await request(authApiFunc.getUser);
+        // ::TODO handle user fetching error
+        if (!response.ok) return;
+        // if not error, set user to the application context state
+        dispatch(setAuth(response.data));
+      }
+    }
   };
 
   return { authToken, login, logout, signup, refresh, user: auth };

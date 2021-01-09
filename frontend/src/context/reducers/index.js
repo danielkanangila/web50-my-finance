@@ -2,7 +2,6 @@ import { SET_AUTH_USER, DELETE_AUTH_USER } from "./../actions";
 export const reducer = (state, action) => {
   switch (action.type) {
     case SET_AUTH_USER:
-      console.log(action);
       return {
         ...state,
         auth: action.payload,

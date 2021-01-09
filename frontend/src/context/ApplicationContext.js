@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from "react";
+import AuthenticationContextProvider from "./AuthenticationContext";
 import { reducer } from "./reducers";
 
 const initialState = {
@@ -12,7 +13,7 @@ const ApplicationContextProvider = ({ children }) => {
 
   return (
     <ApplicationContext.Provider value={[state, dispatch]}>
-      {children}
+      <AuthenticationContextProvider>{children}</AuthenticationContextProvider>
     </ApplicationContext.Provider>
   );
 };
