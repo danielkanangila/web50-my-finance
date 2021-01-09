@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from . import models
 from . import plaid_api as plaid
+from .plaid_api.utils import plaid_request, get_date_from_request
 from . import serializers
 from utils.permissions import GETRequestNotAllowed, CanCreate, CanRetreive, CanUpdate, CanDelete
 from utils.format_error import format_error
@@ -21,49 +22,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
     queryset = models.Transaction.objects.all().order_by('-created_at')
     serializer_class = serializers.TransactionSerializer
-
-
-class TransactionRetreiveAPIView(APIView):
-    permission_classes = [
-        permissions.IsAuthenticated,
-        CanRetreive
-    ]
-
-    def get(self, request, *args, **kwargs):
-        user_id = kwargs.get('user_id')
-
-        try:
-            # Retrieve start and end date form request query params
-            # if not found set default limit date
-            start_date = request.GET.get('start_date', '{:%Y-%m-%d}'.format(
-                datetime.datetime.now() + datetime.timedelta(-30)))
-            end_date = request.GET.get(
-                'end_date', '{:%Y-%m-%d}'.format(datetime.datetime.now()))
-            # Get plaid transactions
-            transactions = plaid.get_transactions(
-                user_id, start_date, end_date)
-            # ::TODO Group transactions by bank accounts
-            groupedTransactions = plaid.group_transactions_by_account(
-                transactions)
-            # print(groupedTransactions)
-            # Get manual saved transactions
-            manual_transactions = models.Transaction.objects.all().order_by('-created_at')
-            # Serialize the manual transaction
-            serializer = serializers.TransactionSerializer(
-                instance=manual_transactions, many=True)
-            # mixup all transactions
-            groupedTransactions.append(
-                {"manual_transactions": serializer.data})
-            # return all transactions
-            return Response(groupedTransactions)
-        except plaid.plaid.errors.PlaidError as e:
-            return Response(format_error(e))
-        except models.PlaidAccessToken.DoesNotExist as e:
-            print(e)
-            return Response(data={"detail": "No plaid account found."}, status=404)
-        except Exception as e:
-            print(e)
-            return Response(data={"detail": "An unknown error occurred while trying to retrieve transactions"}, status=500)
 
 
 class CreatePlaidLinkTokenAPIView(APIView):
@@ -130,18 +88,8 @@ class AccountAPIView(APIView):
     ]
 
     def get(self, request, *args, **kwargs):
-        try:
-            accounts = plaid.get_accounts(kwargs.get('user_id'))
-            return Response(accounts)
-        except plaid.plaid.errors.PlaidError as e:
-            return Response(format_error(e))
-        except models.PlaidAccessToken.DoesNotExist as e:
-            print(e)
-            return Response(data={"detail": "No plaid account found."}, status=404)
-        except Exception as e:
-            print(e)
-            return Response(data={"detail": "An unknown error occurred while trying to retrieve accounts data"}, status=500)
-
+        return plaid_request(api_func=lambda: plaid.get_accounts(kwargs.get('user_id')))
+       
 
 class AccountTransactionsAPIView(APIView):
     permission_classes = [
@@ -150,27 +98,56 @@ class AccountTransactionsAPIView(APIView):
     ]
 
     def get(self, request, *args, **kwargs):
-        try:
-             # if not found set default limit date
-            start_date = request.GET.get('start_date', '{:%Y-%m-%d}'.format(
-                datetime.datetime.now() + datetime.timedelta(-30)))
-            end_date = request.GET.get(
-                'end_date', '{:%Y-%m-%d}'.format(datetime.datetime.now()))
+
+        def get_account_transactions():
+            # Retrieve start and end date form request query params
+            # if not found set default limit date
+            start_date, end_date = get_date_from_request(request)
+            # Get transactions related to account_id and user_id variables in the request params
             transactions = plaid.get_account_transactions(
-                kwargs.get('user_id'), 
-                kwargs.get('account_id'), 
+                kwargs.get('user_id'),
+                kwargs.get('account_id'),
                 start_date,
                 end_date
             )
-            return Response({
+
+            return {
                 'count': len(transactions),
                 'transactions': transactions,
-                })
-        except plaid.plaid.errors.PlaidError as e:
-            return Response(format_error(e))
-        except models.PlaidAccessToken.DoesNotExist as e:
-            print(e)
-            return Response(data={"detail": "No plaid account found."}, status=404)
-        except Exception as e:
-            print(e)
-            return Response(data={"detail": "An unknown error occurred while trying to retrieve accounts data"}, status=500)
+            }
+        
+        return plaid_request(get_account_transactions)
+
+
+class TransactionRetreiveAPIView(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        CanRetreive
+    ]
+
+    def get(self, request, *args, **kwargs):
+        # ::TODO Group transactions by bank accounts
+        def get_transactions():
+            user_id = kwargs.get('user_id')
+            # Retrieve start and end date form request query params
+            # if not found set default limit date
+            start_date, end_date = get_date_from_request(request)
+            # Get plaid transactions
+            transactions = plaid.get_transactions(
+                user_id, start_date, end_date)
+            # Get manual saved transactions
+            manual_transactions = models.Transaction.objects.all().order_by('-created_at')
+            # Serialize the manual transaction
+            serializer = serializers.TransactionSerializer(
+                instance=manual_transactions, many=True)
+            # mixup all transactions
+            transactions.append({
+                'manual': {
+                    'count': len(serializer.data),
+                    'transactions': serializer.data
+                }
+            })
+
+            return transactions
+
+        return plaid_request(get_transactions)
