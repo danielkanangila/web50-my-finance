@@ -6,20 +6,19 @@ export const getAuthToken = () => {
   return userStr ? JSON.parse(userStr).token : "";
 };
 
-const initializeClient = ({ authToken, baseURL }) => {
-  if (!authToken)
-    return axios.create({
-      baseURL: baseURL,
-    });
+const defaultClient = () => {
   return axios.create({
-    baseURL,
+    baseURL: settings.apiURL,
+  });
+};
+
+export const authClient = () => {
+  return axios.create({
+    baseURL: settings.apiURL,
     headers: {
-      Authorization: `Token ${authToken}`,
+      Authorization: `Token ${getAuthToken()}`,
     },
   });
 };
 
-export default initializeClient({
-  authToken: getAuthToken(),
-  baseURL: settings.apiURL,
-});
+export default defaultClient;
