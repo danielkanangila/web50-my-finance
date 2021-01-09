@@ -1,7 +1,9 @@
 import React, { createContext, useReducer } from "react";
 import { reducer } from "./reducers";
 
-const initialState = {};
+const initialState = {
+  auth: null,
+};
 
 export const ApplicationContext = createContext();
 
