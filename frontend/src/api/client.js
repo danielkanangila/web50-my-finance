@@ -2,7 +2,7 @@ import axios from "axios";
 import settings from "./../config/settings";
 
 export const getAuthToken = () => {
-  const userStr = localStorage.getItem("user");
+  const userStr = localStorage.getItem("authToken");
   return userStr ? JSON.parse(userStr).token : "";
 };
 
