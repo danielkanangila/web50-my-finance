@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import {
   DrawerNavigation,
@@ -9,6 +9,7 @@ import {
 } from "./common/DrawerNavigation";
 import Logo from "./common/Logo";
 import { Navbar, NavItem } from "./common/Navbar";
+import Button from "./common/Button";
 
 const MainHeader = () => {
   const [visibility, setVisibility] = useState(true);
@@ -16,18 +17,18 @@ const MainHeader = () => {
   const auth = useAuth();
 
   useEffect(() => {
-    if (location.pathname === "/login" || location.pathname === "/register")
+    if (
+      location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      auth.user
+    )
       setVisibility(false);
     else setVisibility(true);
   }, [location]);
 
   return (
     <DrawerNavigationLayout>
-      <div
-        className={`w-full relative ${
-          visibility && !auth.user ? "block" : "hidden"
-        }`}
-      >
+      <div className={`w-full ${visibility ? "relative" : "hidden"}`}>
         <DrawerNavigation>
           <div className="logo-box flex justify-center w-full mt-2">
             <Link to="/">
@@ -35,11 +36,15 @@ const MainHeader = () => {
             </Link>
           </div>
           <div className="mt-8 flex flex-col items-center">
+            {auth.user && (
+              <DrawerNavigationItem to={`/${auth.user.id}`}>
+                Go to Dashboard
+              </DrawerNavigationItem>
+            )}
             <DrawerNavigationItem to="/">Home</DrawerNavigationItem>
             <DrawerNavigationItem to="/about">About</DrawerNavigationItem>
             <DrawerNavigationItem to="/support">Support</DrawerNavigationItem>
-            <DrawerNavigationItem to="/register">Sign Up</DrawerNavigationItem>
-            <DrawerNavigationItem to="/login">Sign In</DrawerNavigationItem>
+            <SignInButton visibility={!auth.user} width="w-11/12" />
           </div>
         </DrawerNavigation>
         <Navbar
@@ -54,8 +59,10 @@ const MainHeader = () => {
               <NavItem to="/" title="Home" />
               <NavItem to="/about" title="About" />
               <NavItem to="/support" title="Support" />
-              <NavItem to="/register" title="Sign Up" />
-              <NavItem to="/login" title="Sign In" />
+              {auth.user && (
+                <NavItem to={`/${auth.user.id}`}>Go to Dashboard</NavItem>
+              )}
+              <SignInButton visibility={!auth.user} />
             </div>
             <div className="block lg:hidden">
               <DrawerNavigationHandler />
@@ -65,6 +72,20 @@ const MainHeader = () => {
       </div>
     </DrawerNavigationLayout>
   );
+};
+
+const SignInButton = ({ visibility, width = "w-max" }) => {
+  const history = useHistory();
+
+  if (visibility)
+    return (
+      <div className={`flex items-center justify-center ${width}`}>
+        <Button onClick={() => history.push("/login")} className="small">
+          Sign In
+        </Button>
+      </div>
+    );
+  else return <></>;
 };
 
 export default MainHeader;

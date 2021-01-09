@@ -52,12 +52,9 @@ const useAuth = (authFunc) => {
   };
 
   const logout = async () => {
-    const response = await request(authApiFunc.logout);
-    if (response.ok) {
-      localStorage.removeItem("user");
-      return true;
-    }
-    return false;
+    await request(authApiFunc.logout);
+    localStorage.removeItem("user");
+    return true;
   };
 
   const refresh = (freshUser) => {
