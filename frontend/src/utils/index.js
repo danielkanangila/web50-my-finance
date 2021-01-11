@@ -82,3 +82,13 @@ export const isBrowser = () => {
   })(navigator.userAgent || navigator.vendor || window.opera);
   return !check;
 };
+
+/**
+ * Check if a given is an upcoming date
+ * @param {string} date valid date string
+ */
+export const isUpcomingDate = (strDate) => {
+  const dateToCheck = new Date(strDate);
+
+  return dateToCheck > new Date();
+};

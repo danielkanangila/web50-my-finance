@@ -70,16 +70,20 @@ const useAuth = (authFunc) => {
 
   const logout = async () => {
     await request(authApiFunc.logout);
-    localStorage.removeItem("user");
+    setAuthToken(null);
     dispatch(deleteAuth());
     return true;
   };
 
-  const refresh = async () => {
+  /**
+   * Refresh user profile info in case of windows reloading when auth token is valid.
+   * Call the auth token expired function if the auth token is expired.
+   * @param {Function} onTokenExpired callback function to handle expired auth token
+   */
+  const refresh = async (onTokenExpired) => {
     /**
      * check if authToken is not expired before to fetch the auth user
      * otherwise call the login function and return
-     * ::TODO handle invalid token refresh
      */
     if (authToken) {
       const expiryDate = new Date(authToken.expiry);
@@ -93,6 +97,10 @@ const useAuth = (authFunc) => {
         // if not error, set user to the application context state
         dispatch(setAuth(response.data));
       }
+      // if auth token is expired, call the onTokenExpired function
+      // to handle the expired auth token case
+      if (expiryDate < new Date())
+        return onTokenExpired(authToken, setAuthToken);
     }
   };
 
