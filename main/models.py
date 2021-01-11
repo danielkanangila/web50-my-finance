@@ -3,13 +3,8 @@ from django.db import models
 from accounts.models import User
 
 
-class PlaidItemIds(models.Model):
-    item_id = models.CharField(max_length=250)
-
-
 class PlaidAccessToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(PlaidItemIds, on_delete=models.CASCADE)
     access_token = models.CharField(max_length=250, unique=True)
 
 

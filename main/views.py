@@ -53,17 +53,9 @@ class PlaidAccessTokenAPIView(APIView):
             exchange_response = plaid.get_access_token(
                 public_token=request.data.get('public_token'))
             # Save exchange values to the database
-            # save item id
-            itemIds_serializer = serializers.PlaidItemIdsSerializer(
-                data={'item_id': exchange_response['item_id']})
-            # validate data
-            itemIds_serializer.is_valid()
-            # save
-            item_ids = itemIds_serializer.save()
-            # save access_token
+            
             access_token_serializer = serializers.PlaidAccessTokenSerializer(data={
                 'user': request.user.pk,
-                'item': item_ids.pk,
                 'access_token': exchange_response['access_token']
             })
             # validate data
@@ -73,7 +65,7 @@ class PlaidAccessTokenAPIView(APIView):
             # return the response
             return Response({
                 'access_token': access_token.access_token,
-                'item_id': item_ids.item_id
+                'user': request.user.pk
             })
         except plaid.plaid.errors.PlaidError as e:
             return Response(format_error(e))

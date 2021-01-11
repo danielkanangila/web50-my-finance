@@ -11,21 +11,6 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = models.Transaction
         fields = '__all__'
 
-# ::TODO TO BE DELETED IF CLEAN VIEW
-class PlaidItemIdsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.PlaidItemIds
-        fields = '__all__'
-        extra_kwargs = {
-            'access_token': {
-                'required': True,
-                'validators': [
-                    UniqueValidator(
-                        queryset=models.PlaidAccessToken.objects.all())
-                ]
-            }
-        }
-
 
 class PlaidAccessTokenSerializer(serializers.ModelSerializer):
     class Meta:
