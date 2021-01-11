@@ -20,7 +20,10 @@ export const handleFormSubmission = async (
     const errors =
       "data" in response
         ? response.data
-        : { details: "An unknown error occurred." };
+        : {
+            details:
+              "We are not able to process your request. Please try again later.",
+          };
     setErrors(errors);
     // set form loading status to false
     setStatus({ loading: false });
@@ -49,10 +52,16 @@ export const request = async (apiFunc, data) => {
   } catch (error) {
     console.error(error);
     // set response
-    response.data = {
-      details: error.message,
-      ok: false,
-    };
+    response =
+      "response" in error
+        ? {
+            ...error.response,
+            ok: false,
+          }
+        : {
+            details: error.message,
+            ok: false,
+          };
   }
 
   return response;
