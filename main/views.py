@@ -47,7 +47,8 @@ class PlaidAccessTokenAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            # ::TODO:: ADD REQUEST BODY VALDATION ::TODO::
+            # ::TODO:: ADD REQUEST BODY VALDATION 
+            # ::TODO:: REMOVE ITEM IDS STORAGE STEP
             # Exchange link public token to access token
             exchange_response = plaid.get_access_token(
                 public_token=request.data.get('public_token'))
@@ -66,7 +67,7 @@ class PlaidAccessTokenAPIView(APIView):
                 'access_token': exchange_response['access_token']
             })
             # validate data
-            access_token_serializer.is_valid()
+            access_token_serializer.is_valid(raise_exception=True)
             # save
             access_token = access_token_serializer.save()
             # return the response
@@ -76,9 +77,12 @@ class PlaidAccessTokenAPIView(APIView):
             })
         except plaid.plaid.errors.PlaidError as e:
             return Response(format_error(e))
+        except serializers.serializers.ValidationError as e:
+            raise
         except Exception as e:
-            print(e)
-            return Response(data={"detail": "An unknown error occurred while trying to save the access token"}, status=500)
+            raise
+            # print(e)
+            # return Response(data={"detail": "An unknown error occurred while trying to save the access token"}, status=500)
 
 
 class AccountAPIView(APIView):

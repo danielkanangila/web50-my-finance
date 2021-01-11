@@ -67,6 +67,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'knox.auth.TokenAuthentication',
     ),
+    'EXCEPTION_HANDLER': 'expense_tracker.exceptions.custom_exception_handler'
 }
 
 MIDDLEWARE = [

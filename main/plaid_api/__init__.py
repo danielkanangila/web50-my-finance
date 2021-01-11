@@ -21,7 +21,7 @@ def get_link_token(user):
             'user': {
                 'client_user_id': f"{user.pk}"
             },
-            'client_name': f"{user.first_name} {user.last_name}",
+            'client_name': "Finelth",
             'products': PLAID_PRODUCTS,
             'country_codes': PLAID_COUNTRY_CODES,
             'language': "en",
@@ -109,3 +109,21 @@ def get_account_transactions(user_pk, account_id, start_date, end_date):
         ))
 
     return filtered[0]['transactions']
+
+def is_institution_exists(stored_access_tokens, new_access_token):
+    # check if a given access token for an 
+    # instution exists in a list of access tokens
+    new_item = client.Item.get(new_access_token).get('item', {})
+    new_institution_id = new_item.get('institution_id')
+
+    for access_token in stored_access_tokens:
+        old_item = client.Item.get(access_token).get('item', {})
+        existing_institution_id = old_item.get('institution_id')
+
+        if new_institution_id == existing_institution_id:
+            return True
+            break
+    
+    return False
+
+

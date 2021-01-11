@@ -12,7 +12,6 @@ const usePlaid = () => {
   };
 
   const setAccessToken = async (public_token) => {
-    console.log(public_token);
     const response = await request(plaidApiFunc.setAccessToken, {
       public_token,
     });
