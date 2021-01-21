@@ -41,6 +41,7 @@ def get_access_token(public_token):
 
 
 def get_accounts(user_pk):
+    # ::TODO add institution info in each account object
     accounts = []
     try:
         for plaid_access_token in get_access_tokens(user_pk):
@@ -53,15 +54,33 @@ def get_accounts(user_pk):
 
 
 def get_transactions(user_pk, start_date, end_date):
-    transactions = []
+    # ::TODO add institution info in each account object
+    accountsTransactions = []
     try:
         for plaid_access_token in get_access_tokens(user_pk):
-            _transactions = client.Transactions.get(
+            plaid_response = client.Transactions.get(
                 plaid_access_token.access_token, start_date, end_date)
-            transactions.append(_transactions)
+            
+            accounts = plaid_response['accounts']
+            transactions = plaid_response['transactions']
+            # Group transactions by account and add institution's information in account
+            for account in accounts:
+                # filter transactions to get only transactions corresponding to the account id
+                _transactions = list(
+                    filter(
+                        lambda tx: tx["account_id"] == account["account_id"],
+                        transactions
+                    ))
+                # set institution's info
+                account['institution_id'] = plaid_response['item']['institution_id']
+                # set transactions to the accounts
+                account['total_transactions'] = len(_transactions)
+                account['transactions'] = _transactions
+
+                accountsTransactions.append(account)
     except Exception as e:
         raise
-    return transactions
+    return accountsTransactions
 
 
 def get_access_tokens(user_pk):
@@ -72,7 +91,7 @@ def get_access_tokens(user_pk):
     return plaid_access_tokens
 
 
-def group_transactions_by_account(transactionList):
+def  group_transactions_by_account(transactionList):
     # ::TODO Refactor to improve runtime
     # ::TODO Refactor to handle multiple bank account
     # loop through transactions response as came from the Plaid API response
@@ -99,13 +118,11 @@ def group_transactions_by_account(transactionList):
 def get_account_transactions(user_pk, account_id, start_date, end_date):
     # get all transactions from plaid api
     transactions = get_transactions(user_pk, start_date, end_date)
-    # get grouped transations by account
-    groupedTransactions = group_transactions_by_account(transactions)
     # filter grouped transactions to return only transactions related to the account_id parameter
     filtered = list(
         filter(
             lambda acc: acc['account_id'] == account_id,
-            groupedTransactions
+            transactions
         ))
 
     return filtered[0]['transactions']
