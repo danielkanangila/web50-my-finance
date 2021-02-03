@@ -15,4 +15,5 @@ urlpatterns = [
     path('users/<int:user_id>/accounts', views.AccountAPIView.as_view()),
     path('users/<int:user_id>/accounts/<account_id>/transactions',
          views.AccountTransactionsAPIView.as_view()),
+     path('users/<int:user_id>/analytics', views.AnalyticsAPIVIew.as_view())
 ] + router.urls

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from . import models
 from . import plaid_api as plaid
 from .plaid_api.utils import plaid_request, get_date_from_request
+from .plaid_api.analytics import Analytics
 from . import serializers
 from utils.permissions import GETRequestNotAllowed, CanCreate, CanRetreive, CanUpdate, CanDelete
 from utils.format_error import format_error
@@ -147,3 +148,16 @@ class TransactionRetreiveAPIView(APIView):
             return transactions
 
         return plaid_request(get_transactions)
+
+
+    
+class AnalyticsAPIVIew(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+        CanRetreive
+    ]
+
+    def get(self, request, *args, **kwargs):
+        analytics = Analytics(request, *args, **kwargs)
+        # print(analytics.)
+        return Response(analytics.get_data())

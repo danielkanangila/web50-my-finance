@@ -92,6 +92,7 @@ def get_access_tokens(user_pk):
 
 
 def  group_transactions_by_account(transactionList):
+    # ::TODO TO BE DELETED
     # ::TODO Refactor to improve runtime
     # ::TODO Refactor to handle multiple bank account
     # loop through transactions response as came from the Plaid API response
