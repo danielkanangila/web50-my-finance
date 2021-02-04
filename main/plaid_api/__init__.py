@@ -91,31 +91,6 @@ def get_access_tokens(user_pk):
     return plaid_access_tokens
 
 
-def  group_transactions_by_account(transactionList):
-    # ::TODO TO BE DELETED
-    # ::TODO Refactor to improve runtime
-    # ::TODO Refactor to handle multiple bank account
-    # loop through transactions response as came from the Plaid API response
-    newAccounts = []
-    for transaction in transactionList:
-        accounts = []
-        _transactions = []
-        if "accounts" in transaction:
-            accounts = transaction["accounts"]
-
-        if "transactions" in transaction:
-            _transactions = transaction["transactions"]
-        for account in accounts:
-            account["transactions"] = list(
-                filter(
-                    lambda tx: tx["account_id"] == account["account_id"],
-                    _transactions
-                ))
-            newAccounts.append(account)
-
-    return newAccounts
-
-
 def get_account_transactions(user_pk, account_id, start_date, end_date):
     # get all transactions from plaid api
     transactions = get_transactions(user_pk, start_date, end_date)
