@@ -1,4 +1,5 @@
 import datetime
+from django.http import Http404
 from rest_framework import generics, viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -129,6 +130,11 @@ class TransactionRetreiveAPIView(APIView):
             # Retrieve start and end date form request query params
             # if not found set default limit date
             start_date, end_date = get_date_from_request(request)
+            # Check if transaction_id exists in request query
+            # if yes, get the transaction related to the transaction_id query and return
+            if 'transaction_id' in request.GET:
+                return plaid.get_transaction_by_id(user_id, request.GET.get('transaction_id'), start_date, end_date)
+            # Otherwise, return all transactions.
             # Get plaid transactions
             transactions = plaid.get_transactions(
                 user_id, start_date, end_date)
@@ -144,6 +150,8 @@ class TransactionRetreiveAPIView(APIView):
                     'transactions': serializer.data
                 }
             })
+
+            print(request.GET)
 
             return transactions
 

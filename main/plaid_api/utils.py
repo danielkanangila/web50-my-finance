@@ -1,4 +1,5 @@
 import datetime
+from django.conf import settings
 from rest_framework.response import Response
 import plaid
 
@@ -34,9 +35,12 @@ def plaid_request(api_func):
         print(e)
         return Response(data={"detail": "No plaid account found."}, status=404)
     except Exception as e:
-        print(e)
-        return Response(
-            data={
-                'detail': f'An unknown error occurred while trying to excute [{api_func.__name__}] function.'},
-            status=500
-        )
+        if settings.DEBUG:
+            raise
+        else:
+            print(e)
+            return Response(
+                data={
+                    'detail': f'An unknown error occurred while trying to excute [{api_func.__name__}].'},
+                status=500
+            )
