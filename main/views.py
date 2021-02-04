@@ -74,9 +74,7 @@ class PlaidAccessTokenAPIView(APIView):
         except serializers.serializers.ValidationError as e:
             raise
         except Exception as e:
-            raise
-            # print(e)
-            # return Response(data={"detail": "An unknown error occurred while trying to save the access token"}, status=500)
+            return Response(data={"detail": "An unknown error occurred while trying to save the access token"}, status=500)
 
 
 class AccountAPIView(APIView):
@@ -151,8 +149,6 @@ class TransactionRetreiveAPIView(APIView):
                 }
             })
 
-            print(request.GET)
-
             return transactions
 
         return plaid_request(get_transactions)
@@ -167,5 +163,5 @@ class AnalyticsAPIVIew(APIView):
 
     def get(self, request, *args, **kwargs):
         analytics = Analytics(request, *args, **kwargs)
-        # print(analytics.)
+        
         return Response(analytics.get_data())
