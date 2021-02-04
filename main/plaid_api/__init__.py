@@ -128,6 +128,28 @@ def get_account_transactions(user_pk, account_id, start_date, end_date):
 
     return filtered[0]['transactions']
 
+
+def extract_tx_from_accounts(accounts):
+    transactions = []
+    for account in accounts:
+        for transaction in account.get('transactions'):
+            transactions.append(transaction)
+
+    return transactions
+
+def get_transaction_by_id(user_pk, transaction_id, start_date, end_date):
+    # get all transactions from plaid api
+    account_transactions = get_transactions(user_pk, start_date, end_date)
+    transactions = extract_tx_from_accounts(account_transactions)
+    # filter transactions to return only transaction related to the transaction_id parameter
+    filtered = list(
+        filter(
+            lambda tx: tx['transaction_id'] == transaction_id,
+            transactions
+        ))
+
+    return None if not filtered else filtered[0]
+
 def is_institution_exists(stored_access_tokens, new_access_token):
     # check if a given access token for an 
     # instution exists in a list of access tokens
