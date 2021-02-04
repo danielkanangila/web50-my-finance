@@ -107,7 +107,7 @@ class Analytics:
 
         for transaction in self.transactions:
             description = transaction.get('merchant_name') if transaction.get('merchant_name') != None else transaction.get('name')
-            category = '/'.join(transaction.get('category'))
+            category = self.format_category(transaction.get('category'))
             amount = abs(transaction.get('amount'))
             # check if category is already exist in the grouped transactions list
             if self.is_category_exists(category):
@@ -145,7 +145,7 @@ class Analytics:
         # Format one transaction item to return only the necessary transaction information
         return {
             'transaction_id': transaction.get('transaction_id'),
-            'amount': transaction.get('amount'),
+            'amount': abs(transaction.get('amount')),
             'category': transaction.get('category')[-1],
             'description': transaction.get('name') if transaction.get('name') != None else transaction.get('merchant_name'),
             'date': transaction.get('date'),
@@ -180,6 +180,10 @@ class Analytics:
             return old_description
         else:
             return f'{old_description} | {description}'
+
+    def format_category(self, category):
+        return f'{"/".join(category)}' if len(category) <= 2 \
+            else f'{category[0]}/{category[1]}'
 
     def update_transaction_info(self, transaction, category, amount_to_add, description, new_transaction):
         # Helper method used in the update_transaction to update a transaction related to a given category
