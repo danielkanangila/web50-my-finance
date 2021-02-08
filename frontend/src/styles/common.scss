@@ -62,3 +62,11 @@ a.active > * {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
 }
+
+.finance-illustrator {
+  height: fit-content;
+  svg {
+    margin: 0 auto;
+    width: 70%;
+  }
+}

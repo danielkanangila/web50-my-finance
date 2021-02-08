@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import {
   DrawerNavigation,
@@ -75,14 +75,12 @@ const MainHeader = () => {
 };
 
 const SignInButton = ({ visibility, width = "w-max" }) => {
-  const history = useHistory();
-
   if (visibility)
     return (
       <div className={`flex items-center justify-center ${width}`}>
-        <Button onClick={() => history.push("/login")} className="small">
-          Sign In
-        </Button>
+        <Link to="/login">
+          <Button className="small">Sign In</Button>
+        </Link>
       </div>
     );
   else return <></>;
