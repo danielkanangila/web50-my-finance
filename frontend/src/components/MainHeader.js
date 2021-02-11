@@ -28,7 +28,7 @@ const MainHeader = () => {
 
   return (
     <DrawerNavigationLayout>
-      <div className={`w-full ${visibility ? "relative" : "hidden"}`}>
+      <div className={`w-full sticky top-0 ${visibility ? "block" : "hidden"}`}>
         <DrawerNavigation>
           <div className="logo-box flex justify-center w-full mt-2">
             <Link to="/">
@@ -42,13 +42,15 @@ const MainHeader = () => {
               </DrawerNavigationItem>
             )}
             <DrawerNavigationItem to="/">Home</DrawerNavigationItem>
-            <DrawerNavigationItem to="/about">About</DrawerNavigationItem>
+            <DrawerNavigationItem to="/about#howItWorks">
+              How It Works?
+            </DrawerNavigationItem>
             <DrawerNavigationItem to="/support">Support</DrawerNavigationItem>
             <SignInButton visibility={!auth.user} width="w-11/12" />
           </div>
         </DrawerNavigation>
         <Navbar
-          position="sticky"
+          position="relative"
           className="pl-3 pr-3 sm:pl-8 sm:pr-8 lg:pl-20 lg:pr-20"
         >
           <Link to="/">
@@ -57,8 +59,8 @@ const MainHeader = () => {
           <div className="flex items-center h-full text-sm">
             <div className="hidden h-full lg:flex">
               <NavItem to="/" title="Home" />
-              <NavItem to="/about" title="About" />
-              <NavItem to="/support" title="Support" />
+              <NavItem to="/about#howItWorks" title="How It Works?" />
+              <NavItem to="/pricing" title="Pricing" />
               {auth.user && (
                 <NavItem to={`/${auth.user.id}`}>Go to Dashboard</NavItem>
               )}

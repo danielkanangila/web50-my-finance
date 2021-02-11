@@ -6,12 +6,13 @@ const Button = ({
   hoverBg = "bg-gray-700",
   className = "",
   size = "p-3",
+  width = "w-full",
   ...restOfProps
 }) => {
   return (
     <button
       {...restOfProps}
-      className={`transition duration-500 ease-in-out w-full ${size} ${bg} hover:${hoverBg}  cursor-pointer text-white uppercase text-xs ${className}`}
+      className={`transition duration-500 ease-in-out ${width} ${size} ${bg} hover:${hoverBg}  cursor-pointer text-white uppercase text-xs ${className}`}
     >
       {children}
     </button>

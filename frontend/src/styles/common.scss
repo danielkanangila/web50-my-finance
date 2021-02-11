@@ -3,6 +3,10 @@
   color: rgb(63, 63, 63);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #f9fafb;
 }
@@ -67,6 +71,16 @@ a.active > * {
   height: fit-content;
   svg {
     margin: 0 auto;
-    width: 70%;
+    width: 60%;
+  }
+}
+
+.bank-logo {
+  width: 100px;
+  margin-bottom: 15px;
+  // height: ;
+  // border: 1px solid #fff;
+  img {
+    width: 100%;
   }
 }
