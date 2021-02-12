@@ -16,21 +16,23 @@ const PricingCard = ({
       {...restOfProps}
     >
       <div className="pricing-plan  border-t-4 border-solid border-white bg-white text-center max-w-sm mx-auto hover:border-green-600 transition-colors duration-300">
-        <div class="p-6 md:py-8">
-          <h4 class="font-medium leading-tight text-2xl mb-2">{planName}</h4>
-          <p class="text-gray-600">{planDescription}</p>
+        <div className="p-6 md:py-8">
+          <h4 className="font-medium leading-tight text-2xl mb-2">
+            {planName}
+          </h4>
+          <p className="text-gray-600">{planDescription}</p>
         </div>
 
-        <div class="pricing-amount bg-indigo-100 p-6 transition-colors duration-300">
-          <div class="text-center">
-            <span class="text-4xl font-semibold">{price}</span> /
+        <div className="pricing-amount bg-indigo-100 p-6 transition-colors duration-300">
+          <div className="text-center">
+            <span className="text-4xl font-semibold">{price}</span> /
             {paymentFrequency}
           </div>
         </div>
         <div className="p-6 text-center">
           <ul className="leading-loose">
-            {planOptions.map((option) => (
-              <li>{option}</li>
+            {planOptions.map((option, index) => (
+              <li key={index}>{option}</li>
             ))}
           </ul>
           <div className="mt-6 py-4">

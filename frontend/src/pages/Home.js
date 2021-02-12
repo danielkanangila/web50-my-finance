@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/common/Button";
-import Container from "../components/common/Container";
+import Section from "../components/common/Section";
 import PricingCard from "../components/common/PricingCard";
 import { ReactComponent as FinanceIllustrator } from "./../assets/personal_finance.svg";
 import bankIconList from "./../components/icons/BankIcons";
 
 const pricing = [
   {
-    planName: "Trial",
-    planDescription: "30 days trial",
+    planName: "Free / 30 Days",
+    planDescription: "Visualize your bank transfers in one place.",
     price: "$0.00",
     paymentFrequency: "month",
     planOptions: ["Bank Transactions Analytics", "-", "-", "-"],
@@ -31,7 +31,7 @@ const pricing = [
 const Home = () => {
   return (
     <>
-      <Container className="bg-white pt-5 xl:pt-10">
+      <Section className="bg-white py-10">
         <div className="flex flex-col lg:flex-row-reverse pt-10 pb-20 lg:items-center lg:justify-between w-full lg:h-96">
           <div className="w-full lg:w-2/5">
             <h1>
@@ -51,36 +51,36 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
-      <Container className="bg-gray-900" id="howItWorks">
-        <div className="w-full pt-12 pb-20">
+      </Section>
+      <Section className="bg-gray-900" id="howItWorks">
+        <div className="w-full py-20">
           <h1 className="font-extrabold text-3xl text-center text-white lg:pb-10">
             Your Bank Accounts in One Place
           </h1>
           <div className="flex mt-10 lg:mt-10 flex-col lg:flex-row lg:items-center w-full">
             <div className="w-full pb-10 text-left lg:w-3/5 lg:pr-12">
-              <p className="text-xl text-white mb-5 leading-relaxed">
+              <p className="text-xl text-white mb-5 leading-loose">
                 We are using Plaid API to integrates with more than 10,000
                 financial institutions around the world.
               </p>
-              <p className="text-xl text-white leading-relaxed">
-                Improve your financial health or keep finance healthy by using
-                our platform to track and visualize your financial transactions.
-                We are getting your bank transactions to analyze them in a
-                manner to help you to better visualize them.
+              <p className="text-xl text-white leading-loose">
+                Improve your financial health or your keep finance healthy by
+                using our platform to track and visualize your financial
+                transactions. We are getting your bank transactions to analyze
+                them in a manner to help you to better visualize them.
               </p>
             </div>
             <div className="w-full md:w-3/5 md:mx-auto mt-5 lg:m-0 lg:w-2/5 flex flex-wrap items-center justify-between p-10 rounded-md bg-white">
-              {bankIconList.map((BankIcon) => (
-                <BankLogo Logo={BankIcon} />
+              {bankIconList.map((BankIcon, index) => (
+                <BankLogo Logo={BankIcon} key={index} />
               ))}
             </div>
           </div>
         </div>
-      </Container>
-      <Container className="pricing-table-2 py-6 md:py-12 bg-white">
-        <div class="container mx-auto px-4">
-          <div class="max-w-3xl mx-auto text-center">
+      </Section>
+      <Section className="pricing-table-2 py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
             <h1 className="font-extrabold text-3xl text-center lg:pb-5">
               Pricing Plans
             </h1>
@@ -88,13 +88,13 @@ const Home = () => {
               Choose a plan that best suits your budget.
             </p>
           </div>
-          <div class="pricing-plans flex flex-col lg:flex-row flex-wrap justify-center lg:-mx-4 mt-6 md:mt-12">
-            {pricing.map((price) => (
-              <PricingCard {...price} />
+          <div className="pricing-plans flex flex-col lg:flex-row flex-wrap justify-center lg:-mx-4 mt-6 md:mt-12">
+            {pricing.map((price, index) => (
+              <PricingCard {...price} key={index} />
             ))}
           </div>
         </div>
-      </Container>
+      </Section>
     </>
   );
 };

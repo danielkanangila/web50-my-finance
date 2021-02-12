@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import { default as DashboardHome } from "./pages/Dashboard/Home";
 import MainHeader from "./components/MainHeader";
 import ApplicationContextProvider from "./context/ApplicationContext";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               </Dashboard>
             </SecureRoute>
           </Switch>
+          <Footer />
         </div>
       </ApplicationContextProvider>
     </Router>
