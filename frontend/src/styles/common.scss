@@ -84,3 +84,15 @@ a.active > * {
     width: 100%;
   }
 }
+
+.sc-icon {
+  font-family: "SocialNetwork", Helvetica, Arial, sans-serif;
+  display: inline;
+  font-size: 35px;
+  height: fit-content;
+}
+
+.sc-link:hover > span {
+  color: #fff;
+  transition: ease 0.5s;
+}

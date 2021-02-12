@@ -26,9 +26,27 @@ const Footer = () => {
                 Follow Us
               </FooterTitle>
               <ul className="flex flex-col">
-                <FooterLink to="https://facebook.com">Facebook</FooterLink>
-                <FooterLink to="https://twitter.com">Twitter</FooterLink>
-                <FooterLink to="https://youtube.com">YouTube</FooterLink>
+                <FooterLink
+                  to="https://facebook.com"
+                  className="flex items-center sc-link"
+                >
+                  <span className="sc-icon facebook text-gray-300 mr-2">f</span>
+                  <span className="mt-2 text-gray-300">Facebook</span>
+                </FooterLink>
+                <FooterLink
+                  to="https://twitter.com"
+                  className="flex items-center sc-link"
+                >
+                  <span className="sc-icon facebook text-gray-300 mr-2">l</span>
+                  <span className="mt-2 text-gray-300">Twitter</span>
+                </FooterLink>
+                <FooterLink
+                  to="https://youtube.com"
+                  className="flex items-center sc-link"
+                >
+                  <span className="sc-icon facebook text-gray-300 mr-2">x</span>
+                  <span className="mt-2 text-gray-300">YouTube</span>
+                </FooterLink>
               </ul>
             </div>
           </div>
