@@ -12,7 +12,7 @@ const PricingCard = ({
 }) => {
   return (
     <div
-      className={`pricing-plan-wrap lg:w-1/3 my-4 md:my-6 lg:mr-10 ${className} shadow-xl`}
+      className={`pricing-plan-wrap w-full md:w-3/4 mx-auto lg:w-1/3 my-4 md:my-6 lg:mr-10 ${className} shadow-xl`}
       {...restOfProps}
     >
       <div className="pricing-plan  border-t-4 border-solid border-white bg-white text-center max-w-sm mx-auto hover:border-green-600 transition-colors duration-300">

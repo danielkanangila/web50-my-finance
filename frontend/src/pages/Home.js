@@ -8,9 +8,9 @@ import bankIconList from "./../components/icons/BankIcons";
 
 const pricing = [
   {
-    planName: "Free",
-    planDescription: "7 days trial",
-    price: "Free",
+    planName: "Trial",
+    planDescription: "30 days trial",
+    price: "$0.00",
     paymentFrequency: "month",
     planOptions: ["Bank Transactions Analytics", "-", "-", "-"],
   },
@@ -31,7 +31,7 @@ const pricing = [
 const Home = () => {
   return (
     <>
-      <Container className="bg-white pt-4">
+      <Container className="bg-white pt-5 xl:pt-10">
         <div className="flex flex-col lg:flex-row-reverse pt-10 pb-20 lg:items-center lg:justify-between w-full lg:h-96">
           <div className="w-full lg:w-2/5">
             <h1>
@@ -70,7 +70,7 @@ const Home = () => {
                 manner to help you to better visualize them.
               </p>
             </div>
-            <div className="w-full flex flex-wrap items-center justify-between p-10 rounded-md bg-white sm:w-2/5">
+            <div className="w-full md:w-3/5 md:mx-auto mt-5 lg:m-0 lg:w-2/5 flex flex-wrap items-center justify-between p-10 rounded-md bg-white">
               {bankIconList.map((BankIcon) => (
                 <BankLogo Logo={BankIcon} />
               ))}
@@ -88,7 +88,7 @@ const Home = () => {
               Choose a plan that best suits your budget.
             </p>
           </div>
-          <div class="pricing-plans lg:flex flex-wrap justify-center lg:-mx-4 mt-6 md:mt-12">
+          <div class="pricing-plans flex flex-col lg:flex-row flex-wrap justify-center lg:-mx-4 mt-6 md:mt-12">
             {pricing.map((price) => (
               <PricingCard {...price} />
             ))}
