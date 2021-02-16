@@ -8,7 +8,10 @@ const initialState = {
   analytics: {},
   transactions: [],
   errors: [],
-  loading: false,
+  loading: {
+    message: "",
+    status: false,
+  },
 };
 
 export const ApplicationContext = createContext();

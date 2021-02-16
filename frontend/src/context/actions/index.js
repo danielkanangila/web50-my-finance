@@ -18,4 +18,10 @@ export const setTransactions = (data) => ({
 });
 
 export const setError = (message) => ({ type: SET_ERROR, payload: message });
-export const setLoading = (state) => ({ type: SET_LOADING, payload: state });
+export const setLoading = (status, message = "") => ({
+  type: SET_LOADING,
+  payload: {
+    message,
+    status,
+  },
+});

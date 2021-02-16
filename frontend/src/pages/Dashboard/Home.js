@@ -11,8 +11,7 @@ const Home = () => {
       plaid
         .fetchAccounts(auth.user.id)
         .then((_) => {})
-        .catch((error) => console.error(error));
-    // console.log(plaid.state);
+        .catch((error) => console.log(error));
     return () => {};
   }, [auth.user]);
 
