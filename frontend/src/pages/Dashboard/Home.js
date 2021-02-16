@@ -7,7 +7,7 @@ const Home = () => {
   const plaid = usePlaid();
 
   useEffect(() => {
-    if (auth && auth.user.id)
+    if (auth.user)
       plaid
         .fetchAccounts(auth.user.id)
         .then((_) => {})

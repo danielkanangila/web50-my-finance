@@ -13,18 +13,17 @@ import Button from "./common/Button";
 
 const MainHeader = () => {
   const [visibility, setVisibility] = useState(true);
-  const location = useLocation();
   const auth = useAuth();
 
-  useEffect(() => {
-    if (
-      location.pathname === "/login" ||
-      location.pathname === "/register" ||
-      (auth?.user && location.pathname !== "/")
-    )
-      setVisibility(false);
-    else setVisibility(true);
-  }, [location, auth.user]);
+  // useEffect(() => {
+  //   if (
+  //     location.pathname === "/login" ||
+  //     location.pathname === "/register" ||
+  //     (auth?.user && location.pathname !== "/")
+  //   )
+  //     setVisibility(false);
+  //   else setVisibility(true);
+  // }, [location, auth.user]);
 
   return (
     <DrawerNavigationLayout>
@@ -88,4 +87,14 @@ const SignInButton = ({ visibility, width = "w-max" }) => {
   else return <></>;
 };
 
-export default MainHeader;
+export default function MainHeaderRender() {
+  const location = useLocation();
+
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname !== "/"
+  )
+    return <></>;
+  else return <MainHeader />;
+}
