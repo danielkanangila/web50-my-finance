@@ -2,7 +2,7 @@ import plaidApiFunc from "./../api/plaid";
 import { request } from "../utils";
 import { useContext } from "react";
 import { ApplicationContext } from "../context/ApplicationContext";
-import { setAccounts, setError, setLoading } from "../context/actions";
+import { setAccounts, setLoading } from "../context/actions";
 import useLoader from "./useLoader";
 import useErrors from "./useErrors";
 

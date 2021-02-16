@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import {
@@ -12,22 +12,11 @@ import { Navbar, NavItem } from "./common/Navbar";
 import Button from "./common/Button";
 
 const MainHeader = () => {
-  const [visibility, setVisibility] = useState(true);
   const auth = useAuth();
-
-  // useEffect(() => {
-  //   if (
-  //     location.pathname === "/login" ||
-  //     location.pathname === "/register" ||
-  //     (auth?.user && location.pathname !== "/")
-  //   )
-  //     setVisibility(false);
-  //   else setVisibility(true);
-  // }, [location, auth.user]);
 
   return (
     <DrawerNavigationLayout>
-      <div className={`w-full sticky top-0 ${visibility ? "block" : "hidden"}`}>
+      <div className="w-full sticky top-0 block">
         <DrawerNavigation>
           <div className="logo-box flex justify-center w-full mt-2">
             <Link to="/">
