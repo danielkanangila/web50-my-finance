@@ -6,6 +6,11 @@ module.exports = {
       colors: {
         "indigo-dark": "#161525",
       },
+      fontFamily: {
+        LexendMega: ["Lexend Mega", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
+        openSans: ["Open Sans", "sans-serif"],
+      },
     },
   },
   variants: {

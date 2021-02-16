@@ -5,6 +5,7 @@ import Section from "../components/common/Section";
 import PricingCard from "../components/common/PricingCard";
 import { ReactComponent as FinanceIllustrator } from "./../assets/personal_finance.svg";
 import bankIconList from "./../components/icons/BankIcons";
+import { ReactComponent as TransferMoneyIllustration } from "./../assets/transfer_money.svg";
 
 const pricing = [
   {
@@ -21,7 +22,7 @@ const pricing = [
     paymentFrequency: "month",
     planOptions: [
       "Bank Transactions Analytics",
-      "Transfers",
+      "Money Transfers",
       "Daily Report",
       "Income Statement",
     ],
@@ -76,6 +77,16 @@ const Home = () => {
               ))}
             </div>
           </div>
+        </div>
+      </Section>
+      <Section className="py-12 bg-green-400">
+        <div className="flex flex-col-reverse lg:flex-row justify-center items-center lg:px-60">
+          <div>
+            <TransferMoneyIllustration />
+          </div>
+          <h1 className="text-3xl ml-10 mb-5 lg:mb-0 text-left md:text-center lg:text-left text-white font-LexendMega">
+            Easily send money to your friends and family.
+          </h1>
         </div>
       </Section>
       <Section className="pricing-table-2 py-20 bg-white">
