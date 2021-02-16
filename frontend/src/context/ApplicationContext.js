@@ -4,6 +4,11 @@ import { reducer } from "./reducers";
 
 const initialState = {
   auth: null,
+  accounts: [],
+  analytics: {},
+  transactions: [],
+  errors: [],
+  loading: false,
 };
 
 export const ApplicationContext = createContext();

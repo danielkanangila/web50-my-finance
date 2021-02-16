@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Container from "./common/Container";
 import { ReactComponent as AppStoreBadge } from "./../assets/app-store-badge.svg";
 import { ReactComponent as GooglePlayBadge } from "./../assets/google-play-badge.svg";
@@ -103,4 +103,9 @@ export const FooterLink = ({
   </Link>
 );
 
-export default Footer;
+export default function FooterRender() {
+  const location = useLocation();
+
+  if (location.pathname !== "/") return <></>;
+  else return <Footer />;
+}

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import useApi from "./useApi";
 import authApiFunc from "./../api/auth";
@@ -15,6 +15,14 @@ const useAuth = (authFunc) => {
   const [{ auth }, dispatch] = useContext(ApplicationContext); // Application context state and dispatch function
   const authApi = useApi(authFunc);
 
+  useEffect(() => {
+    if (authToken.token && !auth)
+      getAuthUser()
+        .then((_) => {})
+        .catch((error) => console.error(error));
+    return () => null;
+  });
+
   /**
    * Set user information in the application context and set the token to the local storage
    * @param {object} user user profile info and authentication token from the backend
@@ -26,6 +34,17 @@ const useAuth = (authFunc) => {
     });
     // set user to the application context state
     dispatch(setAuth(user.user));
+  };
+
+  const getAuthUser = async () => {
+    const response = await request(authApiFunc.getUser);
+
+    if (!response.ok)
+      throw new Error(
+        "An Error occurred while trying to retrieve authenticated user info."
+      );
+
+    dispatch(setAuth(response.data));
   };
 
   const signup = async (data, formHandler, onSuccess) => {

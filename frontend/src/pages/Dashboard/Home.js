@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import usePlaid from "../../hooks/usePlaid";
-// import plaidApiFunc from "./../../api/plaid"
 
 const Home = () => {
   const auth = useAuth();
   const plaid = usePlaid();
+
+  useEffect(() => {
+    if (auth && auth.user.id)
+      plaid
+        .fetchAccounts(auth.user.id)
+        .then((_) => {})
+        .catch((error) => console.error(error));
+    // console.log(plaid.state);
+    return () => {};
+  }, [auth.user]);
 
   return (
     <div>

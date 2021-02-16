@@ -86,6 +86,7 @@ def get_transactions(user_pk, start_date, end_date):
 def get_access_tokens(user_pk):
     try:
         plaid_access_tokens = PlaidAccessToken.objects.filter(user=user_pk)
+        print(plaid_access_tokens)
     except Exception as e:
         raise
     return plaid_access_tokens

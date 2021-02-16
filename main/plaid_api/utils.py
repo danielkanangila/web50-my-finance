@@ -30,7 +30,7 @@ def plaid_request(api_func):
     # Handle exception to return the formated error and header
     except plaid.errors.PlaidError as e:
         print(e)
-        return Response(data=format_error(e), status=404)
+        return Response(data=format_error(e), status=400)
     except PlaidAccessToken.DoesNotExist as e:
         print(e)
         return Response(data={"detail": "No plaid account found."}, status=404)

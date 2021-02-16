@@ -1,7 +1,13 @@
 import plaidApiFunc from "./../api/plaid";
 import { request } from "../utils";
+import { useContext } from "react";
+import { ApplicationContext } from "../context/ApplicationContext";
+import useAuth from "./useAuth";
+import { setAccounts, setError, setLoading } from "../context/actions";
 
 const usePlaid = () => {
+  const [state, dispatch] = useContext(ApplicationContext);
+
   const createLinkToken = async () => {
     // Call the api to create the link token
     const response = await request(plaidApiFunc.createLinkToken);
@@ -46,7 +52,36 @@ const usePlaid = () => {
     }
   };
 
-  return { createLinkToken, setAccessToken, open };
+  const fetchAccounts = async (userId) => {
+    dispatch(setLoading(true));
+    const response = await request(() => plaidApiFunc.getAccounts(userId));
+
+    if (!response.ok) {
+      dispatch(setLoading(false));
+      dispatch(
+        setError(
+          "An unknown error occurred while trying to retrieve your account(s) information"
+        )
+      );
+      return;
+    }
+    // Disable loading
+    dispatch(setLoading(false));
+    // Set data to the store
+    dispatch(setAccounts(response.data));
+  };
+
+  return {
+    state: {
+      transactions: state.transactions,
+      analytics: state.analytics,
+      accounts: state.accounts,
+    },
+    createLinkToken,
+    setAccessToken,
+    open,
+    fetchAccounts,
+  };
 };
 
 export default usePlaid;
