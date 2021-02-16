@@ -4,10 +4,12 @@ import { useContext } from "react";
 import { ApplicationContext } from "../context/ApplicationContext";
 import { setAccounts, setError, setLoading } from "../context/actions";
 import useLoader from "./useLoader";
+import useErrors from "./useErrors";
 
 const usePlaid = () => {
   const [state, dispatch] = useContext(ApplicationContext);
   const loader = useLoader();
+  const errors = useErrors();
 
   const createLinkToken = async () => {
     // Call the api to create the link token
@@ -59,12 +61,9 @@ const usePlaid = () => {
 
     if (!response.ok) {
       loader.setLoader(false);
-      dispatch(
-        setError(
-          "An unknown error occurred while trying to retrieve your account(s) information"
-        )
+      errors.setErrors(
+        "An unknown error occurred while trying to retrieve your account(s) information"
       );
-      // console.log(response);
       return;
     }
     // Disable loading

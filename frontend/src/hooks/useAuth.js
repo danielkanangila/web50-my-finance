@@ -16,7 +16,7 @@ const useAuth = (authFunc) => {
   const authApi = useApi(authFunc);
 
   useEffect(() => {
-    if (authToken.token && !auth)
+    if (authToken && authToken.token && !auth)
       getAuthUser()
         .then((_) => {})
         .catch((error) => console.error(error));
