@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./../../styles/banner.module.scss";
 import CloseButton from "./CloseButton";
 
-const Banner = ({ message, type, visibility }) => {
+const Banner = ({ message, children, type, visibility }) => {
   const [_visibility, _setVisibility] = useState(visibility);
 
   useEffect(() => {
@@ -25,7 +25,8 @@ const Banner = ({ message, type, visibility }) => {
         className={`${styles.banner} ${styles[type]}`}
       >
         <CloseButton className={styles.close} onClick={close} />
-        {message}
+        {message && message}
+        {children && children}
       </motion.div>
     );
   } else return <></>;
