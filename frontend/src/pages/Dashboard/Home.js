@@ -4,6 +4,7 @@ import useLoader from "../../hooks/useLoader";
 import usePlaid from "../../hooks/usePlaid";
 import Error from "./Error";
 import Button from "./../../components/common/Button";
+import PageLoader from "../../components/common/PageLoader";
 
 const Home = () => {
   const auth = useAuth();
@@ -19,9 +20,10 @@ const Home = () => {
   }, [auth.user]);
 
   return (
-    <div>
+    <div className="relative">
       <Error />
       <Splash visibility={!plaid.state.accounts.length} />
+      <PageLoader visibility={true} message="Fetching your bank data..." />
     </div>
   );
 };
