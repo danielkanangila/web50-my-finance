@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import usePlaid from "../../hooks/usePlaid";
+import Error from "./Error";
 
 const Home = () => {
   const auth = useAuth();
@@ -17,6 +18,7 @@ const Home = () => {
 
   return (
     <div>
+      <Error />
       <h1>
         Welcome to your Dashboard!{" "}
         {auth?.user?.first_name + " " + auth?.user?.last_name}

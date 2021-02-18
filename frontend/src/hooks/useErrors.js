@@ -9,9 +9,12 @@ const useErrors = () => {
     dispatch(setError(message));
   };
 
+  const hasErrors = () => !!state.errors.length;
+
   return {
     messages: state.errors,
     setErrors,
+    hasErrors,
   };
 };
 

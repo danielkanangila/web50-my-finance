@@ -1,27 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../../components/common/Banner";
 import useErrors from "../../hooks/useErrors";
 
 const Error = ({ messages, visibility }) => {
   return (
     <Banner type="danger" visibility={visibility}>
-      <ul>
+      <ul className="list-outside md:list-inside">
         {messages.map((message) => (
-          <li>{message}</li>
+          <li className="text-white text-xs">{message}</li>
         ))}
       </ul>
     </Banner>
   );
 };
 
-export default function RenderMessage() {
-  const [visibility, setVisibility] = useState(initialState);
+export default function RenderErrors() {
+  const [visibility, setVisibility] = useState(false);
   const errors = useErrors();
 
   useEffect(() => {
-    setVisibility(!visibility);
+    if (errors.hasErrors()) setVisibility(true);
+    else setVisibility(false);
     return () => {};
-  }, [errors.messages]);
+  }, [errors]);
 
   return <Error messages={errors.messages} visibility={visibility} />;
 }

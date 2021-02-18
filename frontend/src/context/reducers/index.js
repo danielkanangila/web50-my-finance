@@ -42,7 +42,7 @@ export const reducer = (state, action) => {
     case SET_ERROR:
       return {
         ...state,
-        error: [...state.errors, action.payload],
+        errors: [...state.errors, action.payload],
       };
     default:
       throw new Error("Unknown reducer action.");
