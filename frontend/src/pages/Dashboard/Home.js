@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
+import useLoader from "../../hooks/useLoader";
 import usePlaid from "../../hooks/usePlaid";
 import Error from "./Error";
+import Button from "./../../components/common/Button";
 
 const Home = () => {
   const auth = useAuth();
@@ -19,13 +21,30 @@ const Home = () => {
   return (
     <div>
       <Error />
-      <h1>
-        Welcome to your Dashboard!{" "}
-        {auth?.user?.first_name + " " + auth?.user?.last_name}
-      </h1>
-      <button onClick={() => plaid.open()}>Add an account</button>
+      <Splash visibility={!plaid.state.accounts.length} />
     </div>
   );
+};
+
+/** Visible only if the user has no bank account linked yet */
+const Splash = ({ visibility }) => {
+  const loader = useLoader();
+  const auth = useAuth();
+  const plaid = usePlaid();
+
+  if (!loader.status && visibility) {
+    return (
+      <div className="w-full h-screen flex flex-col items-center justify-center overflow-y-hidden">
+        <h1 className="text-2xl font-bold text-gray-500 mb-5">
+          Welcome {auth?.user?.first_name + " " + auth?.user?.last_name}
+        </h1>
+        <p className="mb-5 text-xl">You haven't linked a bank account yet.</p>
+        <div>
+          <Button onClick={() => plaid.open()}>Please Link Your Bank</Button>
+        </div>
+      </div>
+    );
+  } else return <></>;
 };
 
 export default Home;
