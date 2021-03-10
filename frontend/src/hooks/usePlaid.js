@@ -20,7 +20,7 @@ const usePlaid = () => {
     return response.data;
   };
 
-  const setAccessToken = async (public_token) => {
+  const setAccessToken = async (public_token, auth) => {
     const response = await request(plaidApiFunc.setAccessToken, {
       public_token,
     });
@@ -33,13 +33,14 @@ const usePlaid = () => {
     }
     // if request success, remove error
     errors.setErrors();
-    // the fetch the account information
-    console.log(state.auth?.user);
-    fetchAccounts(state.auth?.user?.id);
-    return response;
+    // reload windows to fetch user account(s) info
+    window.location.reload();
+    // console.log(auth);
+    // fetchAccounts(auth?.user?.id);
+    // return response;
   };
 
-  const _createHandler = async (token) => {
+  const _createHandler = async (token, auth) => {
     // check if token is defined otherwise throw an error
     if (!token)
       throw Error("Cannot create the Plaid handler without the link token.");
@@ -47,17 +48,17 @@ const usePlaid = () => {
     return window.Plaid.create({
       token,
       onSuccess: function (publicToken) {
-        setAccessToken(publicToken);
+        setAccessToken(publicToken, auth);
       },
     });
   };
 
-  const open = async () => {
+  const open = async (auth) => {
     try {
       //create link token
       const token = await createLinkToken();
       // create the plaid link handler
-      const handler = await _createHandler(token.link_token);
+      const handler = await _createHandler(token.link_token, auth);
       // open the handler
       handler.open();
     } catch (error) {

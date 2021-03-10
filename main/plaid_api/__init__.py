@@ -125,22 +125,25 @@ def get_transaction_by_id(user_pk, transaction_id, start_date, end_date):
 
     return None if not filtered else filtered[0]
 
+def get_institution_id(access_token):
+    item = client.Item.get(access_token).get('item', {})
+
+    return item.get('institution_id')
+
 def is_institution_exists(stored_access_tokens, new_access_token):
-    if not stored_access_tokens:
-        return False  
     # check if a given access token for an 
     # instution exists in a list of access tokens
     new_item = client.Item.get(new_access_token).get('item', {})
     new_institution_id = new_item.get('institution_id')
-
+    
     for access_token in stored_access_tokens:
         old_item = client.Item.get(access_token).get('item', {})
         existing_institution_id = old_item.get('institution_id')
 
         if new_institution_id == existing_institution_id:
-            return True
-            break
-    
-    return False
+            # raise exception if institution already stored
+            return new_institution_id
+
+    return None
 
 

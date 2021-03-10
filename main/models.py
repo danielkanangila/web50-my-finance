@@ -6,6 +6,7 @@ from accounts.models import User
 class PlaidAccessToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     access_token = models.CharField(max_length=250, unique=True)
+    institution_id = models.CharField(max_length=10)
 
 
 class Transaction(models.Model):

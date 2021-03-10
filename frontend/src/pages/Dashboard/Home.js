@@ -56,7 +56,9 @@ const Splash = ({ visibility }) => {
         </h1>
         <p className="mb-5 text-xl">You haven't linked a bank account yet.</p>
         <div>
-          <Button onClick={() => plaid.open()}>Please Link Your Bank</Button>
+          <Button onClick={() => plaid.open(auth)}>
+            Please Link Your Bank
+          </Button>
         </div>
       </div>
     );

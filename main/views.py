@@ -54,11 +54,14 @@ class PlaidAccessTokenAPIView(APIView):
             # Exchange link public token to access token
             exchange_response = plaid.get_access_token(
                 public_token=request.data.get('public_token'))
+            # retreive institution id
+            institution_id = plaid.get_institution_id(exchange_response['access_token'])
             # Save exchange values to the database
             
             access_token_serializer = serializers.PlaidAccessTokenSerializer(data={
                 'user': request.user.pk,
-                'access_token': exchange_response['access_token']
+                'access_token': exchange_response['access_token'],
+                'institution_id': institution_id
             })
             # validate data
             access_token_serializer.is_valid(raise_exception=True)
@@ -74,7 +77,8 @@ class PlaidAccessTokenAPIView(APIView):
         except serializers.serializers.ValidationError as e:
             raise
         except Exception as e:
-            return Response(data={"detail": "An unknown error occurred while trying to save the access token"}, status=500)
+            raise
+            # return Response(data={"detail": "An unknown error occurred while trying to save the access token"}, status=500)
 
 
 class AccountAPIView(APIView):
