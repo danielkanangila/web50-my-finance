@@ -6,8 +6,10 @@ const Error = ({ messages, visibility }) => {
   return (
     <Banner type="danger" visibility={visibility}>
       <ul className="list-outside md:list-inside">
-        {messages.map((message) => (
-          <li className="text-white text-xs">{message}</li>
+        {messages.map((message, index) => (
+          <li key={index} className="text-white text-xs">
+            {message}
+          </li>
         ))}
       </ul>
     </Banner>

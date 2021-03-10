@@ -8,15 +8,13 @@ const Logout = () => {
 
   const logout = async () => {
     const response = await auth.logout();
-    console.log(response);
-    if (!response) history.goBack();
+    if (response === false) return history.goBack();
     window.location = "/login";
   };
 
   useEffect(() => {
     logout();
-    return () => {};
-  });
+  }, []);
 
   return <></>;
 };

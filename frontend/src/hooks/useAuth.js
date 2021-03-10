@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import useApi from "./useApi";
 import authApiFunc from "./../api/auth";
@@ -15,13 +15,13 @@ const useAuth = (authFunc) => {
   const [{ auth }, dispatch] = useContext(ApplicationContext); // Application context state and dispatch function
   const authApi = useApi(authFunc);
 
-  useEffect(() => {
-    if (authToken && authToken.token && !auth)
-      getAuthUser()
-        .then((_) => {})
-        .catch((error) => console.error(error));
-    return () => null;
-  });
+  // useEffect(() => {
+  //   if (authToken && authToken.token && !auth)
+  //     getAuthUser()
+  //       .then((_) => {})
+  //       .catch((error) => console.error(error));
+  //   return () => null;
+  // });
 
   /**
    * Set user information in the application context and set the token to the local storage
@@ -36,16 +36,16 @@ const useAuth = (authFunc) => {
     dispatch(setAuth(user.user));
   };
 
-  const getAuthUser = async () => {
-    const response = await request(authApiFunc.getUser);
+  // const getAuthUser = async () => {
+  //   const response = await request(authApiFunc.getUser);
 
-    if (!response.ok)
-      throw new Error(
-        "An Error occurred while trying to retrieve authenticated user info."
-      );
+  //   if (!response.ok)
+  //     throw new Error(
+  //       "An Error occurred while trying to retrieve authenticated user info."
+  //     );
 
-    dispatch(setAuth(response.data));
-  };
+  //   dispatch(setAuth(response.data));
+  // };
 
   const signup = async (data, formHandler, onSuccess) => {
     if (authFunc.name !== authApiFunc.register.name)
@@ -88,10 +88,14 @@ const useAuth = (authFunc) => {
   };
 
   const logout = async () => {
-    await request(authApiFunc.logout);
-    setAuthToken(null);
-    dispatch(deleteAuth());
-    return true;
+    const response = await request(authApiFunc.logout);
+    if (response.ok) {
+      setAuthToken(null);
+      dispatch(deleteAuth());
+      return true;
+    } else {
+      return false;
+    }
   };
 
   /**

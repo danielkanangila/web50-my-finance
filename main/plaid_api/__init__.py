@@ -126,6 +126,8 @@ def get_transaction_by_id(user_pk, transaction_id, start_date, end_date):
     return None if not filtered else filtered[0]
 
 def is_institution_exists(stored_access_tokens, new_access_token):
+    if not stored_access_tokens:
+        return False  
     # check if a given access token for an 
     # instution exists in a list of access tokens
     new_item = client.Item.get(new_access_token).get('item', {})

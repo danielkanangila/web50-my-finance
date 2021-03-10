@@ -25,7 +25,17 @@ const usePlaid = () => {
       public_token,
     });
     // log the error of any
-    if (!response.ok) return console.log(response);
+    if (!response.ok) {
+      errors.setErrors(
+        "An error occurred while trying to link your Account. Please make sure that you're not linked an existing institution and try again."
+      );
+      return console.log(response);
+    }
+    // if request success, remove error
+    errors.setErrors();
+    // the fetch the account information
+    console.log(state.auth?.user);
+    fetchAccounts(state.auth?.user?.id);
     return response;
   };
 

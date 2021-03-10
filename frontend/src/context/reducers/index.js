@@ -40,10 +40,16 @@ export const reducer = (state, action) => {
         loading: action.payload,
       };
     case SET_ERROR:
-      return {
-        ...state,
-        errors: [...state.errors, action.payload],
-      };
+      if (action.payload)
+        return {
+          ...state,
+          errors: [...state.errors, action.payload],
+        };
+      else
+        return {
+          ...state,
+          errors: [],
+        };
     default:
       throw new Error("Unknown reducer action.");
   }
