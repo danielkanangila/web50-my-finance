@@ -77,6 +77,7 @@ export const SidebarLayoutMain = styled.div`
   ${({ width = "6rem" }) => css`
     display: block;
     /* overflow-x: hidden; */
+    padding-bottom: 50px;
     .sidebar {
       @media (min-width: 1024px) {
         width: ${width};

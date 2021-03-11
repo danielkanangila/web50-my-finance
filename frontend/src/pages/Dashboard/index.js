@@ -29,7 +29,6 @@ const Dashboard = ({ children }) => {
           <Header />
           {children}
         </div>
-        <div className="mb-10"></div>
       </SidebarLayoutMain>
     </SidebarLayout>
   );
