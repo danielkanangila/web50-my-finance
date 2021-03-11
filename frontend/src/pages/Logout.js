@@ -14,7 +14,7 @@ const Logout = () => {
 
   useEffect(() => {
     logout();
-  }, []);
+  }, []); // eslint-disable-line
 
   return <></>;
 };

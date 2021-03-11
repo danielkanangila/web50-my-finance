@@ -92,3 +92,53 @@ export const isUpcomingDate = (strDate) => {
 
   return dateToCheck > new Date();
 };
+
+export const getWholeNumberFromAmount = (amount) => {
+  if (!amount) return "00";
+  return amount
+    .toString()
+    .split(".")[0]
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+export const getDecimalPartFromAmount = (amount) => {
+  if (!amount) return "00";
+  const parts = amount.toString().split(".")[0];
+
+  if (parts.length > 1) return parts[1];
+  else return "00";
+};
+
+export const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+};
+
+export const randomCardColor = () => {
+  const colors = [
+    // "orange",
+    // "amber",
+    "yellow",
+    // "lime",
+    "green",
+    // "emerald",
+    // "teal",
+    // "cyan",
+    // "lightBlue",
+    "blue",
+    "indigo",
+    // "violet",
+    "purple",
+    // "fuchsia",
+    "pink",
+    // "rose",
+  ];
+
+  const colorScales = [400, 500, 600, 700, 800, 900];
+
+  const colorIndex = getRandomInt(0, colors.length);
+  const scaleIndex = getRandomInt(0, colorScales.length);
+
+  return `${colors[colorIndex]}-${colorScales[scaleIndex]}`;
+};

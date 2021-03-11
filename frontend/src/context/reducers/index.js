@@ -6,6 +6,7 @@ import {
   SET_ACCOUNTS,
   SET_ERROR,
   SET_LOADING,
+  SET_ACCOUNT_CARD_STYLE,
 } from "./../actions";
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -50,6 +51,11 @@ export const reducer = (state, action) => {
           ...state,
           errors: [],
         };
+    case SET_ACCOUNT_CARD_STYLE:
+      return {
+        ...state,
+        accountsCardColor: [...state.accountsCardColor, action.payload],
+      };
     default:
       throw new Error("Unknown reducer action.");
   }

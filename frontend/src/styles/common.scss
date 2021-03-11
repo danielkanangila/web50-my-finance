@@ -96,3 +96,15 @@ a.active > * {
   color: #fff;
   transition: ease 0.5s;
 }
+
+.account-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 15px;
+}
+
+.act-summary-card:hover {
+  * {
+    color: #fff;
+  }
+}

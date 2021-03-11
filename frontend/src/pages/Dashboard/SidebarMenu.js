@@ -7,7 +7,6 @@ import {
 } from "../../components/common/Sidebar";
 import useAuth from "../../hooks/useAuth";
 import {
-  ChartBar,
   Home as HomeIcon,
   Logout,
   SwitchVertical,
@@ -32,7 +31,7 @@ const SidebarMenu = () => {
         to={`/${auth?.user?.id}`}
       >
         <FlexBox>
-          <HomeIcon className="icon small mr-2" /> Home
+          <HomeIcon className="icon small mr-2" /> Dashboard
         </FlexBox>
       </SidebarItem>
       <SidebarItem
@@ -40,17 +39,17 @@ const SidebarMenu = () => {
         to={`/${auth?.user?.id}/transactions`}
       >
         <FlexBox>
-          <SwitchVertical className="icon small mr-2" /> Transactions
+          <SwitchVertical className="icon small mr-2" /> Transactions History
         </FlexBox>
       </SidebarItem>
-      <SidebarItem
+      {/* <SidebarItem
         onClick={() => updateHearTitle("Statistics")}
         to={`/${auth?.user?.id}/statistics`}
       >
         <FlexBox>
           <ChartBar className="icon small mr-2" /> Statistics
         </FlexBox>
-      </SidebarItem>
+      </SidebarItem> */}
       <SidebarItem to="/logout">
         <FlexBox>
           <Logout className="icon small mr-2 text-red-800" />

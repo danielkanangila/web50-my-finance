@@ -5,11 +5,15 @@ export const SET_ANALYTICS = "SET_ANALYTICS";
 export const SET_TRANSACTIONS = "SET_TRANSACTIONS";
 export const SET_ERROR = "SET_ERROR";
 export const SET_LOADING = "SET_LOADING";
+export const SET_ACCOUNT_CARD_STYLE = "SET_ACCOUNT_STYLE";
 
 export const setAuth = (user) => ({ type: SET_AUTH_USER, payload: user });
 export const deleteAuth = () => ({ type: DELETE_AUTH_USER });
 
-export const setAccounts = (data) => ({ type: SET_ACCOUNTS, payload: data });
+export const setAccounts = (data) => {
+  const accounts = data.map((dt) => dt.accounts);
+  return { type: SET_ACCOUNTS, payload: accounts };
+};
 
 export const setAnalytics = (data) => ({ type: SET_ANALYTICS, payload: data });
 export const setTransactions = (data) => ({
@@ -24,4 +28,9 @@ export const setLoading = (status, message = "") => ({
     message,
     status,
   },
+});
+
+export const setAccountCardStyle = (accountId, cardColor) => ({
+  type: SET_ACCOUNT_CARD_STYLE,
+  payload: { accountId, cardColor },
 });

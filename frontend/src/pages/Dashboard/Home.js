@@ -5,6 +5,7 @@ import usePlaid from "../../hooks/usePlaid";
 import Error from "./Error";
 import Button from "./../../components/common/Button";
 import PageLoader from "../../components/common/PageLoader";
+import AccountsSummary from "../../components/accounts/AccountsSummary";
 
 const Home = () => {
   const auth = useAuth();
@@ -17,7 +18,7 @@ const Home = () => {
         .then((_) => {})
         .catch((error) => console.log(error));
     return () => {};
-  }, [auth.user]);
+  }, [auth.user]); // eslint-disable-line
 
   return (
     <Suspense
@@ -25,11 +26,14 @@ const Home = () => {
         <PageLoader visibility={true} message="Fetching your bank data..." />
       }
     >
-      <div className="relative">
+      <div className="relative px-4">
         <div className="p-5">
           <Error />
         </div>
         <Splash visibility={!plaid.state.accounts.length} />
+        {plaid.state.accounts.length > 0 && (
+          <AccountsSummary accounts={plaid.state.accounts} />
+        )}
       </div>
     </Suspense>
   );

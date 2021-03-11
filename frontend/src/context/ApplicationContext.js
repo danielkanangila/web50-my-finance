@@ -12,6 +12,7 @@ const initialState = {
     message: "",
     status: false,
   },
+  accountsCardColor: [],
 };
 
 export const ApplicationContext = createContext();

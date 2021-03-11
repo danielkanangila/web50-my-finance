@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.6.0",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
+    "currency-symbol-map": "^5.0.1",
     "formik": "^2.2.6",
     "framer-motion": "^3.3.0",
     "node-sass": "^4.14.1",
