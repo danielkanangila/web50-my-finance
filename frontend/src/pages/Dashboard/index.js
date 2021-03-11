@@ -14,7 +14,7 @@ import Logo from "../../components/common/Logo";
 const Dashboard = ({ children }) => {
   return (
     <SidebarLayout>
-      <SidebarLayoutMain options={{ sidebarWidth: "16rem" }}>
+      <SidebarLayoutMain width="16rem">
         <Sidebar className="bg-white shadow">
           <div className="flex justify-center p-2 mb-4">
             <Logo />
@@ -25,10 +25,11 @@ const Dashboard = ({ children }) => {
           </div>
           <SidebarMenu />
         </Sidebar>
-        <div className="w-screen lg:w-auto">
+        <div className="w-screen content">
           <Header />
           {children}
         </div>
+        <div className="mb-10"></div>
       </SidebarLayoutMain>
     </SidebarLayout>
   );

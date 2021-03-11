@@ -6,7 +6,7 @@ import HeaderTitle from "./HeaderTitle";
 
 const Header = () => {
   return (
-    <Navbar position="sticky" className="pl-3 pr-3">
+    <Navbar position="sticky top-0" className="px-4 sm:px-8 lg:px-10">
       <HeaderTitle />
       <div className="flex items-center h-full text-sm">
         {/** A wrapper helper to hide this menu items for small screen and shown only in large screen */}

@@ -27,7 +27,7 @@ const SidebarMenu = () => {
   return (
     <div className="sidebar-menu mt-2">
       <SidebarItem
-        onClick={() => updateHearTitle("Home")}
+        onClick={() => updateHearTitle("Dashboard")}
         to={`/${auth?.user?.id}`}
       >
         <FlexBox>
@@ -35,7 +35,7 @@ const SidebarMenu = () => {
         </FlexBox>
       </SidebarItem>
       <SidebarItem
-        onClick={() => updateHearTitle("Transactions")}
+        onClick={() => updateHearTitle("Transactions History")}
         to={`/${auth?.user?.id}/transactions`}
       >
         <FlexBox>

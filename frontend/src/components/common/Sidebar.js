@@ -25,7 +25,7 @@ export const SidebarContext = createContext();
 export const initialState = {
   visibility: (() => (window.innerWidth >= 1024 ? true : false))(),
   action: null,
-  headerTitle: "Home",
+  headerTitle: "Dashboard",
 };
 
 /**
@@ -74,9 +74,20 @@ export const SidebarLayout = ({ className, children, ...resOfProps }) => {
  * @param {object} props // all div props plus options to define the size of the sidebar
  */
 export const SidebarLayoutMain = styled.div`
-  ${({ options = { sidebarWidth: "6rem" } }) => css`
-    display: grid;
-    grid-template-columns: ${options.sidebarWidth} auto;
+  ${({ width = "6rem" }) => css`
+    display: block;
+    /* overflow-x: hidden; */
+    .sidebar {
+      @media (min-width: 1024px) {
+        width: ${width};
+      }
+    }
+    .content {
+      @media (min-width: 1024px) {
+        margin-left: ${width};
+        width: calc(100vw - ${width});
+      }
+    }
   `}
 `;
 
@@ -94,7 +105,7 @@ export const Sidebar = ({ className, children, ...resOfProps }) => {
     <div
       className={`sidebar pl-2 pr-2 flex flex-col transition duration-500 ease-in-out ${
         visibility ? "block" : "hidden"
-      } lg:block z-50 absolute w-full sm:w-60 lg:w-auto lg:relative  h-full min-h-screen ${
+      } lg:block z-50 absolute w-full sm:w-60 lg:fixed lg:top-0 lg:left-0  h-full min-h-screen ${
         className ? className : ""
       }`}
       {...resOfProps}
