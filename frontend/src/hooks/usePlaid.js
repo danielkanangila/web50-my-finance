@@ -2,7 +2,7 @@ import plaidApiFunc from "./../api/plaid";
 import { request } from "../utils";
 import { useContext } from "react";
 import { ApplicationContext } from "../context/ApplicationContext";
-import { setAccounts, setLoading } from "../context/actions";
+import { setAccounts, setAnalytics, setLoading } from "../context/actions";
 import useLoader from "./useLoader";
 import useErrors from "./useErrors";
 
@@ -67,20 +67,43 @@ const usePlaid = () => {
   };
 
   const fetchAccounts = async (userId) => {
-    dispatch(setLoading(true, "Fetching your bank account(s)..."));
-    const response = await request(() => plaidApiFunc.getAccounts(userId));
+    return await _fetch({
+      apiFunc: () => plaidApiFunc.getAccounts(userId),
+      successCallback: (data) => dispatch(setAccounts(data)),
+      loadingMessage: "Fetching your bank account(s)...",
+      errorMessage:
+        "An unknown error occurred while trying to retrieve your account(s) information.",
+    });
+  };
+
+  const fetchAnalytics = async (userId) => {
+    return await _fetch({
+      apiFunc: () => plaidApiFunc.getAnalytics(userId),
+      successCallback: (data) => dispatch(setAnalytics(data)),
+      loadingMessage: "Analyzing your bank account(s) information...",
+      errorMessage:
+        "An unknown error occurred while trying to analyze your account(s) information.",
+    });
+  };
+
+  const _fetch = async ({
+    apiFunc,
+    successCallback,
+    loadingMessage,
+    errorMessage,
+  }) => {
+    dispatch(setLoading(true, loadingMessage));
+    const response = await request(apiFunc);
 
     if (!response.ok) {
       loader.setLoader(false);
-      errors.setErrors(
-        "An unknown error occurred while trying to retrieve your account(s) information"
-      );
+      errors.setErrors(errorMessage);
       return;
     }
     // Disable loading
     loader.setLoader(false);
     // Set data to the store
-    dispatch(setAccounts(response.data));
+    return successCallback(response.data);
   };
 
   return {
@@ -93,6 +116,7 @@ const usePlaid = () => {
     setAccessToken,
     open,
     fetchAccounts,
+    fetchAnalytics,
   };
 };
 

@@ -8,12 +8,19 @@ const getAccountTransactions = (userId, accountId) =>
 const getTransactions = (userId) =>
   authClient().get(`/users/${userId}/transactions`);
 
+const getAnalytics = (userId) => authClient().get(`/users/${userId}/analytics`);
+
+const getAnalyticsByQuery = (userId, query) =>
+  authClient().get(`/users/${userId}/analytics?${query}`);
+
 const plaid = {
   createLinkToken,
   setAccessToken,
   getAccounts,
   getTransactions,
   getAccountTransactions,
+  getAnalytics,
+  getAnalyticsByQuery,
 };
 
 export default plaid;

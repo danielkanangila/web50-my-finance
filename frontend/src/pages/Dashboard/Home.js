@@ -15,7 +15,9 @@ const Home = () => {
     if (auth.user)
       plaid
         .fetchAccounts(auth.user.id)
-        .then((_) => {})
+        .then((_) => {
+          plaid.fetchAnalytics(auth.user.id);
+        })
         .catch((error) => console.log(error));
     return () => {};
   }, [auth.user]); // eslint-disable-line
