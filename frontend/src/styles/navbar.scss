@@ -1,0 +1,9 @@
+.nav-item:hover .nav-item--hover\:text-white {
+  color: #ffffff;
+  fill: #ffffff;
+}
+
+.dropdown-items a:last-child {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
