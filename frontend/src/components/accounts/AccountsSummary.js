@@ -1,5 +1,6 @@
 import React from "react";
 import AccountSummaryCard from "./AccountSummaryCard";
+import { scaleOrdinal, schemeDark2 } from "d3";
 
 const AccountsSummary = ({ accounts }) => {
   return (
@@ -8,22 +9,25 @@ const AccountsSummary = ({ accounts }) => {
         <AccountList key={index} index={index} list={account} />
       ))}
     </div>
-    // <div className="account-list">
-    //   {accounts.map((act, index) => (
-    //     <>
-    //         {act.map(summary => <AccountSummaryCard key={index} {...act.accounts} />)}
-    //     </>
-    //   ))}
-    // </div>
   );
 };
 
-const AccountList = ({ list, index }) => (
-  <div className={`account-list ins-${index}`}>
-    {list.map((summary) => (
-      <AccountSummaryCard key={summary.account_id} {...summary} />
-    ))}
-  </div>
-);
+const AccountList = ({ list, index }) => {
+  // generate accounts colors
+  const color = scaleOrdinal()
+    .domain(list.map((acc) => acc.account_id))
+    .range(schemeDark2);
+  return (
+    <div className={`account-list ins-${index}`}>
+      {list.map((summary) => (
+        <AccountSummaryCard
+          key={summary.account_id}
+          {...summary}
+          color={color(summary.account_id)}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default AccountsSummary;

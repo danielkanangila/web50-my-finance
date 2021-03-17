@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { randomCardColor } from "../../utils";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ApplicationContext } from "../../context/ApplicationContext";
 import { setAccountCardStyle } from "../../context/actions";
@@ -11,19 +10,26 @@ const AccountSummaryCard = ({
   mask,
   subtype,
   balances,
+  color,
 }) => {
   const dispatch = useContext(ApplicationContext)[1];
-  const cardColor = randomCardColor();
+  const [hover, setHover] = useState(false);
 
   useEffect(() => {
-    dispatch(setAccountCardStyle(account_id, cardColor));
+    dispatch(setAccountCardStyle(account_id, color));
     return () => {};
   }, []); // eslint-disable-line
 
   return (
     <Link
       to={`/accounts/${account_id}`}
-      className={`act-summary-card bg-white rounded-lg p-5 shadow-lg hover:bg-${cardColor} transition duration-500 ease-in-out border-t-4 border-${cardColor}`}
+      className={`act-summary-card bg-white rounded-lg p-5 shadow-lg hover:bg-${color} transition duration-500 ease-in-out border-t-4`}
+      style={{
+        borderColor: color,
+        ...(hover && { backgroundColor: color }),
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <div className="card-header">
         <div className="flex items-center">

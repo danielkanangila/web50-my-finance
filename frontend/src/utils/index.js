@@ -1,3 +1,6 @@
+/* eslint-disable no-sequences */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-const-assign */
 export const handleFormSubmission = async (
   request,
   formHandler,
