@@ -106,6 +106,36 @@ const usePlaid = () => {
     return successCallback(response.data);
   };
 
+  const formatChartData = (transactions, color) => {
+    const totalTransactionsValue = transactions.reduce((total, tx) => {
+      return total + Math.round(tx.amount);
+    }, 0);
+
+    const formatted = transactions.map((tx) => {
+      const value = Math.round(
+        ((tx.amount / totalTransactionsValue) * 100).toFixed(2)
+      );
+
+      return {
+        color: color(tx.category),
+        name: tx.category,
+        value: value || 1,
+      };
+    });
+
+    return [formatted, totalTransactionsValue];
+  };
+
+  const computeTransactionsValue = (transactions) => {
+    return transactions.reduce((total, tx) => {
+      return total + Math.round(tx.amount);
+    }, 0);
+  };
+
+  const computePercentage = (total, amount, toFixed = 2) => {
+    return ((amount / total) * 100).toFixed(toFixed);
+  };
+
   return {
     state: {
       transactions: state.transactions,
@@ -117,6 +147,9 @@ const usePlaid = () => {
     open,
     fetchAccounts,
     fetchAnalytics,
+    formatChartData,
+    computeTransactionsValue,
+    computePercentage,
   };
 };
 

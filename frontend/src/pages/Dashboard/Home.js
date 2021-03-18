@@ -36,7 +36,14 @@ const Home = () => {
         </div>
         <Splash visibility={!plaid.state.accounts.length} />
         <Title title="Last 30 days summary" className="uppercase mb-5" />
-        <AnalyticsDetails {...plaid.state.analytics} />
+        <AnalyticsDetails
+          {...{
+            ...plaid.state.analytics,
+            transactions: plaid.state.analytics?.transactions
+              ?.sort((a, b) => a.amount - b.amount)
+              .reverse(),
+          }}
+        />
         <Title title="Your Account(s)" className="uppercase mb-5" />
         {plaid.state.accounts.length > 0 && (
           <AccountsSummary accounts={plaid.state.accounts} />
