@@ -26,9 +26,15 @@ function App() {
             <Route path="/logout" component={Logout} />
             <SecureRoute path="/:userId">
               <Dashboard>
-                <Route exact path="/:userId/" component={DashboardHome} />
-                <Route path="/:userId/transactions" component={Transactions} />
-                <Route path="/:userId/statistics" component={Statistics} />
+                <Route exact path="/users/:userId/" component={DashboardHome} />
+                <Route
+                  path="/users/:userId/transactions"
+                  component={Transactions}
+                />
+                <Route
+                  path="/users/:userId/statistics"
+                  component={Statistics}
+                />
               </Dashboard>
             </SecureRoute>
           </Switch>

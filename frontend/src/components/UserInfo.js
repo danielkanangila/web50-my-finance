@@ -1,12 +1,16 @@
 import React from "react";
-import { FlexBox } from "../../components/common";
-import { UserCircle } from "../../components/icons";
-import useAuth from "../../hooks/useAuth";
+import { FlexBox } from "./common";
+import { UserCircle } from "./icons";
+import useAuth from "./../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const UserInfo = () => {
   const auth = useAuth();
   return (
-    <div className="mb-8 cursor-pointer">
+    <Link
+      to={`/users/${auth?.user?.id}/profile`}
+      className="block mb-5 cursor-pointer"
+    >
       <FlexBox>
         <div className="w-11 h-11">
           <UserCircle className="w-11 h-11 fill-gray-300" />
@@ -18,7 +22,7 @@ const UserInfo = () => {
           </span>
         </div>
       </FlexBox>
-    </div>
+    </Link>
   );
 };
 

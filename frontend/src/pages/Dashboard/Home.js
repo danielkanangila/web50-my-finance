@@ -30,7 +30,7 @@ const Home = () => {
         <PageLoader visibility={true} message="Fetching your bank data..." />
       }
     >
-      <div className="relative px-4 sm:px-8 lg:px-10">
+      <div className="">
         <div className="p-5">
           <Error />
         </div>

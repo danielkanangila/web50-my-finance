@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./../../styles/navbar.scss";
 export const Navbar = ({
-  position = "relative",
+  position = "sticky top-0",
   bg = "bg-white",
   shadow = "shadow-md",
   children,
@@ -27,7 +27,7 @@ export const NavItem = ({
 }) => (
   <NavLink
     to={to}
-    className={`nav-item transition duration-500 ease-in-out flex items-center h-full p-3 px-4 hover:bg-gray-900 hover:text-white ${
+    className={`nav-item transition duration-500 ease-in-out flex justify-center items-center h-full w-full lg:w-auto p-3 px-4 hover:bg-gray-900 hover:text-white ${
       className ? className : ""
     }`}
     {...restOfProps}
@@ -40,7 +40,9 @@ export const NavItem = ({
 export const Dropdown = ({ className, children, ...restOfProps }) => (
   <div
     {...restOfProps}
-    className={`group relative h-full ${className ? className : ""}`}
+    className={`relative inline-block text-left w-full lg:w-auto ${
+      className ? className : ""
+    }`}
   >
     {children}
   </div>
@@ -49,17 +51,29 @@ export const Dropdown = ({ className, children, ...restOfProps }) => (
 export const DropdownItemsContainer = ({
   className,
   children,
+  visibility,
   ...restOfProps
 }) => (
   <div
     {...restOfProps}
-    className={`dropdown-items hidden group-hover:block absolute pin-r top-full w-48 bg-white shadow rounded-b ${
+    className={`${
+      visibility ? "block" : "hidden"
+    } origin-top-right absolute right-0 mt-2 w-full lg:w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none ${
       className ? className : ""
     }`}
+    role="menu"
   >
     {children}
   </div>
 );
+
+export const DropdownItemGroup = ({ className, children, ...restOfProps }) => {
+  return (
+    <div {...restOfProps} className={`py-1 ${className}`} role="none">
+      {children}
+    </div>
+  );
+};
 
 export const DropdownItem = ({
   to,
@@ -70,10 +84,11 @@ export const DropdownItem = ({
 }) => (
   <Link
     to={to}
-    className={`dropdown-item transition duration-500 ease-in-out block text-left py-3 px-3 hover:bg-green-500 hover:text-white text-xs ${
+    className={`dropdown-item transition duration-500 text-gray-700 ease-in-out block text-left py-3 px-3 hover:bg-gray-100 hover:text-gray-900 ${
       className ? className : ""
     }`}
     {...restOfProps}
+    role="menuitem"
   >
     {children ? children : title}
   </Link>

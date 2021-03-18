@@ -23,7 +23,7 @@ const Login = () => {
 
   const handleLogin = (data, formHandler) => {
     auth.login(data, formHandler, (res) => {
-      history.push(`/${res.user.id}`);
+      history.push(`/users/${res.user.id}`);
     });
   };
 

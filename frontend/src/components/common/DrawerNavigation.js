@@ -47,7 +47,7 @@ export const DrawerNavigation = ({ className, children, ...restOfProps }) => {
   return (
     <div
       className={`z-50 absolute bg-white h-screen w-screen ${
-        visibility ? "block" : "hidden"
+        visibility ? "block drawer-menu-open" : "hidden"
       }`}
       {...restOfProps}
     >

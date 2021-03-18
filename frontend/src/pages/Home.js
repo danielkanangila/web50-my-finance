@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, Route } from "react-router-dom";
 import Button from "../components/common/Button";
 import Section from "../components/common/Section";
 import PricingCard from "../components/common/PricingCard";
 import { ReactComponent as FinanceIllustrator } from "./../assets/personal_finance.svg";
 import bankIconList from "./../components/icons/BankIcons";
 import { ReactComponent as TransferMoneyIllustration } from "./../assets/transfer_money.svg";
+import useAuth from "../hooks/useAuth";
 
 const pricing = [
   {
@@ -118,4 +119,18 @@ const BankLogo = ({ Logo, name = "", className, onClick = () => {} }) => {
   );
 };
 
-export default Home;
+const RenderHome = (props) => {
+  const auth = useAuth();
+
+  return (
+    <Route
+      {...props}
+      render={(comProps) => {
+        if (auth?.user?.id) return <Redirect to={`/users/${auth?.user?.id}`} />;
+        return <Home {...comProps} />;
+      }}
+    />
+  );
+};
+
+export default RenderHome;
