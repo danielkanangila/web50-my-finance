@@ -41,6 +41,7 @@ export const Header = ({
   balances,
   nextAccountId,
   previousAccountId,
+  institution,
 }) => {
   const history = useHistory();
 
@@ -56,9 +57,12 @@ export const Header = ({
           disabled={!previousAccountId}
         />
         <div className="w-full flex flex-col items-center px-2 lg:px-10 2xl:px-20">
-          <div className="flex items-center text-white w-full">
+          <h1 className="text-xs font-bold w-full uppercase">
+            {institution.name}
+          </h1>
+          <div className="flex items-center text-white w-full mb-1">
             <h2 className="text-md lg:text-xl text-white font-bold mr-5">
-              {official_name}
+              {official_name || `${institution.name} - ${type}`}
             </h2>
             <p className="text-sm text-white font-medium">...{mask}</p>
           </div>

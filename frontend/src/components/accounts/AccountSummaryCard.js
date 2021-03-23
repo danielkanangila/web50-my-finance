@@ -12,6 +12,7 @@ const AccountSummaryCard = ({
   subtype,
   balances,
   color,
+  institution,
   isDefault = false,
 }) => {
   const dispatch = useContext(ApplicationContext)[1];
@@ -37,9 +38,14 @@ const AccountSummaryCard = ({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="card-header">
+      <div className="card-header flex flex-col">
+        <span className="text-xs text-gray-500 font-semibold uppercase">
+          {institution.name}
+        </span>
         <div className="flex items-center">
-          <h2 className="text-sm font-bold mr-5">{official_name}</h2>
+          <h2 className="text-md font-bold mr-5">
+            {official_name || institution.name}
+          </h2>
           <p className="text-xs text-gray-500 font-medium">...{mask}</p>
         </div>
         <span className="text-xs text-gray-500 font-semibold uppercase">
