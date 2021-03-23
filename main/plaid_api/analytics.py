@@ -149,7 +149,8 @@ class Analytics:
             'category': transaction.get('category')[-1],
             'description': transaction.get('name') if transaction.get('name') != None else transaction.get('merchant_name'),
             'date': transaction.get('date'),
-            'account': self.get_account_name(account_id=transaction.get('account_id'))
+            'account': self.get_account_name(account_id=transaction.get('account_id')),
+            'account_id': transaction.get('account_id')
         }
 
     def get_account_name(self, account_id):
