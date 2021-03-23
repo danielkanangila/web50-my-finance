@@ -63,10 +63,10 @@ const AuthUserMenu = ({ auth, visibility }) => {
     return (
       <div className="flex flex-col h-full lg:flex-row w-full justify-center items-center lg:items-start lg:w-auto">
         <NavItem to={`/users/${auth?.user?.id}`} title="Overview" />
-        <NavItem
+        {/* <NavItem
           to={`/users/${auth?.user?.id}/transactions`}
           title="Transactions History"
-        />
+        /> */}
         <UserDropdownMenu user={auth?.user} />
       </div>
     );
@@ -85,10 +85,13 @@ const UserDropdownMenu = ({ user }) => {
         My Account
       </NavItem>
       <DropdownItemsContainer visibility={itemsVisibility}>
-        <div className="px-4 my-5 mt-8">
+        {/* <div className="px-4 my-5 mt-8">
           <UserInfo />
           <LinkBankButton />
-        </div>
+        </div> */}
+        <DropdownItemGroup>
+          <DropdownItem to={`/${user.id}/account`} title="Manage Account" />
+        </DropdownItemGroup>
         <DropdownItemGroup>
           <DropdownItem to="/logout" title="Logout" />
         </DropdownItemGroup>
