@@ -16,8 +16,8 @@ import {
   NavItem,
 } from "./common/Navbar";
 import Button from "./common/Button";
-import LinkBankButton from "./LinkBankButton";
-import UserInfo from "./UserInfo";
+// import LinkBankButton from "./LinkBankButton";
+// import UserInfo from "./UserInfo";
 
 const MainHeader = () => {
   const auth = useAuth();

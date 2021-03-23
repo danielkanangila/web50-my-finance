@@ -131,17 +131,18 @@ class Analytics:
     
     def set_grouped_transaction(self, category, description, amount, transaction_item):
         # add new transaction in the grouped_transaction
+        transaction_type = self.get_transaction_type(transaction_categories=transaction_item.get('category'))
         row = {
             'category': category,
             'description': description,
             'amount': amount,
             'total_transactions': 1,
-            'transaction_type': 'Incone' if self.is_income(transaction_categories=transaction_item.get('category')) else 'Expense',
-            'transactions': [self.format_transaction_item(transaction_item)]
+            'transaction_type': transaction_type,
+            'transactions': [self.format_transaction_item(transaction_item, transaction_type)]
         }
         self.grouped_transactions.append(row)
 
-    def format_transaction_item(self, transaction):
+    def format_transaction_item(self, transaction, transaction_type=None):
         # Format one transaction item to return only the necessary transaction information
         return {
             'transaction_id': transaction.get('transaction_id'),
@@ -150,7 +151,8 @@ class Analytics:
             'description': transaction.get('name') if transaction.get('name') != None else transaction.get('merchant_name'),
             'date': transaction.get('date'),
             'account': self.get_account_name(account_id=transaction.get('account_id')),
-            'account_id': transaction.get('account_id')
+            'account_id': transaction.get('account_id'),
+            'transaction_type': transaction_type,
         }
 
     def get_account_name(self, account_id):
@@ -189,15 +191,19 @@ class Analytics:
     def update_transaction_info(self, transaction, category, amount_to_add, description, new_transaction):
         # Helper method used in the update_transaction to update a transaction related to a given category
         if (transaction.get('category') == category):
+            transaction_type = self.get_transaction_type(transaction_categories=transaction.get('category'))
             return {
                 **transaction,
                 'amount': transaction.get('amount') + amount_to_add,
                 'description': self.format_description(old_description=transaction.get("description"), description=description),
                 'total_transactions': transaction.get('total_transactions') + 1,
-                'transactions': [*transaction.get('transactions'), self.format_transaction_item(new_transaction)]
+                'transactions': [*transaction.get('transactions'), self.format_transaction_item(new_transaction, transaction_type)]
             }
         else:
             return transaction
+
+    def get_transaction_type(self, transaction_categories):
+        return 'Income' if self.is_income(transaction_categories=transaction_categories) else 'Expense'
 
     def get_data(self):
         return { 

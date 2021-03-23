@@ -5,11 +5,12 @@ import { ApplicationContext } from "../context/ApplicationContext";
 // import useLoader from "./useLoader";
 
 const useAccounts = (params) => {
-  const [state] = useContext(ApplicationContext);
+  const [appState] = useContext(ApplicationContext);
   const [currentAccount, setCurrentAccount] = useState({});
   const [currentColor, setCurrentColor] = useState(null);
   const [nextAccountId, setNextAccountId] = useState(null);
   const [previousAccountId, setPreviousAccountId] = useState(null);
+  const [transactions, setTransactions] = useState([]);
   // const plaid = usePlaid();
   // const loader = useLoader();
   // const errors = useErrors();
@@ -18,11 +19,43 @@ const useAccounts = (params) => {
     setCurrentAccount(getAccountById(accountId));
     setCurrentColor(getAccountColor(accountId));
     _setNextPreviousAccount(accountId);
+    _setTransactions(accountId);
   };
 
+  const groupTransactionType = (accountId, data) => {
+    const items = extractAccountTransaction(accountId, data);
+    const expenses = items.filter((tx) => tx.transaction_type === "Expense");
+    const incomes = items.filter((tx) => tx.transaction_type === "Income");
+
+    return {
+      expenses,
+      incomes,
+    };
+  };
+
+  const extractAccountTransaction = (accountId, data = null) => {
+    // extract transactions list from analytics
+    const items = data || appState?.analytics?.transactions;
+    let _transactions = [];
+    for (const item of items) {
+      if (item.transactions) {
+        // get all transactions related to the accountId
+        const filteredTx = item.transactions.filter(
+          (tx) => tx.account_id === accountId
+        );
+        if (filteredTx.length)
+          _transactions = [..._transactions, ...filteredTx];
+      }
+    }
+    return _transactions;
+  };
+
+  const _setTransactions = (accountId) =>
+    setTransactions(groupTransactionType(accountId));
+
   const _setNextPreviousAccount = (accountId) => {
-    for (let i = 0; i < state.accounts.length; i++) {
-      let accountList = state.accounts[i];
+    for (let i = 0; i < appState.accounts.length; i++) {
+      let accountList = appState.accounts[i];
 
       for (let y = 0; y < accountList.length; y++) {
         if (accountList[y].account_id === accountId) {
@@ -41,7 +74,7 @@ const useAccounts = (params) => {
   };
 
   const getAccountColor = (accountId) => {
-    const result = state.accountsCardColor.filter(
+    const result = appState.accountsCardColor.filter(
       (entry) => entry.accountId === accountId
     );
 
@@ -50,7 +83,7 @@ const useAccounts = (params) => {
   };
 
   const getAccountById = (accountId) => {
-    for (const accountList of state.accounts) {
+    for (const accountList of appState.accounts) {
       for (const acc of accountList) {
         if (acc.account_id === accountId) return acc;
       }
@@ -58,13 +91,15 @@ const useAccounts = (params) => {
   };
 
   return {
-    accounts: state.accounts,
+    accounts: appState.accounts,
     currentAccount,
     currentColor,
     previousAccountId,
     nextAccountId,
+    transactions,
     getAccountColor,
     getAccountById,
+    groupTransactionType,
     init,
   };
 };

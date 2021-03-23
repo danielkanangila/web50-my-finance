@@ -14,11 +14,12 @@ const Account = () => {
     init,
     nextAccountId,
     previousAccountId,
+    transactions,
   } = useAccounts();
 
   useEffect(() => {
     init(params?.accountId, params?.userId);
-  }, [params, init]);
+  }, [params]);
 
   return (
     <div>
@@ -33,7 +34,7 @@ const Account = () => {
       <Transactions
         userId={params?.userId}
         accountId={params?.accountId}
-        transactions={[]}
+        transactions={transactions}
       />
     </div>
   );
@@ -65,11 +66,11 @@ export const Header = ({
         />
         <div className="w-full flex flex-col items-center px-2 lg:px-10 2xl:px-20">
           <h1 className="text-xs font-bold w-full uppercase">
-            {institution.name}
+            {institution?.name}
           </h1>
           <div className="flex items-center text-white w-full mb-1">
             <h2 className="text-md lg:text-xl text-white font-bold mr-5">
-              {official_name || `${institution.name} - ${type}`}
+              {official_name || `${institution?.name} - ${type}`}
             </h2>
             <p className="text-sm text-white font-medium">...{mask}</p>
           </div>
