@@ -1,8 +1,11 @@
 import datetime
 import plaid
+import pprint
 
 from .settings import PLAID_PRODUCTS, PLAID_COUNTRY_CODES, PLAID_REDIRECT_URI, PLAID_CLIENT_ID, PLAID_SECRET, PLAID_ENV, PLAID_API_VERSION, config
 from ..models import PlaidAccessToken
+
+pp = pprint.PrettyPrinter(indent=4)
 
 client = plaid.Client(
     client_id=PLAID_CLIENT_ID,
@@ -45,8 +48,15 @@ def get_accounts(user_pk):
     accounts = []
     try:
         for plaid_access_token in get_access_tokens(user_pk):
-            account = client.Accounts.get(plaid_access_token.access_token)
-            accounts.append(account)
+            response = client.Accounts.get(plaid_access_token.access_token)
+            # getting institution information
+            ins = get_institution_by_id(response.get('item').get('institution_id'))
+            # # add institution information to all acccounts
+            data = list(map(
+                lambda acc: {**acc, 'institution': ins },
+                response.get('accounts', [])
+            ))
+            accounts.append({'accounts': data})
     except Exception as e:
         print(e)
         raise
@@ -145,5 +155,14 @@ def is_institution_exists(stored_access_tokens, new_access_token):
             return new_institution_id
 
     return None
+
+def get_institution_by_id(institution_id):
+    response = client.Institutions.get_by_id(institution_id)
+
+    return {
+        'id': response.get('institution').get('institution_id'),
+        'name': response.get('institution').get('name'),
+        'country': response.get('institution').get('country_codes')
+    }
 
 
