@@ -11,6 +11,7 @@ import { default as DashboardHome } from "./pages/Dashboard/Home";
 import MainHeader from "./components/MainHeader";
 import ApplicationContextProvider from "./context/ApplicationContext";
 import Footer from "./components/Footer";
+import Account from "./components/accounts/Account";
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
                 <Route
                   path="/users/:userId/statistics"
                   component={Statistics}
+                />
+                <Route
+                  path="/users/:userId/accounts/:accountId"
+                  component={Account}
                 />
               </Dashboard>
             </SecureRoute>

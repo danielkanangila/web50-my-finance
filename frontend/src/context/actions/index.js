@@ -32,5 +32,5 @@ export const setLoading = (status, message = "") => ({
 
 export const setAccountCardStyle = (accountId, cardColor) => ({
   type: SET_ACCOUNT_CARD_STYLE,
-  payload: { accountId, cardColor },
+  payload: { accountId, color: cardColor },
 });

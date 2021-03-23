@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ApplicationContext } from "../../context/ApplicationContext";
 import { setAccountCardStyle } from "../../context/actions";
 import Amount from "../common/Amount";
+import useAuth from "../../hooks/useAuth";
 
 const AccountSummaryCard = ({
   account_id,
@@ -11,9 +12,11 @@ const AccountSummaryCard = ({
   subtype,
   balances,
   color,
+  isDefault = false,
 }) => {
   const dispatch = useContext(ApplicationContext)[1];
   const [hover, setHover] = useState(false);
+  const auth = useAuth();
 
   useEffect(() => {
     dispatch(setAccountCardStyle(account_id, color));
@@ -22,8 +25,11 @@ const AccountSummaryCard = ({
 
   return (
     <Link
-      to={`/accounts/${account_id}`}
-      className={`act-summary-card bg-white rounded-lg p-5 shadow-lg hover:bg-${color} transition duration-500 ease-in-out border-t-4`}
+      to={`/users/${auth?.user?.id}/accounts/${account_id}`}
+      className={`
+        act-summary-card block 
+        ${!isDefault ? "bg-white rounded-lg shadow-lg " : "default"}  p-5 
+        hover:bg-${color} transition duration-500 ease-in-out border-t-4`}
       style={{
         borderColor: color,
         ...(hover && { backgroundColor: color }),

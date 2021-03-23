@@ -8,6 +8,7 @@ import PageLoader from "../../components/common/PageLoader";
 import AccountsSummary from "../../components/accounts/AccountsSummary";
 import AnalyticsDetails from "../../components/accounts/AnalyticsDetails";
 import Title from "../../components/common/Title";
+import Container from "../../components/common/Container";
 
 const Home = () => {
   const auth = useAuth();
@@ -30,7 +31,7 @@ const Home = () => {
         <PageLoader visibility={true} message="Fetching your bank data..." />
       }
     >
-      <div className="">
+      <Container>
         <div className="p-5">
           <Error />
         </div>
@@ -48,7 +49,7 @@ const Home = () => {
         {plaid.state.accounts.length > 0 && (
           <AccountsSummary accounts={plaid.state.accounts} />
         )}
-      </div>
+      </Container>
     </Suspense>
   );
 };

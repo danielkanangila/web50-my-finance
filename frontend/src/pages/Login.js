@@ -40,7 +40,7 @@ const Login = () => {
           type="text"
           name="username"
           label="Username or Email"
-          placeholder="example@gmail.com"
+          // placeholder="example@gmail.com"
           autoComplete="email"
           required
         />
@@ -49,7 +49,7 @@ const Login = () => {
           type="password"
           name="password"
           label="Password"
-          placeholder="**********"
+          // placeholder="**********"
           required
         />
         <div className="m-6"></div>

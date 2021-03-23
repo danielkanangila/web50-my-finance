@@ -107,9 +107,12 @@ svg {
   }
 }
 
-.act-summary-card:hover {
-  * {
-    color: #fff;
+.act-summary-card {
+  &:hover,
+  &.default {
+    * {
+      color: #fff;
+    }
   }
 }
 
@@ -133,4 +136,15 @@ svg {
 
 .recharts-wrapper {
   position: inherit !important;
+}
+
+.account-header *,
+.account-balances .balance-card > * {
+  color: #fff;
+}
+
+button.action:hover {
+  span {
+    color: rgb(41, 40, 40);
+  }
 }
