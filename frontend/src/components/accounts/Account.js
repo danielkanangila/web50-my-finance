@@ -4,6 +4,7 @@ import useAccounts from "../../hooks/useAccounts";
 import Container from "../common/Container";
 import { Balance } from "./AccountSummaryCard";
 import Button from "./../common/Button";
+import Transactions from "./Transactions";
 
 const Account = () => {
   const params = useParams();
@@ -27,6 +28,12 @@ const Account = () => {
         {...currentAccount?.balances}
         nextAccountId={nextAccountId}
         previousAccountId={previousAccountId}
+      />
+      <div className="my-5"></div>
+      <Transactions
+        userId={params?.userId}
+        accountId={params?.accountId}
+        transactions={[]}
       />
     </div>
   );
