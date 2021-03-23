@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { ApplicationContext } from "../context/ApplicationContext";
-// import usePlaid from "./usePlaid";
+import usePlaid from "./usePlaid";
 // import useErrors from "./useErrors";
 // import useLoader from "./useLoader";
 
@@ -11,6 +11,7 @@ const useAccounts = (params) => {
   const [nextAccountId, setNextAccountId] = useState(null);
   const [previousAccountId, setPreviousAccountId] = useState(null);
   const [transactions, setTransactions] = useState([]);
+  const { computeTransactionsValue } = usePlaid();
   // const plaid = usePlaid();
   // const loader = useLoader();
   // const errors = useErrors();
@@ -28,8 +29,14 @@ const useAccounts = (params) => {
     const incomes = items.filter((tx) => tx.transaction_type === "Income");
 
     return {
-      expenses,
-      incomes,
+      expenses: {
+        total: computeTransactionsValue(expenses),
+        items: expenses,
+      },
+      incomes: {
+        total: computeTransactionsValue(incomes),
+        items: incomes,
+      },
     };
   };
 

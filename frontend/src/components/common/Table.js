@@ -2,9 +2,9 @@ import React from "react";
 
 export const defaultStyle = {
   table: "min-w-full divide-y divide-gray-200",
-  thead: "bg-gray-50",
+  thead: "bg-gray-100",
   th:
-    "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+    "px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider",
   tbody: "bg-white divide-y divide-gray-200",
   tbodyTr: "",
   td: "px-6 py-4 whitespace-nowrap",
@@ -49,15 +49,15 @@ export const Td = ({ children, className = defaultStyle.td }) => (
   <td className={`${className} cursor-pointer`}>{children}</td>
 );
 
-export const DataViewer = ({ titles, items, styles }) => (
+export const DataViewer = ({ keys, items, showHeader = false, styles }) => (
   <Table
     className={styles?.table || defaultStyle.table}
     wrapperClassName={styles?.tableWrapper || defaultStyle.tableWrapper}
   >
-    {titles && (
+    {showHeader && (
       <Thead className={styles?.thead || defaultStyle.thead}>
         <tr>
-          {titles.map((title, idx) => (
+          {keys.map((title, idx) => (
             <Th className={styles?.th || defaultStyle.th} key={idx}>
               {title}
             </Th>
@@ -66,17 +66,32 @@ export const DataViewer = ({ titles, items, styles }) => (
       </Thead>
     )}
     <Tbody className={styles?.tbody || defaultStyle.tbody}>
-      {items.map((item, index) => (
-        <tr className={styles?.tbodyTr} key={index}>
-          {Object.keys(item).map((key, keyIndex) => (
-            <Td className={styles?.td || defaultStyle.td} key={keyIndex}>
-              {item[key]}
-            </Td>
-          ))}
-        </tr>
-      ))}
+      <DataItems
+        items={items || []}
+        keys={keys || []}
+        styles={{
+          td: styles?.td || defaultStyle.td,
+          tbodyTr: styles?.tbodyTr || defaultStyle.tbodyTr,
+        }}
+      />
     </Tbody>
   </Table>
 );
+
+export const DataItems = ({ items, keys, styles }) => {
+  return (
+    <>
+      {items.map((item, index) => (
+        <tr className={styles?.tbodyTr} key={index}>
+          {keys.map((key, keyIndex) => (
+            <td key={keyIndex} className={styles?.td}>
+              {item[key]}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </>
+  );
+};
 
 // export default Table;

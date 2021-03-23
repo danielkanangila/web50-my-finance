@@ -119,9 +119,7 @@ export const Transactions = ({ data }) => {
     <>
       {data && (
         <DataViewer
-          // titles={Object.keys(data[0]).filter(
-          //   (key) => key === "category" || key === "amount"
-          // )}
+          keys={["color", "category", "amount", "percentage"]}
           items={data}
           styles={{
             td: "py-1 px-4 whitespace-normal text-sm",
