@@ -1,5 +1,6 @@
 import datetime
 from django.http import Http404
+from django.shortcuts import get_list_or_404
 from rest_framework import generics, viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -46,6 +47,7 @@ class PlaidAccessTokenAPIView(APIView):
     permission_classes = [
         permissions.IsAuthenticated
     ]
+    
 
     def post(self, request, *args, **kwargs):
         try:
@@ -79,6 +81,13 @@ class PlaidAccessTokenAPIView(APIView):
         except Exception as e:
             raise
             # return Response(data={"detail": "An unknown error occurred while trying to save the access token"}, status=500)
+
+    def get(self, request, *args, **kwargs):
+        response = get_list_or_404(models.PlaidAccessToken, user=request.user.pk)
+        print(response)
+
+        return Response({'message': "ok"})
+
 
 
 class AccountAPIView(APIView):

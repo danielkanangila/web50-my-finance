@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router";
-import useAccounts from "../../hooks/useAccounts";
-import Container from "../common/Container";
-import { Balance } from "./AccountSummaryCard";
-import Button from "./../common/Button";
-import Transactions from "./Transactions";
+import useAccounts from "./../hooks/useAccounts";
+import Container from "../components/common/Container";
+import { Balance } from "../components/accounts/AccountSummaryCard";
+import Button from "../components/common/Button";
+import Transactions from "../components/accounts/Transactions";
 
 const Account = () => {
   const params = useParams();

@@ -1,7 +1,8 @@
 import { authClient } from "./client";
 
 const createLinkToken = () => authClient().post("/create_link_token", {});
-const setAccessToken = (data) => authClient().post("/set_access_token", data);
+const setAccessToken = (data) => authClient().post("/access_tokens", data);
+const getLinkedBanks = () => authClient().post("/access_tokens");
 const getAccounts = (userId) => authClient().get(`/users/${userId}/accounts`);
 const getAccountTransactions = (userId, accountId) =>
   authClient().get(`/users/${userId}/accounts/${accountId}/transactions`);
@@ -21,6 +22,7 @@ const plaid = {
   getAccountTransactions,
   getAnalytics,
   getAnalyticsWithQuery,
+  getLinkedBanks
 };
 
 export default plaid;
