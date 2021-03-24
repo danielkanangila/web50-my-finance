@@ -1,0 +1,37 @@
+%alert {
+  width: 100%;
+  margin: 15px 0;
+  position: relative;
+  border-radius: 10px;
+  // box-shadow: 2px 2px 10px 4px rgba(32, 33, 36, 0.28);
+  padding: 15px 35px 15px 15px;
+}
+
+@mixin alert-types {
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    border: none;
+  }
+
+  .success {
+    background-color: #007f00;
+    color: #fff;
+  }
+
+  .danger {
+    background-color: #e04040;
+    color: #fff;
+  }
+
+  .warning {
+    background-color: #ffa502;
+    color: #222222;
+  }
+
+  .info {
+    background-color: #222222;
+    color: #fff;
+  }
+}

@@ -1,0 +1,8 @@
+djangorestframework
+python-dotenv
+django-cors-headers 
+dj-database-url
+django-rest-knox
+django-cors-headers 
+psycopg2
+plaid-python>=5.0.0, < 6.0.0

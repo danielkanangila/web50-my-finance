@@ -1,0 +1,162 @@
+* {
+  box-sizing: border-box;
+  color: rgb(63, 63, 63);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f9fafb;
+}
+
+::-webkit-input-placeholder {
+  opacity: 0;
+  transition: inherit;
+}
+
+.main-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 15px 0;
+}
+
+button:focus {
+  outline: none;
+  border: none;
+}
+
+.top-full {
+  top: 100%;
+}
+.left-full {
+  left: 100%;
+}
+
+.group:hover .group-hover\:block {
+  display: block;
+}
+
+svg {
+  fill: rgb(34, 34, 34);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+
+  &.small {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+// a.active > * {
+//   --tw-bg-opacity: 1;
+//   background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+// }
+
+.fill-gray-300 {
+  --tw-bg-opacity: 1;
+  fill: rgba(209, 213, 219, var(--tw-bg-opacity));
+}
+
+.small {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.finance-illustrator {
+  height: fit-content;
+  svg {
+    margin: 0 auto;
+    width: 60%;
+  }
+}
+
+.bank-logo {
+  width: 100px;
+  margin-bottom: 15px;
+  // height: ;
+  // border: 1px solid #fff;
+  img {
+    width: 100%;
+  }
+}
+
+.sc-icon {
+  font-family: "SocialNetwork", Helvetica, Arial, sans-serif;
+  display: inline;
+  font-size: 35px;
+  height: fit-content;
+}
+
+.sc-link:hover > span {
+  color: #fff;
+  transition: ease 0.5s;
+}
+
+.account-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 15px;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+}
+
+.act-summary-card {
+  &:hover,
+  &.default {
+    * {
+      color: #fff;
+    }
+  }
+}
+
+.analytics {
+  &-details-header {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 10px;
+  }
+  &-detail {
+    * {
+      color: #fff;
+    }
+  }
+}
+
+.piechart-container {
+  width: 450px;
+  height: 450px;
+}
+
+.recharts-wrapper {
+  position: inherit !important;
+}
+
+.account-header *,
+.account-balances .balance-card > * {
+  color: #fff;
+}
+
+button.action:hover {
+  span {
+    color: rgb(41, 40, 40);
+  }
+}
+
+.react-datepicker-wrapper {
+  input {
+    padding: 7px 15px;
+    border: 2px solid rgb(184, 184, 184);
+    border-radius: 5px;
+  }
+}
+
+.page-loader {
+  height: calc(100vh - 50px);
+}
