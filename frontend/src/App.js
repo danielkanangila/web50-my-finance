@@ -12,6 +12,7 @@ import MainHeader from "./components/MainHeader";
 import ApplicationContextProvider from "./context/ApplicationContext";
 import Footer from "./components/Footer";
 import Account from "./components/accounts/Account";
+import MyAccount from "./pages/MyAccount";
 
 function App() {
   return (
@@ -39,6 +40,10 @@ function App() {
                 <Route
                   path="/users/:userId/accounts/:accountId"
                   component={Account}
+                />
+                <Route
+                  path="/users/:userId/my-account"
+                  component={MyAccount}
                 />
               </Dashboard>
             </SecureRoute>
