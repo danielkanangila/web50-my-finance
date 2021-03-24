@@ -89,11 +89,16 @@ const usePlaid = () => {
   const fetchAnalyticsWithQuery = async (userId, query) => {
     return await _fetch({
       apiFunc: () => plaidApiFunc.getAnalyticsWithQuery(userId, query),
-      successCallback: (data) => dispatch(setAnalytics(data)),
+      successCallback: async (data) => await updateAnalytics(data),
       loadingMessage: "Analyzing your bank account(s) information...",
       errorMessage:
         "An unknown error occurred while trying to analyze your account(s) information.",
     });
+  };
+
+  const updateAnalytics = async (newData) => {
+    await dispatch(setAnalytics({}));
+    await dispatch(setAnalytics(newData));
   };
 
   const _fetch = async ({

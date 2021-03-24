@@ -3,7 +3,7 @@ import React from "react";
 const Spinner = ({ size = 5, color = "gray" }) => {
   return (
     <svg
-      class={`animate-spin -ml-1 mr-3 h-${size} w-${size} text-white`}
+      className={`animate-spin -ml-1 mr-3 h-${size} w-${size} text-white`}
       xmlns="http://www.w3.org/2000/svg"
       fill="transparent"
       viewBox="0 0 24 24"
@@ -15,7 +15,7 @@ const Spinner = ({ size = 5, color = "gray" }) => {
         r="10"
         fill="none"
         stroke={color}
-        stroke-width="4"
+        strokeWidth="4"
       ></circle>
       <path
         class="opacity-75"

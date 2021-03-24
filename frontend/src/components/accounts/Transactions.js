@@ -9,11 +9,13 @@ import Button from "../common/Button";
 import usePlaid from "../../hooks/usePlaid";
 import useAuth from "../../hooks/useAuth";
 import useAccounts from "../../hooks/useAccounts";
+import Loader from "../common/Loader";
 
 const Transactions = ({ transactions, accountId }) => {
   const [currentTransactions, setCurrentTransactions] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [loading, setLoading] = useState(false);
   const auth = useAuth();
   const plaid = usePlaid();
   const { groupTransactionsByType } = useAccounts();
@@ -28,6 +30,7 @@ const Transactions = ({ transactions, accountId }) => {
   }, [transactions]); // eslint-disable-line
 
   const updateTransactions = async () => {
+    setLoading(true);
     await plaid.fetchAnalyticsWithQuery(
       auth?.user?.id,
       `start_date=${format(startDate, "yyyy-MM-dd")}&end_date=${format(
@@ -37,28 +40,35 @@ const Transactions = ({ transactions, accountId }) => {
     );
     const newTxs = groupTransactionsByType(accountId);
     setCurrentTransactions(newTxs);
+    setLoading(false);
   };
 
-  const formatItems = (items = []) => {
-    return items.map((tx, index) => ({
-      ...tx,
-      amount: (
-        <TransactionAmount
-          key={index}
-          amount={formatAmount(tx.amount, "USD")}
-        />
-      ),
-      category: (
-        <ItemDescription
-          key={index}
-          category={tx.category}
-          description={tx.description}
-        />
-      ),
-    }));
-  };
   return (
     <Container>
+      <Header
+        startDate={startDate}
+        endDate={endDate}
+        setStartDate={setStartDate}
+        setEndDate={setEndDate}
+        updateTransactions={updateTransactions}
+      />
+      <Loader visibility={loading} message="Loading Transactions..." />
+      {!loading && (
+        <TransactionsList currentTransactions={currentTransactions} />
+      )}
+    </Container>
+  );
+};
+
+export const Header = ({
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
+  updateTransactions,
+}) => {
+  return (
+    <>
       <h2 className="text-2xl font-bold mb-5">Transactions</h2>
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center">
         <div className="flex flex-col sm:flex-row">
@@ -80,45 +90,69 @@ const Transactions = ({ transactions, accountId }) => {
           <Button onClick={updateTransactions}>Submit</Button>
         </div>
       </div>
-      <div>
-        <DataViewer
-          keys={["date", "category", "amount"]}
-          items={[]}
-          showHeader={true}
-          styles={{
-            td: "py-1 px-4 whitespace-normal text-sm",
-            tbodyTr: "hover:bg-gray-50 transition duration-500 ease-in-out",
-            tableWrapper: "overflow-hidden border-b border-t border-gray-200",
-          }}
+    </>
+  );
+};
+
+export const TransactionsList = ({ currentTransactions }) => {
+  const formatItems = (items = []) => {
+    return items.map((tx, index) => ({
+      ...tx,
+      amount: (
+        <TransactionAmount
+          key={index}
+          amount={formatAmount(tx.amount, "USD")}
         />
-        <GroupHeader
-          name="Incomes"
-          total={formatAmount(currentTransactions?.incomes?.total, "USD")}
+      ),
+      category: (
+        <ItemDescription
+          key={index}
+          category={tx.category}
+          description={tx.description}
         />
-        <DataViewer
-          keys={["date", "category", "amount"]}
-          items={formatItems(currentTransactions?.incomes?.items)}
-          styles={{
-            td: "py-1 px-4 whitespace-normal text-sm",
-            tbodyTr: "hover:bg-gray-50 transition duration-500 ease-in-out",
-            tableWrapper: "overflow-hidden border-b border-t border-gray-200",
-          }}
-        />
-        <GroupHeader
-          name="Expenses"
-          total={formatAmount(currentTransactions?.expenses?.total, "USD")}
-        />
-        <DataViewer
-          keys={["date", "category", "amount"]}
-          items={formatItems(currentTransactions?.expenses?.items)}
-          styles={{
-            td: "py-1 px-4 whitespace-normal text-sm",
-            tbodyTr: "hover:bg-gray-50 transition duration-500 ease-in-out",
-            tableWrapper: "overflow-hidden border-b border-t border-gray-200",
-          }}
-        />
-      </div>
-    </Container>
+      ),
+    }));
+  };
+
+  return (
+    <div>
+      <DataViewer
+        keys={["date", "category", "amount"]}
+        items={[]}
+        showHeader={true}
+        styles={{
+          td: "py-1 px-4 whitespace-normal text-sm",
+          tbodyTr: "hover:bg-gray-50 transition duration-500 ease-in-out",
+          tableWrapper: "overflow-hidden border-b border-t border-gray-200",
+        }}
+      />
+      <GroupHeader
+        name="Incomes"
+        total={formatAmount(currentTransactions?.incomes?.total, "USD")}
+      />
+      <DataViewer
+        keys={["date", "category", "amount"]}
+        items={formatItems(currentTransactions?.incomes?.items)}
+        styles={{
+          td: "py-1 px-4 whitespace-normal text-sm",
+          tbodyTr: "hover:bg-gray-50 transition duration-500 ease-in-out",
+          tableWrapper: "overflow-hidden border-b border-t border-gray-200",
+        }}
+      />
+      <GroupHeader
+        name="Expenses"
+        total={formatAmount(currentTransactions?.expenses?.total, "USD")}
+      />
+      <DataViewer
+        keys={["date", "category", "amount"]}
+        items={formatItems(currentTransactions?.expenses?.items)}
+        styles={{
+          td: "py-1 px-4 whitespace-normal text-sm",
+          tbodyTr: "hover:bg-gray-50 transition duration-500 ease-in-out",
+          tableWrapper: "overflow-hidden border-b border-t border-gray-200",
+        }}
+      />
+    </div>
   );
 };
 
