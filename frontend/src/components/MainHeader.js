@@ -61,7 +61,7 @@ const MainHeader = () => {
 const AuthUserMenu = ({ auth, visibility }) => {
   if (visibility)
     return (
-      <div className="flex flex-col h-full lg:flex-row w-full justify-center items-center lg:items-start lg:w-auto">
+      <div className="flex flex-col h-full lg:flex-row w-full justify-center items-center lg:w-auto">
         <NavItem to={`/users/${auth?.user?.id}`} title="Overview" />
         {/* <NavItem
           to={`/users/${auth?.user?.id}/transactions`}
