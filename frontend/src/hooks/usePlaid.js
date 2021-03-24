@@ -86,6 +86,16 @@ const usePlaid = () => {
     });
   };
 
+  const fetchAnalyticsWithQuery = async (userId, query) => {
+    return await _fetch({
+      apiFunc: () => plaidApiFunc.getAnalyticsWithQuery(userId, query),
+      successCallback: (data) => dispatch(setAnalytics(data)),
+      loadingMessage: "Analyzing your bank account(s) information...",
+      errorMessage:
+        "An unknown error occurred while trying to analyze your account(s) information.",
+    });
+  };
+
   const _fetch = async ({
     apiFunc,
     successCallback,
@@ -150,6 +160,7 @@ const usePlaid = () => {
     formatChartData,
     computeTransactionsValue,
     computePercentage,
+    fetchAnalyticsWithQuery,
   };
 };
 

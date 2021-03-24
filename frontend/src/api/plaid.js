@@ -10,7 +10,7 @@ const getTransactions = (userId) =>
 
 const getAnalytics = (userId) => authClient().get(`/users/${userId}/analytics`);
 
-const getAnalyticsByQuery = (userId, query) =>
+const getAnalyticsWithQuery = (userId, query) =>
   authClient().get(`/users/${userId}/analytics?${query}`);
 
 const plaid = {
@@ -20,7 +20,7 @@ const plaid = {
   getTransactions,
   getAccountTransactions,
   getAnalytics,
-  getAnalyticsByQuery,
+  getAnalyticsWithQuery,
 };
 
 export default plaid;

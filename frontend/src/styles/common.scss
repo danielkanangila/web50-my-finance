@@ -148,3 +148,11 @@ button.action:hover {
     color: rgb(41, 40, 40);
   }
 }
+
+.react-datepicker-wrapper {
+  input {
+    padding: 7px 15px;
+    border: 2px solid rgb(184, 184, 184);
+    border-radius: 5px;
+  }
+}

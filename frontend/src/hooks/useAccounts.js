@@ -23,7 +23,7 @@ const useAccounts = (params) => {
     _setTransactions(accountId);
   };
 
-  const groupTransactionType = (accountId, data) => {
+  const groupTransactionsByType = (accountId, data) => {
     const items = extractAccountTransaction(accountId, data);
     const expenses = items.filter((tx) => tx.transaction_type === "Expense");
     const incomes = items.filter((tx) => tx.transaction_type === "Income");
@@ -31,13 +31,17 @@ const useAccounts = (params) => {
     return {
       expenses: {
         total: computeTransactionsValue(expenses),
-        items: expenses,
+        items: expenses.sort(sortByDate).reverse(),
       },
       incomes: {
         total: computeTransactionsValue(incomes),
-        items: incomes,
+        items: incomes.sort(sortByDate).reverse(),
       },
     };
+  };
+
+  const sortByDate = (a, b) => {
+    return new Date(a.date) - new Date(b.date);
   };
 
   const extractAccountTransaction = (accountId, data = null) => {
@@ -58,7 +62,7 @@ const useAccounts = (params) => {
   };
 
   const _setTransactions = (accountId) =>
-    setTransactions(groupTransactionType(accountId));
+    setTransactions(groupTransactionsByType(accountId));
 
   const _setNextPreviousAccount = (accountId) => {
     for (let i = 0; i < appState.accounts.length; i++) {
@@ -106,7 +110,7 @@ const useAccounts = (params) => {
     transactions,
     getAccountColor,
     getAccountById,
-    groupTransactionType,
+    groupTransactionsByType,
     init,
   };
 };

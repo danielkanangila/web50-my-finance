@@ -19,7 +19,7 @@ const Account = () => {
 
   useEffect(() => {
     init(params?.accountId, params?.userId);
-  }, [params]);
+  }, [params]); // eslint-disable-line
 
   return (
     <div>
