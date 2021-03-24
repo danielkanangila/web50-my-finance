@@ -156,3 +156,7 @@ button.action:hover {
     border-radius: 5px;
   }
 }
+
+.page-loader {
+  height: calc(100vh - 50px);
+}

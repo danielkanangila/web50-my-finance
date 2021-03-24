@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useLoader from "../../hooks/useLoader";
 import usePlaid from "../../hooks/usePlaid";
@@ -13,7 +13,7 @@ import Container from "../../components/common/Container";
 const Home = () => {
   const auth = useAuth();
   const plaid = usePlaid();
-
+  const loader = useLoader();
   useEffect(() => {
     if (auth.user)
       plaid
@@ -26,36 +26,42 @@ const Home = () => {
   }, [auth.user]); // eslint-disable-line
 
   return (
-    <Suspense
-      fallback={
-        <PageLoader visibility={true} message="Fetching your bank data..." />
-      }
-    >
-      <Container>
-        <div className="p-5">
-          <Error />
-        </div>
-        <Splash visibility={!plaid.state.accounts.length} />
-        <Title title="Last 30 days summary" className="uppercase mb-5" />
-        <AnalyticsDetails
-          {...{
-            ...plaid.state.analytics,
-            transactions: plaid.state.analytics?.transactions
-              ?.sort((a, b) => a.amount - b.amount)
-              .reverse(),
-          }}
+    <>
+      {loader.status && (
+        <PageLoader
+          visibility={true}
+          message="Fetching your account(s) information..."
         />
-        <Title title="Your Account(s)" className="uppercase mb-5" />
-        {plaid.state.accounts.length > 0 && (
-          <AccountsSummary accounts={plaid.state.accounts} />
+      )}
+      <Container>
+        {!loader.status && (
+          <>
+            <div className="p-5">
+              <Error />
+            </div>
+            <NoAccountScreen visibility={!plaid.state.accounts.length} />
+            <Title title="Last 30 days summary" className="uppercase mb-5" />
+            <AnalyticsDetails
+              {...{
+                ...plaid.state.analytics,
+                transactions: plaid.state.analytics?.transactions
+                  ?.sort((a, b) => a.amount - b.amount)
+                  .reverse(),
+              }}
+            />
+            <Title title="Your Account(s)" className="uppercase mb-5" />
+            {plaid.state.accounts.length > 0 && (
+              <AccountsSummary accounts={plaid.state.accounts} />
+            )}
+          </>
         )}
       </Container>
-    </Suspense>
+    </>
   );
 };
 
 /** Visible only if the user has no bank account linked yet */
-const Splash = ({ visibility }) => {
+const NoAccountScreen = ({ visibility }) => {
   const [display, setDisplay] = useState(visibility);
   const loader = useLoader();
   const auth = useAuth();
