@@ -18,7 +18,7 @@ const AccountList = ({ list, index }) => {
     .domain(list.map((acc) => acc.account_id))
     .range(schemeDark2);
   return (
-    <div className={`account-list ins-${index}`}>
+    <div className={`account-list mb-5 ins-${index}`}>
       {list.map((summary) => (
         <AccountSummaryCard
           key={summary.account_id}

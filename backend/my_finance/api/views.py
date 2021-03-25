@@ -104,7 +104,8 @@ class PlaidAccessTokenAPIView(APIView):
 
         if 'new_access_token' in response:
             obj.delete()
-            return Response({'message': 'The bank has been successfully unlinked.'})
+            return self.get(request=request, args={}, kwargs={})
+            # return Response({'message': 'The bank has been successfully unlinked.'})
         else:
             return Response({'message': 'We are unable to unlinked your bank. Please try again later.'})
 

@@ -19,6 +19,10 @@ const MyAccount = () => {
         .catch((e) => {setLoading(false); console.log(e)})
     }, []) // eslint-disable-line
 
+    const unlinkBank = async (access_token_id) => {
+        await plaid.unlinkBank(access_token_id, setBankList)
+    } 
+
     return (
         <>
             {loading && (
@@ -47,7 +51,7 @@ const MyAccount = () => {
                         <List data={bankList?.institutions?.map((item, index) => 
                                 (<>
                                     <span>{item.country.join('|')} - {item.name}</span>
-                                    <span className="material-icons text-red-500 cursor-pointer hover:text-red-400">delete</span>
+                                    <span onClick={() => unlinkBank(item.access_token_id)} className="material-icons text-red-500 cursor-pointer hover:text-red-400">delete</span>
                                 </>)
                             )} />
                     </div>
