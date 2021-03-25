@@ -96,7 +96,7 @@ class PlaidAccessTokenAPIView(APIView):
                 'access_token_id': data.pk
             })
 
-        return Response({'instutions': instutions})
+        return Response({'institutions': instutions})
 
     def delete(self, request, pk, format=None):
         obj = self.get_object(pk)
