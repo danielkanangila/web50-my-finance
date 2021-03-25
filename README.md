@@ -1,6 +1,6 @@
 # CS50's  WEB - Final Project "myFinance"
 
-My Finance is a web application that help people to manage all of their bank accounts in one place. The application is built-in Python/Django Framework, JavaScript/React.js and [Plaid API](https://plaid.com/).
+My Finance is a web application that help people to manage all of their bank accounts in one place. The application is built-in Python/Django Framework, JavaScript/React.js, Tailwind CSS and [Plaid API](https://plaid.com/).
 
 The backend application is a RESTFull API built-in Django and the frontend application is built-in JavaScript/React.
 

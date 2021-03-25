@@ -60,7 +60,7 @@ const Register = () => {
               type="text"
               name="first_name"
               label="First Name"
-              placeholder="Dan"
+              // placeholder="Dan"
               required
               autoComplete="first_name"
             />
@@ -71,7 +71,7 @@ const Register = () => {
               type="text"
               name="last_name"
               label="Last Name"
-              placeholder="Joe"
+              // placeholder="Joe"
               required
               autoComplete="last_name"
             />
@@ -82,7 +82,7 @@ const Register = () => {
           type="text"
           name="email"
           label="Email"
-          placeholder="example@gmail.com"
+          // placeholder="example@gmail.com"
           required
           autoComplete="email"
         />
@@ -91,7 +91,7 @@ const Register = () => {
           type="password"
           name="password"
           label="Password"
-          placeholder="**********"
+          // placeholder="**********"
           required
           autoComplete="new-password"
         />
