@@ -57,3 +57,11 @@ The frontend application will start on `http://localhost:3000` and make sure tha
 
 You can access the application via your web browser on `http://localhost:3000`.
 
+**Note:** If you're using Plaid in the sandbox environment `PLAID_ENV=sandbox`, use the following credential to link any banks:
+```
+username=user_good
+password=pass_good
+```
+If you set a different Plaid environment, you should use your real bank credential in order to link your bank(s).
+
+
