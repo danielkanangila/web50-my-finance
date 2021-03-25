@@ -67,6 +67,6 @@ If you set a different Plaid environment, you should use your real bank credenti
 ## Demo
 **On YouTube**:
 
-[![CS50's WEB Final Project Demo](https://drive.google.com/uc?export=view&id=1WnBhyrOuooMT0Y6BUQwdarcZhNnXYHdx)](https://youtu.be/q2UE8eo7qbM)
+[![CS50's WEB Final Project Demo](https://drive.google.com/uc?export=view&id=1WnBhyrOuooMT0Y6BUQwdarcZhNnXYHdx)](https://youtu.be/RRMsR_AbAOI)
 
 
