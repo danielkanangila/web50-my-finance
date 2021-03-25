@@ -44,7 +44,6 @@ def get_access_token(public_token):
 
 
 def get_accounts(user_pk):
-    # ::TODO add institution info in each account object
     accounts = []
     try:
         for plaid_access_token in get_access_tokens(user_pk):
@@ -165,4 +164,5 @@ def get_institution_by_id(institution_id):
         'country': response.get('institution').get('country_codes')
     }
 
-
+def revoke_access_token(access_token):
+    return client.Item.access_token.invalidate(access_token)

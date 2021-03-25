@@ -1,6 +1,6 @@
 import datetime
 from django.http import Http404
-from django.shortcuts import get_list_or_404
+from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import generics, viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -47,6 +47,9 @@ class PlaidAccessTokenAPIView(APIView):
     permission_classes = [
         permissions.IsAuthenticated
     ]
+
+    def get_object(self, pk):
+        return get_object_or_404(plaid.PlaidAccessToken, pk=pk)
     
 
     def post(self, request, *args, **kwargs):
@@ -84,10 +87,26 @@ class PlaidAccessTokenAPIView(APIView):
 
     def get(self, request, *args, **kwargs):
         response = get_list_or_404(models.PlaidAccessToken, user=request.user.pk)
-        print(response)
+        instutions = list()
 
-        return Response({'message': "ok"})
+        for data in response:
+            ins = plaid.get_institution_by_id(data.institution_id)
+            instutions.append({
+                **ins,
+                'access_token_id': data.pk
+            })
 
+        return Response({'instutions': instutions})
+
+    def delete(self, request, pk, format=None):
+        obj = self.get_object(pk)
+        response = plaid.revoke_access_token(obj.access_token)
+
+        if 'new_access_token' in response:
+            obj.delete()
+            return Response({'message': 'The bank has been successfully unlinked.'})
+        else:
+            return Response({'message': 'We are unable to unlinked your bank. Please try again later.'})
 
 
 class AccountAPIView(APIView):

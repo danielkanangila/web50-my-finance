@@ -12,6 +12,7 @@ urlpatterns = [
          views.TransactionRetreiveAPIView.as_view()),
     path('create_link_token', views.CreatePlaidLinkTokenAPIView.as_view()),
     path('access_tokens', views.PlaidAccessTokenAPIView.as_view()),
+    path('access_tokens/<int:pk>', views.PlaidAccessTokenAPIView.as_view()),
     path('users/<int:user_id>/accounts', views.AccountAPIView.as_view()),
     path('users/<int:user_id>/accounts/<account_id>/transactions',
          views.AccountTransactionsAPIView.as_view()),

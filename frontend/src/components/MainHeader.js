@@ -90,7 +90,7 @@ const UserDropdownMenu = ({ user }) => {
           <LinkBankButton />
         </div> */}
         <DropdownItemGroup>
-          <DropdownItem onClick={() => setItemsVisibility(false)} to={`/users/${user.id}/my-account`} title="Manage Accounts" />
+          <DropdownItem onClick={() => setItemsVisibility(false)} to={`/users/${user.id}/my-account`} title="Manage Account" />
         </DropdownItemGroup>
         <DropdownItemGroup>
           <DropdownItem onClick={() => setItemsVisibility(false)} to="/logout" title="Logout" />

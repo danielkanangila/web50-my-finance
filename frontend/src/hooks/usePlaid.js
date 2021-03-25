@@ -86,6 +86,15 @@ const usePlaid = () => {
     });
   };
 
+  const getLinkedBanks = async () => {
+    return await _fetch({
+      apiFunc: () => plaidApiFunc.getLinkedBanks(),
+      successCallback: (data) => console.log(data),
+      loadingMessage: 'Retrieving your account information...',
+      errorMessage: 'An unknown error occurred while trying to retrieve your account information.'
+    })
+  }
+
   const fetchAnalyticsWithQuery = async (userId, query) => {
     return await _fetch({
       apiFunc: () => plaidApiFunc.getAnalyticsWithQuery(userId, query),
@@ -166,6 +175,7 @@ const usePlaid = () => {
     computeTransactionsValue,
     computePercentage,
     fetchAnalyticsWithQuery,
+    getLinkedBanks
   };
 };
 

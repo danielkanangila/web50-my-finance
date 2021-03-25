@@ -8,7 +8,7 @@ const UserInfo = () => {
   const auth = useAuth();
   return (
     <Link
-      to={`/users/${auth?.user?.id}/profile`}
+      to={`/users/${auth?.user?.id}/my-account`}
       className="block mb-5 cursor-pointer"
     >
       <FlexBox>
