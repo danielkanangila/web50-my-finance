@@ -1,4 +1,4 @@
-# CS50's  WEB - Final Project "myFinance"
+# myFinance
 
 My Finance is a web application that help people to manage all of their bank accounts in one place. The application is built-in Python/Django Framework, JavaScript/React.js, Tailwind CSS and [Plaid API](https://plaid.com/).
 
@@ -67,6 +67,6 @@ If you set a different Plaid environment, you should use your real bank credenti
 ## Demo
 **On YouTube**:
 
-[![CS50's WEB Final Project Demo](https://drive.google.com/uc?export=view&id=1WnBhyrOuooMT0Y6BUQwdarcZhNnXYHdx)](https://youtu.be/RRMsR_AbAOI)
+[![Demo](https://drive.google.com/uc?export=view&id=1WnBhyrOuooMT0Y6BUQwdarcZhNnXYHdx)](https://youtu.be/RRMsR_AbAOI)
 
 
